@@ -21,8 +21,10 @@ public class TaskEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private Project project;
-    private List<SubtaskEntity> subtaskList;
-    private List<LogEntity> logList;
-    private List<UtilityEntity> utilList;
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private ProjectEntity project;
+    //private List<SubtaskEntity> subtaskList;
+    //private List<LogEntity> logList;
+    //private List<UtilityEntity> utilList;
 }

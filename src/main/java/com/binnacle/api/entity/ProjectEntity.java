@@ -21,8 +21,9 @@ public class ProjectEntity {
     private int id;
     private String name;
     private String owner;
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<TaskEntity> taskList;
-    private List<LogEntity> logList;
-    private List<UtilityEntity> utilList;
+    //private List<LogEntity> logList;
+    //private List<UtilityEntity> utilList;
 
 }
