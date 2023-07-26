@@ -24,7 +24,10 @@ public class TaskEntity {
     @ManyToOne
     @JoinColumn(name = "project_id")
     private ProjectEntity project;
-    //private List<SubtaskEntity> subtaskList;
-    //private List<LogEntity> logList;
-    //private List<UtilityEntity> utilList;
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+    private List<SubtaskEntity> subtaskList;
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+    private List<LogEntity> logList;
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+    private List<UtilityEntity> utilList;
 }

@@ -16,8 +16,14 @@ public class LogEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @ManyToOne
+    @JoinColumn(name = "project_id")
     private ProjectEntity project;
+    @ManyToOne
+    @JoinColumn(name = "task_id")
     private TaskEntity task;
+    @ManyToOne
+    @JoinColumn(name = "subtask_id")
     private SubtaskEntity subtask;
     private LocalDate date;
     private String log;

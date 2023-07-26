@@ -21,7 +21,11 @@ public class SubtaskEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private Task task;
+    @ManyToOne
+    @JoinColumn(name = "task_id")
+    private TaskEntity task;
+    @OneToMany(mappedBy = "subtask", cascade = CascadeType.ALL)
     private List<LogEntity> logList;
+    @OneToMany(mappedBy = "subtask", cascade = CascadeType.ALL)
     private List<UtilityEntity> utilList;
 }
