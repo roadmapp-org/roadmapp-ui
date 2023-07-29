@@ -1,8 +1,8 @@
 package com.binnacle.api.security;
 
 import com.binnacle.api.entity.UserEntity;
-import com.binnacle.api.repository.IUserRepository;
-import com.binnacle.api.utils.ErrorCodes;
+import com.binnacle.api.repository.contract.IUserRepository;
+import com.binnacle.api.utils.errors.ErrorCodes;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.core.userdetails.User;

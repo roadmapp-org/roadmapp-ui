@@ -1,4 +1,4 @@
-package com.binnacle.api.repository;
+package com.binnacle.api.repository.contract.spring;
 
 import com.binnacle.api.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

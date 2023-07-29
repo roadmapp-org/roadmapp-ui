@@ -1,5 +1,6 @@
 package com.binnacle.api.security;
 
+import com.binnacle.api.utils.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,8 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/user/create").permitAll()    // dejamos fuera del alcance de la aplicación la gestion de los usuarios administradores
-                .antMatchers("/client/create").permitAll()
+                .antMatchers("/project/create").hasRole(Roles.USER)
                 .antMatchers("/auth/login").permitAll()
                 .anyRequest().authenticated()
             .and()

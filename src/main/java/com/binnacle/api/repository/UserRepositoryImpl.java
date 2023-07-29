@@ -1,8 +1,8 @@
-package com.binnacle.api.repository.impl;
+package com.binnacle.api.repository;
 
 import com.binnacle.api.entity.UserEntity;
-import com.binnacle.api.repository.IUserRepository;
-import com.binnacle.api.repository.IUserSpringRepository;
+import com.binnacle.api.repository.contract.IUserRepository;
+import com.binnacle.api.repository.contract.spring.IUserSpringRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +14,6 @@ public class UserRepositoryImpl implements IUserRepository {
     private final IUserSpringRepository userSpringRepository;
     @Override
     public UserEntity findByUserName(String username) {
-        Optional<UserEntity> userEntity = userSpringRepository.findById(username);
-        return userEntity.orElse(null);
+        return userSpringRepository.findById(username).orElse(null);
     }
 }
