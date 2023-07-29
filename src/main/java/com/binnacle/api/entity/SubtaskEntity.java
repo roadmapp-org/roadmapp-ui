@@ -28,4 +28,5 @@ public class SubtaskEntity {
     private List<LogEntity> logList;
     @OneToMany(mappedBy = "subtask", cascade = CascadeType.ALL)
     private List<UtilityEntity> utilList;
+    private boolean active;
 }

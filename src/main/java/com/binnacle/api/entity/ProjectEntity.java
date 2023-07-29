@@ -27,5 +27,6 @@ public class ProjectEntity {
     private List<LogEntity> logList;
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<UtilityEntity> utilList;
+    private boolean active;
 
 }

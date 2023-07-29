@@ -27,4 +27,5 @@ public class LogEntity {
     private SubtaskEntity subtask;
     private LocalDate date;
     private String log;
+    private boolean active;
 }

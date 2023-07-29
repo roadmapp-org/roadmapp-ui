@@ -28,4 +28,5 @@ public class UtilityEntity {
     private LocalDate date;
     private String name;
     private String value;
+    private boolean active;
 }

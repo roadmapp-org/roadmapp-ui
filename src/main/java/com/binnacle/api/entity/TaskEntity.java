@@ -30,4 +30,5 @@ public class TaskEntity {
     private List<LogEntity> logList;
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
     private List<UtilityEntity> utilList;
+    private boolean active;
 }
