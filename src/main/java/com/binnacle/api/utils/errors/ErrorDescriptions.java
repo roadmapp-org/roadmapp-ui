@@ -7,4 +7,5 @@ public class ErrorDescriptions {
     public static final String UP_TO_50_CHARACTERS = "This field cannot be blank";
     public static final String PROJECT_ALREADY_DEFINED = "This project name already exists";
     public static final String COULD_NOT_SAVE_PROJECT = "This project name already exists";
+    public static final String UPDATE_NOT_ALLOWED = "You cannot update this object";
 }

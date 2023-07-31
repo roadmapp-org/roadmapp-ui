@@ -22,4 +22,9 @@ public class ProjectRepositoryImpl implements IProjectRepository {
     public ProjectEntity save(ProjectEntity project) {
         return projectSpringRepository.save(project);
     }
+
+    @Override
+    public ProjectEntity findById(int id) {
+        return projectSpringRepository.findById(id).orElse(null);
+    }
 }

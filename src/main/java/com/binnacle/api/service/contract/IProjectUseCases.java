@@ -5,4 +5,5 @@ import com.binnacle.api.response.PersistResponse;
 
 public interface IProjectUseCases {
     PersistResponse create(ProjectCreateUpdateRequest request);
+    PersistResponse update(ProjectCreateUpdateRequest request);
 }

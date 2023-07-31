@@ -14,10 +14,13 @@ import com.binnacle.api.utils.Tools;
 import com.binnacle.api.utils.errors.ErrorCodes;
 import com.binnacle.api.utils.errors.ErrorDescriptions;
 import com.binnacle.api.utils.exceptions.AlreadyDefinedException;
+import com.binnacle.api.utils.exceptions.RecordNotFoundException;
+import com.binnacle.api.utils.exceptions.UpdateNotAllowedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,10 +35,10 @@ public class ProjectService implements IProjectUseCases {
         try {
             // previous validations
             ProjectEntity project = projectRepository.findByProjectName(request.getName());
-            if(project!= null)
+            if(project != null)
                 throw new AlreadyDefinedException(ErrorCodes.ALREADY_DEFINED, ErrorDescriptions.PROJECT_ALREADY_DEFINED);
 
-            // bussiness logic
+            // business logic
             project = new ProjectEntity();
             project.setName(request.getName());
             project.setActive(true);
@@ -44,12 +47,41 @@ public class ProjectService implements IProjectUseCases {
             ProjectEntity savedProject = projectRepository.save(project);
 
             // return
-            persistResponse = new PersistResponse(Results.OK,"",savedProject);
+            persistResponse = new PersistResponse(Results.OK,"",savedProject,HttpStatus.OK);
 
         } catch(AlreadyDefinedException e){
-            persistResponse = new PersistResponse(Results.LOGIC_ERROR, new ErrorResponse(e.getMessage(), e.getDescriptions()), "");
+            persistResponse = new PersistResponse(Results.ERROR, new ErrorResponse(e.getMessage(), e.getDescriptions()), "",HttpStatus.BAD_REQUEST);
         } catch(Exception e) {
-            persistResponse = new PersistResponse(Results.GENERIC_ERROR,request, new ErrorResponse(e.getMessage(), ErrorDescriptions.COULD_NOT_SAVE_PROJECT));
+            persistResponse = new PersistResponse(Results.ERROR, new ErrorResponse(e.getMessage(), ErrorDescriptions.COULD_NOT_SAVE_PROJECT),"",HttpStatus.BAD_REQUEST);
+        } finally {
+            return persistResponse;
+        }
+    }
+
+    @Override
+    public PersistResponse update(ProjectCreateUpdateRequest request) {
+        PersistResponse persistResponse = new PersistResponse();
+        try {
+            // previous validations
+            ProjectEntity project = projectRepository.findById(request.getId());
+            if(project == null)
+                throw new RecordNotFoundException(ErrorCodes.RECORD_NOT_FOUND, ErrorDescriptions.RECORD_NOT_FOUND);
+            if(!project.getOwner().equals(SecurityContextHolder.getContext().getAuthentication().getName()))
+                throw new UpdateNotAllowedException(ErrorCodes.UPDATE_NOT_ALLOWED, ErrorDescriptions.UPDATE_NOT_ALLOWED);
+
+            //business logic
+            project.setName(request.getName());
+            ProjectEntity savedProject = projectRepository.save(project);
+
+            // return
+            persistResponse = new PersistResponse(Results.OK,"",savedProject,HttpStatus.OK);
+
+        } catch(RecordNotFoundException e) {
+            persistResponse = new PersistResponse(Results.ERROR, new ErrorResponse(e.getMessage(), e.getDescriptions()), "",HttpStatus.BAD_REQUEST);
+        } catch(UpdateNotAllowedException e) {
+            persistResponse = new PersistResponse(Results.ERROR, new ErrorResponse(e.getMessage(), e.getDescriptions()), "",HttpStatus.UNAUTHORIZED);
+        } catch (Exception e) {
+            persistResponse = new PersistResponse(Results.ERROR, new ErrorResponse(e.getMessage(), ErrorDescriptions.COULD_NOT_SAVE_PROJECT),"",HttpStatus.BAD_REQUEST);
         } finally {
             return persistResponse;
         }

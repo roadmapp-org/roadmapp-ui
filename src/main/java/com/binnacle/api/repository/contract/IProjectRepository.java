@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface IProjectRepository {
     ProjectEntity findByProjectName(String projectName);
     ProjectEntity save(ProjectEntity project);
+    ProjectEntity findById(int id);
 }

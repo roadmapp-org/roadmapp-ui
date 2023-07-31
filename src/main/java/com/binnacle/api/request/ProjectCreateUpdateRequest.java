@@ -8,6 +8,8 @@ import javax.validation.constraints.Size;
 
 @Getter
 public class ProjectCreateUpdateRequest {
+
+    private int id;
     @NotBlank(message = ErrorDescriptions.NOT_BLANK)
     @Size(max = 50, message = ErrorDescriptions.UP_TO_50_CHARACTERS)
     private String name;

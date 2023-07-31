@@ -31,13 +31,30 @@ public class ProjectController {
 
         if(errorResponse != null)
         {
-            persistResponse = new PersistResponse(Results.VALIDATION_ERROR,errorResponse,null);
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(persistResponse);
+            persistResponse = new PersistResponse(Results.VALIDATION_ERROR,errorResponse,null,HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(persistResponse.getStatus()).body(persistResponse);
         }
 
         persistResponse = projectUseCases.create(request);
 
-        return ResponseEntity.status(HttpStatus.OK).body(persistResponse);
+        return ResponseEntity.status(persistResponse.getStatus()).body(persistResponse);
+
+    }
+
+    @PostMapping(value = "/update", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<?> update(@Valid @RequestBody ProjectCreateUpdateRequest request, BindingResult bindingResult) {
+        ResponseEntity<ErrorResponse> errorResponse = Tools.getErrorResponseResponseEntity(bindingResult);
+        PersistResponse persistResponse;
+
+        if(errorResponse != null)
+        {
+            persistResponse = new PersistResponse(Results.VALIDATION_ERROR,errorResponse,null,HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(persistResponse.getStatus()).body(persistResponse);
+        }
+
+        persistResponse = projectUseCases.update(request);
+
+        return ResponseEntity.status(persistResponse.getStatus()).body(persistResponse);
 
     }
 
