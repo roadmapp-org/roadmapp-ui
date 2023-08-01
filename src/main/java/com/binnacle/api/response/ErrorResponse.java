@@ -20,6 +20,12 @@ public class ErrorResponse {
         }
         this.description = messageList;
     }
+    public ErrorResponse(String code, String descriptions) {
+        this.code = code;
+        List<String> messageList = new ArrayList<>();
+        messageList.add(descriptions);
+        this.description = messageList;
+    }
     private final String code;
     private final List<String> description;
 

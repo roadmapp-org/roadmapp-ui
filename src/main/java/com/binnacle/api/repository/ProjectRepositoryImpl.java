@@ -27,4 +27,9 @@ public class ProjectRepositoryImpl implements IProjectRepository {
     public ProjectEntity findById(int id) {
         return projectSpringRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public void delete(ProjectEntity projectEntity) {
+        projectSpringRepository.delete(projectEntity);
+    }
 }

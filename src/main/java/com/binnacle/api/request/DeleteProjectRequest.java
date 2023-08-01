@@ -4,13 +4,12 @@ import com.binnacle.api.utils.errors.ErrorDescriptions;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Getter
-public class ProjectCreateUpdateRequest {
-
-    private int id;
-    @NotBlank(message = ErrorDescriptions.NOT_BLANK)
-    @Size(max = 50, message = ErrorDescriptions.UP_TO_50_CHARACTERS)
-    private String name;
+public class DeleteProjectRequest {
+    @NotNull
+    private Integer id;
 }

@@ -9,4 +9,5 @@ public interface IProjectRepository {
     ProjectEntity findByProjectName(String projectName);
     ProjectEntity save(ProjectEntity project);
     ProjectEntity findById(int id);
+    void delete(ProjectEntity projectEntity);
 }
