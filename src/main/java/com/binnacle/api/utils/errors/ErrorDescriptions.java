@@ -9,4 +9,5 @@ public class ErrorDescriptions {
     public static final String COULD_NOT_SAVE_PROJECT = "This project name already exists";
     public static final String UPDATE_NOT_ALLOWED = "You cannot update this object";
     public static final String DELETION_NOT_ALLOWED = "You cannot delete this object";
+    public static final String ERROR_WHEN_RETREIVING_DATA = "Data couldn´t be retreived";
 }

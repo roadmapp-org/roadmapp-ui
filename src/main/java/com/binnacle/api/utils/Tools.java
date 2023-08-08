@@ -1,5 +1,6 @@
 package com.binnacle.api.utils;
 
+import com.binnacle.api.response.DataResponse;
 import com.binnacle.api.response.ErrorResponse;
 import com.binnacle.api.response.PersistResponse;
 import com.binnacle.api.utils.errors.ErrorCodes;
@@ -57,5 +58,16 @@ public class Tools {
                 "",
                 HttpStatus.BAD_REQUEST
         );
+    }
+
+    public static DataResponse getDataResponseError(Exception e, String descriptions) {
+        ErrorResponse errorResponse = new ErrorResponse(e.getMessage(),descriptions);
+        return new DataResponse(
+                Results.ERROR,
+                errorResponse,
+                "",
+                HttpStatus.BAD_REQUEST
+        );
+
     }
 }

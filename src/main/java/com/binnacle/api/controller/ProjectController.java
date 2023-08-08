@@ -1,12 +1,15 @@
 package com.binnacle.api.controller;
 
+import com.binnacle.api.entity.ProjectEntity;
 import com.binnacle.api.request.CreateUpdateProjectRequest;
 import com.binnacle.api.request.DeleteProjectRequest;
+import com.binnacle.api.response.DataResponse;
 import com.binnacle.api.response.ErrorResponse;
 import com.binnacle.api.response.PersistResponse;
 import com.binnacle.api.service.contract.IProjectUseCases;
 import com.binnacle.api.utils.Results;
 import com.binnacle.api.utils.Tools;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("project")
@@ -73,7 +77,10 @@ public class ProjectController {
 
     }
 
-
-
+    @GetMapping(value="/myprojects")
+    public ResponseEntity<?> myProjects() {
+        DataResponse dataResponse = projectUseCases.getMyProjects();
+        return ResponseEntity.status(dataResponse.getStatus()).body(dataResponse);
+    }
 
 }

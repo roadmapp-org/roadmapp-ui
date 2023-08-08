@@ -1,8 +1,9 @@
 package com.binnacle.api.repository.contract;
 
 import com.binnacle.api.entity.ProjectEntity;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface IProjectRepository {
@@ -10,4 +11,5 @@ public interface IProjectRepository {
     ProjectEntity save(ProjectEntity project);
     ProjectEntity findById(int id);
     void delete(ProjectEntity projectEntity);
+    List<ProjectEntity> getAllByOwner(String owner);
 }

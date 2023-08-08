@@ -4,6 +4,7 @@ import com.binnacle.api.entity.ProjectEntity;
 import com.binnacle.api.repository.contract.IProjectRepository;
 import com.binnacle.api.request.CreateUpdateProjectRequest;
 import com.binnacle.api.request.DeleteProjectRequest;
+import com.binnacle.api.response.DataResponse;
 import com.binnacle.api.response.PersistResponse;
 import com.binnacle.api.service.contract.IProjectUseCases;
 import com.binnacle.api.utils.Results;
@@ -11,6 +12,7 @@ import com.binnacle.api.utils.Tools;
 import com.binnacle.api.utils.errors.ErrorCodes;
 import com.binnacle.api.utils.errors.ErrorDescriptions;
 import com.binnacle.api.utils.exceptions.AlreadyDefinedException;
+import com.binnacle.api.utils.exceptions.ErrorWhenRetreivingDataException;
 import com.binnacle.api.utils.exceptions.RecordNotFoundException;
 import com.binnacle.api.utils.exceptions.ActionNotAllowedException;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -108,6 +113,24 @@ public class ProjectService implements IProjectUseCases {
         }
         finally {
             return persistResponse;
+        }
+    }
+
+    @Override
+    public DataResponse getMyProjects() {
+        DataResponse dataResponse = new DataResponse();
+        List<ProjectEntity> projectList = new ArrayList<ProjectEntity>();
+        try {
+            projectList = projectRepository.getAllByOwner(SecurityContextHolder.getContext().getAuthentication().getName());
+            if(projectList == null)
+                throw new ErrorWhenRetreivingDataException(ErrorCodes.ERROR_WHEN_RETREIVING_DATA, ErrorDescriptions.ERROR_WHEN_RETREIVING_DATA);
+
+            dataResponse = new DataResponse(Results.OK,"",projectList,HttpStatus.OK);
+
+        } catch (Exception e) {
+            dataResponse = Tools.getDataResponseError(e,"");
+        } finally {
+            return dataResponse;
         }
     }
 }

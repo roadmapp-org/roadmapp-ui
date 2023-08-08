@@ -1,13 +1,12 @@
 package com.binnacle.api.repository;
 
 import com.binnacle.api.entity.ProjectEntity;
-import com.binnacle.api.entity.UserEntity;
 import com.binnacle.api.repository.contract.IProjectRepository;
 import com.binnacle.api.repository.contract.spring.IProjectSpringRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -31,5 +30,10 @@ public class ProjectRepositoryImpl implements IProjectRepository {
     @Override
     public void delete(ProjectEntity projectEntity) {
         projectSpringRepository.delete(projectEntity);
+    }
+
+    @Override
+    public List<ProjectEntity> getAllByOwner(String owner) {
+        return projectSpringRepository.findByOwner(owner).get();
     }
 }
