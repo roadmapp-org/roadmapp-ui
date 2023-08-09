@@ -3,7 +3,7 @@ package com.binnacle.api.service;
 import com.binnacle.api.entity.ProjectEntity;
 import com.binnacle.api.repository.contract.IProjectRepository;
 import com.binnacle.api.request.CreateUpdateProjectRequest;
-import com.binnacle.api.request.DeleteProjectRequest;
+import com.binnacle.api.request.DeleteGroupRequest;
 import com.binnacle.api.response.DataResponse;
 import com.binnacle.api.response.PersistResponse;
 import com.binnacle.api.service.contract.IProjectUseCases;
@@ -69,6 +69,8 @@ public class ProjectService implements IProjectUseCases {
             if(!project.getOwner().equals(SecurityContextHolder.getContext().getAuthentication().getName()))
                 throw new ActionNotAllowedException(ErrorCodes.UPDATE_NOT_ALLOWED, ErrorDescriptions.UPDATE_NOT_ALLOWED);
 
+            // TODO: validate that the name we are trying to set does not exist
+
             //business logic
             project.setName(request.getName());
             ProjectEntity savedProject = projectRepository.save(project);
@@ -88,7 +90,7 @@ public class ProjectService implements IProjectUseCases {
     }
 
     @Override
-    public PersistResponse delete(DeleteProjectRequest request) {
+    public PersistResponse delete(DeleteGroupRequest request) {
         PersistResponse persistResponse = new PersistResponse();
         try {
             // previous validations

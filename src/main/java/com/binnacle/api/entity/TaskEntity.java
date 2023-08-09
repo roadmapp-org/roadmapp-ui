@@ -4,6 +4,7 @@ import com.binnacle.api.model.Log;
 import com.binnacle.api.model.Project;
 import com.binnacle.api.model.Task;
 import com.binnacle.api.model.Utility;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,6 +24,7 @@ public class TaskEntity {
     private String name;
     @ManyToOne
     @JoinColumn(name = "project_id")
+    @JsonIgnore
     private ProjectEntity project;
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
     private List<SubtaskEntity> subtaskList;
