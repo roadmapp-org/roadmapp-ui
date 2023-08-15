@@ -23,7 +23,7 @@ public class TaskController {
 
     private final ITaskUseCases taskUseCases;
 
-    @PostMapping(value = "/create", consumes = "application/json", produces = "application/json")
+    @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> create(@Valid @RequestBody CreateUpdateTaskRequest request, BindingResult bindingResult) {
 
         ResponseEntity<ErrorResponse> errorResponse = Tools.getErrorResponseResponseEntity(bindingResult);
@@ -41,7 +41,7 @@ public class TaskController {
 
     }
 
-    @PatchMapping(value = "/update", consumes = "application/json", produces = "application/json")
+    @PatchMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> update(@Valid @RequestBody CreateUpdateTaskRequest request, BindingResult bindingResult) {
         ResponseEntity<ErrorResponse> errorResponse = Tools.getErrorResponseResponseEntity(bindingResult);
         PersistResponse persistResponse;
@@ -59,7 +59,7 @@ public class TaskController {
     }
 
 
-    @DeleteMapping(value = "/delete", consumes = "application/json", produces = "application/json")
+    @DeleteMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> delete(@Valid @RequestBody DeleteGroupRequest request, BindingResult bindingResult) {
         ResponseEntity<ErrorResponse> errorResponse = Tools.getErrorResponseResponseEntity(bindingResult);
         PersistResponse persistResponse;

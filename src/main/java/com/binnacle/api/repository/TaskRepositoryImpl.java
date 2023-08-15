@@ -34,9 +34,4 @@ public class TaskRepositoryImpl implements ITaskRepository {
     public void delete(TaskEntity taskEntity) {
         taskSpringRepository.delete(taskEntity);
     }
-
-    /*@Override
-    public List<ProjectEntity> getAllByOwner(String owner) {
-        return projectSpringRepository.findByOwner(owner).get();
-    }*/
 }

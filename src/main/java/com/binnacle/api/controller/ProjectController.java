@@ -23,7 +23,7 @@ public class ProjectController {
 
     private final IProjectUseCases projectUseCases;
 
-    @PostMapping(value = "/create", consumes = "application/json", produces = "application/json")
+    @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> create(@Valid @RequestBody CreateUpdateProjectRequest request, BindingResult bindingResult) {
         ResponseEntity<ErrorResponse> errorResponse = Tools.getErrorResponseResponseEntity(bindingResult);
         PersistResponse persistResponse;
@@ -40,7 +40,7 @@ public class ProjectController {
 
     }
 
-    @PatchMapping(value = "/update", consumes = "application/json", produces = "application/json")
+    @PatchMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> update(@Valid @RequestBody CreateUpdateProjectRequest request, BindingResult bindingResult) {
         ResponseEntity<ErrorResponse> errorResponse = Tools.getErrorResponseResponseEntity(bindingResult);
         PersistResponse persistResponse;
@@ -57,7 +57,7 @@ public class ProjectController {
 
     }
 
-    @DeleteMapping(value = "/delete", consumes = "application/json", produces = "application/json")
+    @DeleteMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<?> delete(@Valid @RequestBody DeleteGroupRequest request, BindingResult bindingResult) {
         ResponseEntity<ErrorResponse> errorResponse = Tools.getErrorResponseResponseEntity(bindingResult);
         PersistResponse persistResponse;
@@ -74,7 +74,7 @@ public class ProjectController {
 
     }
 
-    @GetMapping(value="/myprojects")
+    @GetMapping()
     public ResponseEntity<?> myProjects() {
         DataResponse dataResponse = projectUseCases.getMyProjects();
         return ResponseEntity.status(dataResponse.getStatus()).body(dataResponse);
