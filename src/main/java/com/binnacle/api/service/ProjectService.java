@@ -35,8 +35,10 @@ public class ProjectService implements IProjectUseCases {
         try {
             // previous validations
             ProjectEntity project = projectRepository.findByProjectName(request.getName());
+
             if(project != null)
-                throw new AlreadyDefinedException(ErrorCodes.ALREADY_DEFINED, ErrorDescriptions.PROJECT_ALREADY_DEFINED);
+                if(project.getOwner().equals(SecurityContextHolder.getContext().getAuthentication().getName()))
+                    throw new AlreadyDefinedException(ErrorCodes.ALREADY_DEFINED, ErrorDescriptions.PROJECT_ALREADY_DEFINED);
 
             // business logic
             project = new ProjectEntity();

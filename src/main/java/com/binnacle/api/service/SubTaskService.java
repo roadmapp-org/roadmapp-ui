@@ -1,57 +1,61 @@
 package com.binnacle.api.service;
 
 import com.binnacle.api.entity.ProjectEntity;
+import com.binnacle.api.entity.SubtaskEntity;
 import com.binnacle.api.entity.TaskEntity;
 import com.binnacle.api.repository.contract.IProjectRepository;
+import com.binnacle.api.repository.contract.ISubTaskRepository;
 import com.binnacle.api.repository.contract.ITaskRepository;
+import com.binnacle.api.request.CreateUpdateSubTaskRequest;
 import com.binnacle.api.request.CreateUpdateTaskRequest;
 import com.binnacle.api.request.DeleteGroupRequest;
-import com.binnacle.api.response.DataResponse;
 import com.binnacle.api.response.PersistResponse;
+import com.binnacle.api.service.contract.ISubTaskUseCases;
 import com.binnacle.api.service.contract.ITaskUseCases;
 import com.binnacle.api.utils.Results;
 import com.binnacle.api.utils.Tools;
 import com.binnacle.api.utils.errors.ErrorCodes;
 import com.binnacle.api.utils.errors.ErrorDescriptions;
-import com.binnacle.api.utils.exceptions.*;
+import com.binnacle.api.utils.exceptions.ActionNotAllowedException;
+import com.binnacle.api.utils.exceptions.AlreadyDefinedException;
+import com.binnacle.api.utils.exceptions.AppException;
+import com.binnacle.api.utils.exceptions.RecordNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
-public class TaskService implements ITaskUseCases {
+public class SubTaskService implements ISubTaskUseCases {
     private final ITaskRepository taskRepository;
     private final IProjectRepository projectRepository;
+    private final ISubTaskRepository subTaskRepository;
 
     @Override
-    public PersistResponse create(CreateUpdateTaskRequest request) {
+    public PersistResponse create(CreateUpdateSubTaskRequest request) {
         PersistResponse persistResponse = new PersistResponse();
+        SubtaskEntity subtask;
         try {
             ProjectEntity project = projectRepository.findById(request.getProjectId());
             if(project == null)
                 throw new RecordNotFoundException(ErrorCodes.RECORD_NOT_FOUND, ErrorDescriptions.RECORD_NOT_FOUND);
 
-
-
             // previous validations
-            TaskEntity task = taskRepository.findByTaskName(request.getName());
-            if(task != null)
-                    throw new AlreadyDefinedException(ErrorCodes.ALREADY_DEFINED, ErrorDescriptions.PROJECT_ALREADY_DEFINED);
+            TaskEntity task = taskRepository.findById(request.getTaskId());
+            if(project == null)
+                throw new RecordNotFoundException(ErrorCodes.RECORD_NOT_FOUND, ErrorDescriptions.RECORD_NOT_FOUND);
+
 
             // business logic
-            task = new TaskEntity();
-            task.setName(request.getName());
-            task.setProject(project);
-            task.setActive(true);
-            TaskEntity savedTask = taskRepository.save(task);
+            subtask = new SubtaskEntity();
+            subtask.setName(request.getName());
+            subtask.setTask(task);
+            subtask.setActive(true);
+            SubtaskEntity savedSubtask = subTaskRepository.save(subtask);
 
             // return
-            persistResponse = new PersistResponse(Results.OK,"",savedTask,HttpStatus.OK);
+            persistResponse = new PersistResponse(Results.OK,"",savedSubtask,HttpStatus.OK);
 
         } catch(AppException e){
             persistResponse = Tools.getBadRequest(e, "");
@@ -64,7 +68,7 @@ public class TaskService implements ITaskUseCases {
 
 
     @Override
-    public PersistResponse update(CreateUpdateTaskRequest request) {
+    public PersistResponse update(CreateUpdateSubTaskRequest request) {
         PersistResponse persistResponse = new PersistResponse();
         try {
             // previous validations
