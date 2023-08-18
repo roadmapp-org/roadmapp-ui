@@ -72,22 +72,22 @@ public class SubTaskService implements ISubTaskUseCases {
         PersistResponse persistResponse = new PersistResponse();
         try {
             // previous validations
-            TaskEntity task = taskRepository.findById(request.getId());
-            if(task == null)
+            SubtaskEntity subtask = subTaskRepository.findById(request.getId());
+            if(subtask == null)
                 throw new RecordNotFoundException(ErrorCodes.RECORD_NOT_FOUND, ErrorDescriptions.RECORD_NOT_FOUND);
 
-            if(!task.getProject().getOwner().equals(SecurityContextHolder.getContext().getAuthentication().getName()))
+            if(!subtask.getTask().getProject().getOwner().equals(SecurityContextHolder.getContext().getAuthentication().getName()))
                 throw new ActionNotAllowedException(ErrorCodes.UPDATE_NOT_ALLOWED, ErrorDescriptions.UPDATE_NOT_ALLOWED);
 
-            for(TaskEntity loopTask : task.getProject().getTaskList()) {
-                if(loopTask.getId() != task.getId())
-                    if(loopTask.getName().equals(request.getName()))
+            for(SubtaskEntity loopSubTask : subtask.getTask().getSubtaskList()) {
+                if(loopSubTask.getId() != subtask.getId())
+                    if(loopSubTask.getName().equals(request.getName()))
                         throw new AlreadyDefinedException(ErrorCodes.ALREADY_DEFINED, ErrorDescriptions.PROJECT_ALREADY_DEFINED);
             }
 
             //business logic
-            task.setName(request.getName());
-            TaskEntity savedTask = taskRepository.save(task);
+            subtask.setName(request.getName());
+            SubtaskEntity savedTask = subTaskRepository.save(subtask);
 
             // return
             persistResponse = new PersistResponse(Results.OK,"",savedTask,HttpStatus.OK);

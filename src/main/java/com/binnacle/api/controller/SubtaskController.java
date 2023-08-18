@@ -41,9 +41,9 @@ public class SubtaskController {
         return ResponseEntity.status(persistResponse.getStatus()).body(persistResponse);
 
     }
-    /*
+
     @PatchMapping(consumes = "application/json", produces = "application/json")
-    public ResponseEntity<?> update(@Valid @RequestBody CreateUpdateTaskRequest request, BindingResult bindingResult) {
+    public ResponseEntity<?> update(@Valid @RequestBody CreateUpdateSubTaskRequest request, BindingResult bindingResult) {
         ResponseEntity<ErrorResponse> errorResponse = Tools.getErrorResponseResponseEntity(bindingResult);
         PersistResponse persistResponse;
 
@@ -53,7 +53,7 @@ public class SubtaskController {
             return ResponseEntity.status(persistResponse.getStatus()).body(persistResponse);
         }
 
-        persistResponse = taskUseCases.update(request);
+        persistResponse = subtaskUseCases.update(request);
 
         return ResponseEntity.status(persistResponse.getStatus()).body(persistResponse);
 
@@ -71,11 +71,10 @@ public class SubtaskController {
             return ResponseEntity.status(persistResponse.getStatus()).body(persistResponse);
         }
 
-        persistResponse = taskUseCases.delete(request);
+        persistResponse = subtaskUseCases.delete(request);
 
         return ResponseEntity.status(persistResponse.getStatus()).body(persistResponse);
 
     }
-    */
 
 }
