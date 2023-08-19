@@ -100,7 +100,7 @@ public class ProjectService implements IProjectUseCases {
             if(project == null)
                 throw new RecordNotFoundException(ErrorCodes.RECORD_NOT_FOUND, ErrorDescriptions.RECORD_NOT_FOUND);
             if(!project.getOwner().equals(SecurityContextHolder.getContext().getAuthentication().getName()))
-                throw new ActionNotAllowedException(ErrorCodes.UPDATE_NOT_ALLOWED, ErrorDescriptions.UPDATE_NOT_ALLOWED);
+                throw new ActionNotAllowedException(ErrorCodes.DELETION_NOT_ALLOWED, ErrorDescriptions.DELETION_NOT_ALLOWED);
 
             //business logic
             projectRepository.delete(project);

@@ -36,7 +36,8 @@ public class TaskService implements ITaskUseCases {
             if(project == null)
                 throw new RecordNotFoundException(ErrorCodes.RECORD_NOT_FOUND, ErrorDescriptions.RECORD_NOT_FOUND);
 
-
+            if(!project.getOwner().equals(SecurityContextHolder.getContext().getAuthentication().getName()))
+                throw new ActionNotAllowedException(ErrorCodes.CREATION_NOT_ALLOWED, ErrorDescriptions.UPDATE_NOT_ALLOWED);
 
             // previous validations
             TaskEntity task = taskRepository.findByTaskName(request.getName());
