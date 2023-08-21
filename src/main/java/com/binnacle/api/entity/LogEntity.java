@@ -1,5 +1,6 @@
 package com.binnacle.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,12 +19,15 @@ public class LogEntity {
     private int id;
     @ManyToOne
     @JoinColumn(name = "project_id")
+    @JsonIgnore
     private ProjectEntity project;
     @ManyToOne
     @JoinColumn(name = "task_id")
+    @JsonIgnore
     private TaskEntity task;
     @ManyToOne
     @JoinColumn(name = "subtask_id")
+    @JsonIgnore
     private SubtaskEntity subtask;
     private LocalDate date;
     private String log;
