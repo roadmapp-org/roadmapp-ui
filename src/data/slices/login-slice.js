@@ -4,13 +4,18 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 export const login = createAsyncThunk(
     'auth/login',
     async (credentials) => {
+        /*
         const response = await fetch('http://localhost:8080/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(credentials)
         });
-        const data = await response.json();
-        return data;
+        const data = await response.json();*/
+        if(credentials.username === "A129153" || credentials.username === "tobiolea" && credentials.password === "bbva1234")
+            return "token";
+        else
+            throw new Error('Login failed');
+
     }
 );
 

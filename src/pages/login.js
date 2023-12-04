@@ -1,5 +1,6 @@
+import React, { useState } from "react";
 import { useDispatch } from 'react-redux'
-import { Form } from 'react-router-dom';
+import { Form, useNavigate } from "react-router-dom";
 import { login } from '../data/slices/login-slice';
 
 export async function action({request,params}) {
@@ -7,21 +8,39 @@ export async function action({request,params}) {
 }
 
 export const Login = () => {
+    const [showError, setShowError] = useState(false);
     const dispatch = useDispatch();
-    const onSubmit = async () => {
-        dispatch(login({
-            username: document.getElementById('username').value,
-            password: document.getElementById('password').value
-        }));
+    const navigate = useNavigate();
+
+    const onSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            const result = await dispatch(login({
+                username: document.getElementById('username').value,
+                password: document.getElementById('password').value
+            }));
+            console.log(result)
+            if(result.type === "auth/login/rejected") {
+                console.log("Login rejected")
+                setShowError(true);
+            } else {
+                console.log("Login successful")
+                navigate(`/home`);
+            }
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     return (
         <>
             <h1>Login</h1>
-            <Form method="post" id="login-form" onSubmit={onSubmit}>
+            <Form method="post" onSubmit={onSubmit} >
                 <input type="text" name="username" id="username" placeholder="Username" />
                 <input type="password" name="password" id="password" placeholder="Password" />
                 <input type="submit" value="Login" />
+                <br></br>
+                {showError && <p>Invalid username or password</p>}
             </Form>
         </>
     );
