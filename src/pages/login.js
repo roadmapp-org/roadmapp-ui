@@ -19,12 +19,9 @@ export const Login = () => {
                 username: document.getElementById('username').value,
                 password: document.getElementById('password').value
             }));
-            console.log(result)
             if(result.type === "auth/login/rejected") {
-                console.log("Login rejected")
                 setShowError(true);
             } else {
-                console.log("Login successful")
                 navigate(`/home`);
             }
         } catch (err) {
