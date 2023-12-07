@@ -4,7 +4,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import {logout, selectCurrentUser } from './data/slices/login-slice'
 
 export const NavBar = () => {
-    
+
+    const auth = useSelector((state) => state.user)
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -15,6 +17,8 @@ export const NavBar = () => {
 
     return (
         <>
+        {auth.token && (
+        
             <nav>
                 <ul>
                     <li><Link to="/">Home</Link></li>
@@ -25,6 +29,7 @@ export const NavBar = () => {
                     <button onClick={onClickLogOut}>Log Out</button>
                 </div>
             </nav>
+        )}
         </>
     );
 
