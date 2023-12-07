@@ -3,10 +3,6 @@ import { useDispatch } from 'react-redux'
 import { Form, useNavigate } from "react-router-dom";
 import { login } from '../data/slices/login-slice';
 
-export async function action({request,params}) {
-    
-}
-
 export const Login = () => {
     const [showError, setShowError] = useState(false);
     const dispatch = useDispatch();
