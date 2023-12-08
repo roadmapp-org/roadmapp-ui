@@ -1,8 +1,10 @@
+import { useSelector } from 'react-redux';
 import { Navigate  } from 'react-router-dom';
 
 export const PrivateRoute = ({ element }) => {
-    // this is going to query for a token in local storage
-    if (true) {
+    const user = useSelector(state => state.user);
+
+    if (user.token) {
       return element;
     } else {
       return <Navigate to="/login" />;

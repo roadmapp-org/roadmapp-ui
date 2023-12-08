@@ -22,7 +22,7 @@ export const login = createAsyncThunk(
 );
 
 const initialState = {
-    token: "",
+    token: localStorage.getItem('token') || null,
     status: "idle",
     error: ""
 };
@@ -33,6 +33,7 @@ const loginSlice = createSlice({
     reducers: {
         logout: (state) => {
             state.token = null
+            localStorage.removeItem('token');
         }
     },
     extraReducers: (builder) => {
@@ -43,6 +44,7 @@ const loginSlice = createSlice({
             .addCase(login.fulfilled, (state, action) => {
                 state.status = 'succeeded';
                 state.token = action.payload;
+                localStorage.setItem('token', action.payload);
             })
             .addCase(login.rejected, (state, action) => {
                 state.status = 'failed';
