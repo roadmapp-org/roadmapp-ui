@@ -1,9 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 
-export const login = createAsyncThunk(
-    'auth/login',
-    async (credentials) => {
+export const login = createAsyncThunk('auth/login', async (credentials) => {
         
         const response = await fetch('http://localhost:8080/auth/login', {
             method: 'POST',
@@ -17,7 +15,6 @@ export const login = createAsyncThunk(
             return token;
         else
             throw new Error('Login failed');
-
     }
 );
 
