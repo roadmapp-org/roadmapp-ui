@@ -18,6 +18,14 @@ import java.util.List;
 @Builder
 @Table(name = "tasks")
 public class TaskEntity {
+
+    public TaskEntity(int id, String name, int projectId, boolean active) {
+        this.id = id;
+        this.name = name;
+        this.active = active;
+        this.project = ProjectEntity.builder().id(projectId).build();
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

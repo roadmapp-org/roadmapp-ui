@@ -18,6 +18,14 @@ import java.util.List;
 @Builder
 @Table(name = "subtasks")
 public class SubtaskEntity {
+
+    public SubtaskEntity(int id, String name, int task_id, boolean active) {
+        this.id = id;
+        this.name = name;
+        this.task = TaskEntity.builder().id(task_id).build();
+        this.active = active;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

@@ -3,9 +3,9 @@ INSERT INTO users VALUES
     ('smartineza',1,'$2a$10$DJSezd2kgaLZ1MKHSzC7KOHi8.IQLNE5KG4lPY9IYE5Wlu.4kpeKq','USER');
 
 INSERT INTO projects (active, name, owner) VALUES (1, 'WS Mercados', 'tobiolea');
-INSERT INTO projects (active, name, owner) VALUES (1, 'Amparos', 'tobiolea');
-INSERT INTO projects (active, name, owner) VALUES (1, 'DemonioMQ', 'tobiolea');
-INSERT INTO projects (active, name, owner) VALUES (1, 'Sigma', 'tobiolea');
+INSERT INTO projects (active, name, owner) VALUES (1, 'Amparos', 'smartineza');
+INSERT INTO projects (active, name, owner) VALUES (1, 'DemonioMQ', 'smartineza');
+INSERT INTO projects (active, name, owner) VALUES (1, 'Sigma', 'smartineza');
 
 INSERT INTO tasks (active, name, project_id) VALUES (1, 'Nuevo endpoint', 1);
 INSERT INTO tasks (active, name, project_id) VALUES (1, 'Pruebas unitarias', 1);

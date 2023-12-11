@@ -7,6 +7,7 @@ import com.binnacle.api.repository.contract.ITaskRepository;
 import com.binnacle.api.repository.contract.spring.IProjectSpringRepository;
 import com.binnacle.api.repository.contract.spring.ITaskSpringRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TaskRepositoryImpl implements ITaskRepository {
     private final ITaskSpringRepository taskSpringRepository;
+    private final JdbcTemplate jdbcTemplate;
     @Override
     public TaskEntity findByTaskName(String projectName) {
         return taskSpringRepository.findByName(projectName).orElse(null);
@@ -33,5 +35,17 @@ public class TaskRepositoryImpl implements ITaskRepository {
     @Override
     public void delete(TaskEntity taskEntity) {
         taskSpringRepository.delete(taskEntity);
+    }
+
+    @Override
+    public List<TaskEntity> getAllByOwner(String owner) {
+        String sqlQuery = "SELECT t.* FROM tasks t INNER JOIN projects p WHERE t.project_id = p.id AND p.owner = :name";
+        return jdbcTemplate.query(sqlQuery, new Object[]{owner}, (rs, rowNum) ->
+                new TaskEntity(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getInt("project_id"),
+                        rs.getBoolean("active")
+                ));
     }
 }

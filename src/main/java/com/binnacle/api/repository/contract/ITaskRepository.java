@@ -14,5 +14,5 @@ public interface ITaskRepository {
     TaskEntity findById(int id);
 
     void delete(TaskEntity taskEntity);
-    /*List<ProjectEntity> getAllByOwner(String owner);*/
+    List<TaskEntity> getAllByOwner(String owner);
 }

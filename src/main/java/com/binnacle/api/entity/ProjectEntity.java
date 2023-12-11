@@ -16,6 +16,14 @@ import java.util.List;
 @Builder
 @Table(name = "projects")
 public class ProjectEntity {
+
+    public ProjectEntity(int id, String name, String owner, boolean active) {
+        this.id = id;
+        this.name = name;
+        this.owner = owner;
+        this.active = active;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

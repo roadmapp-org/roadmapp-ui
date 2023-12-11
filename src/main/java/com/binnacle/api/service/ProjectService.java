@@ -124,8 +124,9 @@ public class ProjectService implements IProjectUseCases {
     public DataResponse getMyProjects() {
         DataResponse dataResponse = new DataResponse();
         List<ProjectEntity> projectList = new ArrayList<ProjectEntity>();
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
         try {
-            projectList = projectRepository.getAllByOwner(SecurityContextHolder.getContext().getAuthentication().getName());
+            projectList = projectRepository.getAllByOwner(name);
             if(projectList == null)
                 throw new ErrorWhenRetreivingDataException(ErrorCodes.ERROR_WHEN_RETREIVING_DATA, ErrorDescriptions.ERROR_WHEN_RETREIVING_DATA);
 
