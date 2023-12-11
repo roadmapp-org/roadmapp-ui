@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 export const getLogs = createAsyncThunk('logs/fetch', async() => {
         console.log("logs/fetch")
         const bearerToken = localStorage.getItem('token');
-        const response = await fetch('http://localhost:8080/project', {
+        const response = await fetch('http://localhost:8080/home', {
             headers: {
                 Authorization: `Bearer ${bearerToken}`
             }

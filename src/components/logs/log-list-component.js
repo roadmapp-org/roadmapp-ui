@@ -10,15 +10,17 @@ export const LogListComponent = () => {
     
     useEffect(() => {
         if (logStatus === 'idle') {
-          dispatch(getLogs())
+          //dispatch(getLogs())
         }
       }, [logs])
 
     return (
         <div>
+            {/*
             {logs.map((item, index) => (
                 <LogItemComponent item={item} index={index}></LogItemComponent>
             ))}
+            */}
         </div>
     )
 
