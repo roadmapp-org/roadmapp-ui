@@ -10,7 +10,8 @@ export const LogFilterComponent = () => {
     const tasks = useSelector((state) => state.logLevel.tasks)
     const subtasks = useSelector((state) => state.logLevel.subtasks)
 
-    const [filteredProjects, setFilteredProjects] = useState(useSelector((state) => state.logLevel.projects));
+    const [filteredTask, setFilteredTasks] = useState(useSelector((state) => state.logLevel.tasks));
+    const [filteredSubtask, setFilteredSubtasks] = useState(useSelector((state) => state.logLevel.tasks));
 
     
     const [ layout, setLayout ] = useState({
@@ -26,7 +27,6 @@ export const LogFilterComponent = () => {
     });
 
     const onSelectProject = (e) => {
-        console.log(layout)
         if(e.target.value !== "0") {
             setLayout({...setLayout, taskDisabled: false, subtaskDisabled: true})
         } else {
@@ -35,6 +35,8 @@ export const LogFilterComponent = () => {
         document.getElementById('taskFilter').selectedIndex = 0
         document.getElementById('subtaskFilter').selectedIndex = 0
         setFilter({project: e.target.value, task: "0", subtask: "0"})
+        const filtered = tasks.filter((item) => item.project_id.toString() === e.target.value);
+        setFilteredTasks(filtered)
     }
 
     const onSelectTask = (e) => {
@@ -48,6 +50,8 @@ export const LogFilterComponent = () => {
         }
         document.getElementById('subtaskFilter').selectedIndex = 0
         setFilter({...filter, task: e.target.value, subtask: "0"})
+        const filtered = subtasks.filter((item) => item.task_id.toString() == e.target.value)
+        setFilteredSubtasks(filtered);
     }
 
     const onSelectSubtask = (e) => {
@@ -77,7 +81,7 @@ export const LogFilterComponent = () => {
             <select id='taskFilter' disabled={layout.taskDisabled} onChange={onSelectTask}>
                 <option key={0} value={0}>{" "}</option>
                 {
-                    tasks.map((item, index) => (
+                    filteredTask.map((item, index) => (
                         <option key={item.id} value={item.id}>{item.name}</option>
                     ))
                 }
@@ -87,7 +91,7 @@ export const LogFilterComponent = () => {
             <select id='subtaskFilter' disabled={layout.subtaskDisabled} onChange={onSelectSubtask}>
                 <option key={0} value={0}>{" "}</option>
                 {
-                    subtasks.map((item, index) => (
+                    filteredSubtask.map((item, index) => (
                         <option key={item.id} value={item.id}>{item.name}</option>
                     ))
                 }
