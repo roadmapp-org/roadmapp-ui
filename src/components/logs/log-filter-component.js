@@ -4,8 +4,6 @@ import { getLevels } from '../../pages/home/log-level-slice';
 
 export const LogFilterComponent = () => {
 
-    const dispatch = useDispatch();
-    const projectsStatus = useSelector(state => state.logLevel.status)
     const projects = useSelector((state) => state.logLevel.projects)
     const tasks = useSelector((state) => state.logLevel.tasks)
     const subtasks = useSelector((state) => state.logLevel.subtasks)
@@ -59,11 +57,6 @@ export const LogFilterComponent = () => {
     }
 
 
-    useEffect(() => {
-        if(projectsStatus === 'idle') {
-            dispatch(getLevels())
-        }
-    }, [])
 
     return (
         <div>

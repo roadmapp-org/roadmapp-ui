@@ -16,9 +16,11 @@ const initialState = {
     projects: [],
     tasks: [],
     subtasks: [],
+    logs: [],
     status: "idle",
     error: ""
 }
+
 
 const logLevelSlice = createSlice({
     name: 'logLevel',
@@ -35,6 +37,7 @@ const logLevelSlice = createSlice({
                 state.projects = action.payload.list.projectList
                 state.tasks = action.payload.list.taskList
                 state.subtasks = action.payload.list.subtaskList
+                state.logs = action.payload.list.logList
             })
             .addCase(getLevels.rejected, (state,action) => {
                 state.status = 'rejected';
