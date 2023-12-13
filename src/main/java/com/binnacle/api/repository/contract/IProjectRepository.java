@@ -1,6 +1,7 @@
 package com.binnacle.api.repository.contract;
 
 import com.binnacle.api.entity.ProjectEntity;
+import com.binnacle.api.response.project.ProjectResponse;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,5 +12,5 @@ public interface IProjectRepository {
     ProjectEntity save(ProjectEntity project);
     ProjectEntity findById(int id);
     void delete(ProjectEntity projectEntity);
-    List<ProjectEntity> getAllByOwner(String owner);
+    List<ProjectResponse> getAllByOwner(String owner);
 }

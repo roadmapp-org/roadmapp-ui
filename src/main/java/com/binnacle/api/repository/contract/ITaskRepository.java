@@ -2,6 +2,7 @@ package com.binnacle.api.repository.contract;
 
 import com.binnacle.api.entity.ProjectEntity;
 import com.binnacle.api.entity.TaskEntity;
+import com.binnacle.api.response.task.TaskResponse;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,5 +15,5 @@ public interface ITaskRepository {
     TaskEntity findById(int id);
 
     void delete(TaskEntity taskEntity);
-    List<TaskEntity> getAllByOwner(String owner);
+    List<TaskResponse> getAllByOwner(String owner);
 }

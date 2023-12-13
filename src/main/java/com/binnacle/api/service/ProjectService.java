@@ -6,6 +6,7 @@ import com.binnacle.api.request.CreateUpdateProjectRequest;
 import com.binnacle.api.request.DeleteGroupRequest;
 import com.binnacle.api.response.DataResponse;
 import com.binnacle.api.response.PersistResponse;
+import com.binnacle.api.response.project.ProjectResponse;
 import com.binnacle.api.service.contract.IProjectUseCases;
 import com.binnacle.api.utils.Results;
 import com.binnacle.api.utils.Tools;
@@ -123,7 +124,7 @@ public class ProjectService implements IProjectUseCases {
     @Override
     public DataResponse getMyProjects() {
         DataResponse dataResponse = new DataResponse();
-        List<ProjectEntity> projectList = new ArrayList<ProjectEntity>();
+        List<ProjectResponse> projectList = new ArrayList<ProjectResponse>();
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         try {
             projectList = projectRepository.getAllByOwner(name);

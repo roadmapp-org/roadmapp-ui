@@ -23,6 +23,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Service
 @RequiredArgsConstructor
@@ -76,7 +78,9 @@ public class LogService implements ILogUseCases {
             log.setProject(project);
             log.setTask(task);
             log.setSubtask(subtask);
-            log.setDate(LocalDate.now());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            log.setDate(LocalDateTime.now().format(formatter));
+            //log.setDate(LocalDateTime.now());
             log.setLog(request.getLog());
             log.setActive(true);
 

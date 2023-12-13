@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -29,7 +30,7 @@ public class LogEntity {
     @JoinColumn(name = "subtask_id")
     @JsonIgnore
     private SubtaskEntity subtask;
-    private LocalDate date;
+    private String date;
     private String log;
     private boolean active;
 }

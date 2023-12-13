@@ -3,6 +3,7 @@ package com.binnacle.api.repository;
 import com.binnacle.api.entity.ProjectEntity;
 import com.binnacle.api.repository.contract.IProjectRepository;
 import com.binnacle.api.repository.contract.spring.IProjectSpringRepository;
+import com.binnacle.api.response.project.ProjectResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -40,11 +41,11 @@ public class ProjectRepositoryImpl implements IProjectRepository {
     }*/
 
     @Override
-    public List<ProjectEntity> getAllByOwner(String owner) {
+    public List<ProjectResponse> getAllByOwner(String owner) {
         //return projectSpringRepository.findByOwner(owner).get();
         String sqlQuery = "SELECT * FROM projects WHERE owner = :name";
         return jdbcTemplate.query(sqlQuery, new Object[]{owner}, (rs, rowNum) ->
-                new ProjectEntity(
+                new ProjectResponse(
                         rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("owner"),

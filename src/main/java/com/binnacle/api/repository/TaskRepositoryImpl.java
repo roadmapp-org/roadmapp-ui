@@ -6,6 +6,7 @@ import com.binnacle.api.repository.contract.IProjectRepository;
 import com.binnacle.api.repository.contract.ITaskRepository;
 import com.binnacle.api.repository.contract.spring.IProjectSpringRepository;
 import com.binnacle.api.repository.contract.spring.ITaskSpringRepository;
+import com.binnacle.api.response.task.TaskResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -38,10 +39,10 @@ public class TaskRepositoryImpl implements ITaskRepository {
     }
 
     @Override
-    public List<TaskEntity> getAllByOwner(String owner) {
+    public List<TaskResponse> getAllByOwner(String owner) {
         String sqlQuery = "SELECT t.* FROM tasks t INNER JOIN projects p WHERE t.project_id = p.id AND p.owner = :name";
         return jdbcTemplate.query(sqlQuery, new Object[]{owner}, (rs, rowNum) ->
-                new TaskEntity(
+                new TaskResponse(
                         rs.getInt("id"),
                         rs.getString("name"),
                         rs.getInt("project_id"),
