@@ -7,11 +7,11 @@ import { getHome } from "../../pages/home/home-slice";
 
 export const Home = () => {
     
-    const logStatus = useSelector(state => state.log.status)
+    const homeStatus = useSelector(state => state.home.status)
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (logStatus === 'idle') {
+        if (homeStatus === 'idle') {
           dispatch(getHome())
         }
       }, [])
@@ -21,9 +21,7 @@ export const Home = () => {
             <LogFilterComponent/>    
             <h2>Ultimos logs</h2>
             {
-            /*
                 <LogListComponent/>
-            */
             }
         </>
     );
