@@ -4,6 +4,7 @@ import { LogListComponent } from '../../components/logs/log-list-component';
 import { useEffect } from 'react';
 import { LogFilterComponent } from '../../components/logs/log-filter-component';
 import { getHome } from "../../pages/home/home-slice";
+import { LogCreateForm } from '../../components/logs/log-create-form';
 
 export const Home = () => {
     
@@ -18,11 +19,11 @@ export const Home = () => {
 
     return (
         <>
-            <LogFilterComponent/>    
-            <h2>Ultimos logs</h2>
-            {
-                <LogListComponent/>
-            }
+            <LogFilterComponent/>
+            <br></br>
+            <LogCreateForm/>
+            <br></br>
+            <LogListComponent/>
         </>
     );
 }
