@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { getLevels } from '../../pages/home/log-level-slice';
 
 export const LogFilterComponent = () => {
 
-    const projects = useSelector((state) => state.logLevel.projects)
-    const tasks = useSelector((state) => state.logLevel.tasks)
-    const subtasks = useSelector((state) => state.logLevel.subtasks)
+    const projects = useSelector((state) => state.home.projects)
+    const tasks = useSelector((state) => state.home.tasks)
+    const subtasks = useSelector((state) => state.home.subtasks)
 
-    const [filteredTask, setFilteredTasks] = useState(useSelector((state) => state.logLevel.tasks));
-    const [filteredSubtask, setFilteredSubtasks] = useState(useSelector((state) => state.logLevel.tasks));
+    const [filteredTask, setFilteredTasks] = useState(useSelector((state) => state.home.tasks));
+    const [filteredSubtask, setFilteredSubtasks] = useState(useSelector((state) => state.home.tasks));
 
     
     const [ layout, setLayout ] = useState({
@@ -55,8 +54,6 @@ export const LogFilterComponent = () => {
     const onSelectSubtask = (e) => {
         setFilter({...filter, subtask: e.target.value})
     }
-
-
 
     return (
         <div>

@@ -2,9 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import { LogListComponent } from '../../components/logs/log-list-component';
 import { useEffect } from 'react';
-import { getLevels } from './log-level-slice';
 import { LogFilterComponent } from '../../components/logs/log-filter-component';
-import { getLogs } from "../../pages/login/log-slice";
+import { getHome } from "../../pages/home/home-slice";
 
 export const Home = () => {
     
@@ -13,7 +12,7 @@ export const Home = () => {
 
     useEffect(() => {
         if (logStatus === 'idle') {
-          dispatch(getLevels())
+          dispatch(getHome())
         }
       }, [])
 
