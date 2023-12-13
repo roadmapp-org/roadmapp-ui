@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
+import { projectSelected, taskSelected, subtaskSelected } from '../../pages/home/home-slice'
 
 export const LogFilterComponent = () => {
+    const dispatch = useDispatch()
 
     const projects = useSelector((state) => state.home.projects)
     const tasks = useSelector((state) => state.home.tasks)
@@ -28,10 +30,13 @@ export const LogFilterComponent = () => {
             setLayout({...setLayout, taskDisabled: false, subtaskDisabled: true})
         } else {
             setLayout({...layout, taskDisabled: true, subtaskDisabled: true})
+            dispatch(taskSelected(e.target.value))
+            dispatch(subtaskSelected(e.target.value))
         }
         document.getElementById('taskFilter').selectedIndex = 0
         document.getElementById('subtaskFilter').selectedIndex = 0
         setFilter({project: e.target.value, task: "0", subtask: "0"})
+        dispatch(projectSelected(e.target.value))
         const filtered = tasks.filter((item) => item.project_id.toString() === e.target.value);
         setFilteredTasks(filtered)
     }
@@ -44,15 +49,18 @@ export const LogFilterComponent = () => {
                 ...layout,
                 subtaskDisabled: true
             })
+            dispatch(subtaskSelected(e.target.value))
         }
         document.getElementById('subtaskFilter').selectedIndex = 0
         setFilter({...filter, task: e.target.value, subtask: "0"})
+        dispatch(taskSelected(e.target.value))
         const filtered = subtasks.filter((item) => item.task_id.toString() == e.target.value)
         setFilteredSubtasks(filtered);
     }
 
     const onSelectSubtask = (e) => {
         setFilter({...filter, subtask: e.target.value})
+        dispatch(subtaskSelected(e.target.value))
     }
 
     return (

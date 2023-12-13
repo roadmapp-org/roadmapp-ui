@@ -17,6 +17,9 @@ const initialState = {
     tasks: [],
     subtasks: [],
     logs: [],
+    selectedProject: "0",
+    selectedTask: "0",
+    selectedSubtask: "0",
     status: "idle",
     error: ""
 }
@@ -25,8 +28,16 @@ const initialState = {
 const homeSlice = createSlice({
     name: 'home',
     initialState,
-    redcer: {
-
+    reducers: {
+        projectSelected: (state, action) => {
+            state.selectedProject = action.payload
+        },
+        taskSelected: (state, action) => {
+            state.selectedTask = action.payload
+        },
+        subtaskSelected: (state, action) => {
+            state.selectedSubtask = action.payload
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -45,5 +56,11 @@ const homeSlice = createSlice({
             })
     }
 })
+
+export const selectSelectedProject = (state) => state.home.selectedProject;
+export const selectSelectedTask = (state) => state.home.selectedTask;
+export const selectSelectedSubtask = (state) => state.home.selectedSubtask;
+
+export const { projectSelected, taskSelected, subtaskSelected } = homeSlice.actions;
 
 export default homeSlice.reducer;

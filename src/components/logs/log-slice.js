@@ -12,6 +12,26 @@ export const getLogs = createAsyncThunk('logs/fetch', async() => {
     }
 )
 
+export const createLog = createAsyncThunk('logs/create', async(log) => {
+        const persist = {
+            projectId: log.projectId,
+            taskId: log.taskId,
+            subtaskId: log.subtaskId,
+            log: log.log
+        };
+
+        const bearerToken = localStorage.getItem('token');
+        const response = await fetch('http://localhost:8080/logs', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${bearerToken}`
+            },
+            body: JSON.stringify(persist)
+        });
+        return response.json();
+})        
+
 const initialState = {
     list: [],
     status: "idle",
