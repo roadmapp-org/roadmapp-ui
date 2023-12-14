@@ -60,6 +60,14 @@ const homeSlice = createSlice({
 export const selectSelectedProject = (state) => state.home.selectedProject;
 export const selectSelectedTask = (state) => state.home.selectedTask;
 export const selectSelectedSubtask = (state) => state.home.selectedSubtask;
+export const selectLogList = (state) => state.home.logs;
+
+export const logSliceSelectors = {
+    selectSelectedProject,
+    selectSelectedTask,
+    selectSelectedSubtask,
+    selectLogList
+}
 
 export const { projectSelected, taskSelected, subtaskSelected } = homeSlice.actions;
 

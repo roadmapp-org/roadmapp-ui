@@ -9,7 +9,7 @@ export const LogListComponent = () => {
             { logs.length > 0 && 
                 <>
                     {logs.map((item, index) => (
-                        <LogItemComponent log={item} index={index}></LogItemComponent>
+                        <LogItemComponent log={item} index={index} key={item.id}></LogItemComponent>
                     ))}
                 </>
             }

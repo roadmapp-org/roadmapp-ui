@@ -10,6 +10,7 @@ import {
 export const LogCreateForm = () => {
 
     const dispatch = useDispatch();
+    const [showError, setShowError] = useState(false);
 
     const selectedProject = useSelector(selectSelectedProject);
     const selectedTask = useSelector(selectSelectedTask);
@@ -46,6 +47,8 @@ export const LogCreateForm = () => {
                 cols={50} // Set the number of visible columns
                 placeholder="Type your text here..."
             />
+            <br></br>
+            {showError && <p>Error when saving the log</p>}
             <br></br>
             <input type="submit" value="Log" />
         </Form>

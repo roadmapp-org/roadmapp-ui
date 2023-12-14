@@ -6,6 +6,7 @@ import homeReducer from '../pages/home/home-slice.js'
 export default configureStore({
   reducer: {
     user: loginReducer,
-    home: homeReducer
+    home: homeReducer,
+    log: logReducer
   }
 })
