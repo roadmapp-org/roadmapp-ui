@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-export const getHome = createAsyncThunk('logs/fetch', async() => {
-    console.log("logs/fetch")
+export const getHome = createAsyncThunk('home/fetch', async() => {
+    console.log("home/fetch")
     const bearerToken = localStorage.getItem('token');
     const response = await fetch('http://localhost:8080/home', {
         headers: {

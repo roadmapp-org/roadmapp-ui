@@ -4,7 +4,7 @@ import { logSliceSelectors } from '../../pages/home/home-slice'
 export const getLogs = createAsyncThunk('logs/fetch', async() => {
         console.log("logs/fetch")
         const bearerToken = localStorage.getItem('token');
-        const response = await fetch('http://localhost:8080/home', {
+        const response = await fetch('http://localhost:8080/logs', {
             headers: {
                 Authorization: `Bearer ${bearerToken}`
             }
@@ -55,7 +55,7 @@ const logSlice = createSlice({
                 state.status = 'succeeded';
                 console.log("createLog.fulfilled");
                 console.log(action.payload);
-                //state.list.push(action.payload.persistedObject);
+                state.list.push(action.payload.persistedObject);
             })
             .addCase(createLog.rejected, (state, action) => {
                 console.log("createLog.rejected");

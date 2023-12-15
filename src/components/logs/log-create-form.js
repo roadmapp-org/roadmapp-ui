@@ -11,6 +11,7 @@ export const LogCreateForm = () => {
 
     const dispatch = useDispatch();
     const [showError, setShowError] = useState(false);
+    const [createLogErrorMessage, setCreateLogErrorMessage] = useState("");
 
     const selectedProject = useSelector(selectSelectedProject);
     const selectedTask = useSelector(selectSelectedTask);
@@ -24,6 +25,14 @@ export const LogCreateForm = () => {
 
     const onSubmit = async (event) => {
         event.preventDefault();
+
+        if(inputValue === "" || inputValue === undefined)
+        {
+            setShowError(true)
+            setCreateLogErrorMessage("Insert a log")
+            return;
+        }
+
         const persist = {
             projectId: selectedProject,
             taskId: selectedTask,
@@ -33,8 +42,9 @@ export const LogCreateForm = () => {
         
         try {
             await dispatch(createLog(persist));
+            setInputValue("")
         } catch (err) {
-            console.log(err);
+            setCreateLogErrorMessage("Error when saving the log")
         }
     }
 
@@ -48,7 +58,7 @@ export const LogCreateForm = () => {
                 placeholder="Type your text here..."
             />
             <br></br>
-            {showError && <p>Error when saving the log</p>}
+            {showError && <p>{createLogErrorMessage}</p>}
             <br></br>
             <input type="submit" value="Log" />
         </Form>
