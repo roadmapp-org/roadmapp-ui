@@ -65,7 +65,7 @@ public class HomeService implements IHomeUseCases {
             homeResponse.setProjectList(projectList);
             homeResponse.setTaskList(taskList);
             homeResponse.setSubtaskList(subtaskList);
-            homeResponse.setLogList(logList);
+            //homeResponse.setLogList(logList);
 
             dataResponse = new DataResponse(Results.OK,"",homeResponse, HttpStatus.OK);
 

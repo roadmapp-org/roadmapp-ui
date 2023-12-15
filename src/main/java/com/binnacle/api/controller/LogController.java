@@ -2,6 +2,8 @@ package com.binnacle.api.controller;
 
 import com.binnacle.api.request.CreateUpdateLogRequest;
 import com.binnacle.api.request.CreateUpdateProjectRequest;
+import com.binnacle.api.request.LogFilterRequest;
+import com.binnacle.api.response.DataResponse;
 import com.binnacle.api.response.ErrorResponse;
 import com.binnacle.api.response.PersistResponse;
 import com.binnacle.api.service.contract.ILogUseCases;
@@ -11,10 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -41,6 +40,25 @@ public class LogController {
         return ResponseEntity.status(persistResponse.getStatus()).body(persistResponse);
 
     }
+
+
+
+    @GetMapping
+    public ResponseEntity<?> getLatestByOwner() {
+        DataResponse dataResponse = logUseCases.getLatestByOwner();
+        return ResponseEntity.status(dataResponse.getStatus()).body(dataResponse);
+    }
+
+    @GetMapping("/filtered")
+    public ResponseEntity<?> getFiltered(@RequestBody LogFilterRequest logFilterRequest) {
+        DataResponse dataResponse = logUseCases.getFiltered(
+                logFilterRequest.getProjectId(),
+                logFilterRequest.getTaskId(),
+                logFilterRequest.getSubtaskId()
+        );
+        return ResponseEntity.status(dataResponse.getStatus()).body(dataResponse);
+    }
+
 
 
 

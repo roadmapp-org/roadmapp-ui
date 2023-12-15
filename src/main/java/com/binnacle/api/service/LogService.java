@@ -9,7 +9,10 @@ import com.binnacle.api.repository.contract.IProjectRepository;
 import com.binnacle.api.repository.contract.ISubTaskRepository;
 import com.binnacle.api.repository.contract.ITaskRepository;
 import com.binnacle.api.request.CreateUpdateLogRequest;
+import com.binnacle.api.response.DataResponse;
 import com.binnacle.api.response.PersistResponse;
+import com.binnacle.api.response.log.LogResponse;
+import com.binnacle.api.response.project.ProjectResponse;
 import com.binnacle.api.service.contract.ILogUseCases;
 import com.binnacle.api.utils.Results;
 import com.binnacle.api.utils.Tools;
@@ -17,6 +20,7 @@ import com.binnacle.api.utils.errors.ErrorCodes;
 import com.binnacle.api.utils.errors.ErrorDescriptions;
 import com.binnacle.api.utils.exceptions.ActionNotAllowedException;
 import com.binnacle.api.utils.exceptions.AppException;
+import com.binnacle.api.utils.exceptions.ErrorWhenRetreivingDataException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,6 +29,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -97,6 +103,57 @@ public class LogService implements ILogUseCases {
             return persistResponse;
         }
 
+    }
+
+    @Override
+    public DataResponse getLatestByOwner() {
+        DataResponse dataResponse = new DataResponse();
+
+        List<LogResponse> logList;
+
+        String owner = SecurityContextHolder.getContext().getAuthentication().getName();
+        try {
+
+            logList = logRepository.getLatestByOwner(owner);
+            if(logList == null)
+                throw new ErrorWhenRetreivingDataException(ErrorCodes.ERROR_WHEN_RETREIVING_DATA, ErrorDescriptions.ERROR_WHEN_RETREIVING_DATA);
+
+            dataResponse = new DataResponse(Results.OK,"",logList, HttpStatus.OK);
+
+        } catch (Exception e) {
+            dataResponse = Tools.getDataResponseError(e, "");
+        } finally {
+            return dataResponse;
+        }
+    }
+
+    @Override
+    public DataResponse getFiltered(int projectId, int taskId, int subtaskId) {
+        DataResponse dataResponse = new DataResponse();
+        List<LogResponse> logList = new ArrayList<>();
+        String owner = SecurityContextHolder.getContext().getAuthentication().getName();
+        try {
+            if(subtaskId != 0){
+                logList = logRepository.getLatestBySubTask(subtaskId, owner);
+                if(logList == null)
+                    throw new ErrorWhenRetreivingDataException(ErrorCodes.ERROR_WHEN_RETREIVING_DATA, ErrorDescriptions.ERROR_WHEN_RETREIVING_DATA);
+            } else if(taskId != 0){
+                logList = logRepository.getLatestByTask(taskId, owner);
+                if(logList == null)
+                    throw new ErrorWhenRetreivingDataException(ErrorCodes.ERROR_WHEN_RETREIVING_DATA, ErrorDescriptions.ERROR_WHEN_RETREIVING_DATA);
+            } else if(projectId != 0) {
+                logList = logRepository.getLatestByProject(projectId, owner);
+                if(logList == null)
+                    throw new ErrorWhenRetreivingDataException(ErrorCodes.ERROR_WHEN_RETREIVING_DATA, ErrorDescriptions.ERROR_WHEN_RETREIVING_DATA);
+            }
+
+            dataResponse = new DataResponse(Results.OK,"",logList, HttpStatus.OK);
+
+        } catch (Exception e) {
+            dataResponse = Tools.getDataResponseError(e, "");
+        } finally {
+            return dataResponse;
+        }
     }
 
     private boolean isTaskInProject(TaskEntity task, ProjectEntity project) {

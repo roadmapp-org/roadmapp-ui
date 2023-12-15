@@ -11,8 +11,8 @@ import java.util.List;
 public interface ILogRepository {
     LogEntity save (LogEntity log);
     List<LogResponse> getLatestByOwner(String owner);
-    List<LogResponse> getLatestByProject(int project);
-    List<LogResponse> getLatestByTask(int task);
-    List<LogResponse> getLatestBySubTask(int subtask);
+    List<LogResponse> getLatestByProject(int project, String owner);
+    List<LogResponse> getLatestByTask(int task, String owner);
+    List<LogResponse> getLatestBySubTask(int subtask, String owner);
 
 }

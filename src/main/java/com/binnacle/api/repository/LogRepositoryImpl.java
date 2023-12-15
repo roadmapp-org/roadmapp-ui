@@ -25,30 +25,30 @@ public class LogRepositoryImpl implements ILogRepository {
     @Override
     public List<LogResponse> getLatestByOwner(String owner) {
         return getLogs(
-                "SELECT l.* FROM logs l INNER JOIN projects p WHERE l.project_id = p.id AND p.owner = ?",
+                "SELECT l.* FROM logs l, projects p WHERE l.project_id = ? AND l.project_id = p.id AND p.owner = ?",
                 new Object[]{owner});
     }
 
     @Override
-    public List<LogResponse> getLatestByProject(int projectId) {
+    public List<LogResponse> getLatestByProject(int projectId, String owner) {
         return getLogs(
-                "SELECT l.* FROM logs l WHERE l.project_id = ?",
-                new Object[]{projectId}
+                "SELECT l.* FROM logs l, projects p WHERE l.project_id = ? AND l.project_id = p.id AND p.owner = ?",
+                new Object[]{projectId, owner}
         );
     }
 
     @Override
-    public List<LogResponse> getLatestByTask(int taskId) {
+    public List<LogResponse> getLatestByTask(int taskId, String owner) {
         return getLogs(
-                "SELECT l.* FROM logs l WHERE l.task_id = ?",
-                new Object[]{taskId}
+                "SELECT l.* FROM logs l, projects p WHERE l.task_id = ? AND l.project_id = p.id AND p.owner = ?",
+                new Object[]{taskId, owner}
         );
     }
 
     @Override
-    public List<LogResponse> getLatestBySubTask(int subtaskId) {
+    public List<LogResponse> getLatestBySubTask(int subtaskId, String owner) {
         return getLogs(
-                "SELECT l.* FROM logs l WHERE l.subtask_id = ?",
+                "SELECT l.* FROM logs l, projects p WHERE l.subtask_id = ? AND p.id = l.project_id AND p.owner = ?",
                 new Object[]{subtaskId}
         );
     }
