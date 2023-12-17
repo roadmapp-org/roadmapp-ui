@@ -29,7 +29,6 @@ export const LogCreateForm = () => {
         if(inputValue === "" || inputValue === undefined)
         {
             setShowError(true)
-            setCreateLogErrorMessage("Insert a log")
             return;
         }
         const persist = {
@@ -38,7 +37,6 @@ export const LogCreateForm = () => {
             subtaskId: selectedSubtask,
             log: inputValue
         }
-        
         await dispatch(createLog(persist));
         if(creationStatus === "succeeded")
             setInputValue("")
@@ -49,8 +47,8 @@ export const LogCreateForm = () => {
             <textarea
                 value={inputValue}
                 onChange={handleChange}
-                rows={4} // Set the number of visible rows
-                cols={50} // Set the number of visible columns
+                rows={4}
+                cols={50}
                 placeholder="Type your text here..."
             />
             <br></br>
