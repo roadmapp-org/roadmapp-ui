@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const getLogs = createAsyncThunk('logs/fetch', async() => {
-        console.log("logs/fetch")
         const bearerToken = localStorage.getItem('token');
         const response = await fetch('http://localhost:8080/logs', {
             headers: {
@@ -12,7 +11,8 @@ export const getLogs = createAsyncThunk('logs/fetch', async() => {
     }
 )
 
-export const createLog = createAsyncThunk('logs/create', async(log) => {
+export const createLog = createAsyncThunk('logs/create', async(log, {rejectWithValue}) => {
+    try {
         const persist = {
             projectId: log.projectId,
             taskId: log.taskId,
@@ -28,7 +28,15 @@ export const createLog = createAsyncThunk('logs/create', async(log) => {
             },
             body: JSON.stringify(persist)
         });
+
+        if(!response.ok)
+            throw new Error('Error when saving the log');
+
         return response.json();
+
+    } catch (error) {
+        return rejectWithValue(error.message);
+    }
 })     
 
 export const fetchFilteredLogs = createAsyncThunk('logs/filter', async(filters) => {
@@ -37,8 +45,6 @@ export const fetchFilteredLogs = createAsyncThunk('logs/filter', async(filters) 
     Object.keys(filters).forEach(key => url.searchParams.append(key, filters[key]));
 
     const bearerToken = localStorage.getItem('token');
-    console.log("logs/filter/before server")
-    console.log(url)
 
     const response = await fetch(url, {
         method: 'GET',
@@ -47,13 +53,13 @@ export const fetchFilteredLogs = createAsyncThunk('logs/filter', async(filters) 
             Authorization: `Bearer ${bearerToken}`
         }
     });
-    console.log("logs/filter/after server")
     return response.json();
 })
 
 const initialState = {
     list: [],
     status: "idle",
+    creationStatus: "idle",
     error: ""
 }
 
@@ -66,26 +72,20 @@ const logSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(createLog.pending, (state) => {
-                console.log("createLog.pending");
-                state.status = 'loading';
+                state.creationStatus = 'loading';
             })
             .addCase(createLog.fulfilled, (state, action) => {
-                state.status = 'succeeded';
-                console.log("createLog.fulfilled");
-                console.log(action.payload);
+                state.creationStatus = 'succeeded';
                 state.list.push(action.payload.persistedObject);
             })
             .addCase(createLog.rejected, (state, action) => {
-                console.log("createLog.rejected");
-                state.status = 'failed';
+                state.creationStatus = 'failed';
                 state.error = action.error.message;
             })
             .addCase(getLogs.pending, (state) => {
                 state.status = 'loading';
             })
             .addCase(getLogs.fulfilled, (state,action) => {
-                console.log("getLogs.fulfilled");
-                console.log(action.payload)
                 state.status = 'succeeded';
                 state.list = action.payload.list;
             })
@@ -97,8 +97,6 @@ const logSlice = createSlice({
                 state.status = 'loading';
             })
             .addCase(fetchFilteredLogs.fulfilled, (state,action) => {
-                console.log("fetchFilteredLogs.fulfilled");
-                console.log(action.payload.list)
                 state.status = 'succeeded';
                 state.list = action.payload.list;
             })

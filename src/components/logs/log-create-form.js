@@ -11,11 +11,12 @@ export const LogCreateForm = () => {
 
     const dispatch = useDispatch();
     const [showError, setShowError] = useState(false);
-    const [createLogErrorMessage, setCreateLogErrorMessage] = useState("");
+    const [createLogErrorMessage, setCreateLogErrorMessage] = useState("Error when saving the log");
 
     const selectedProject = useSelector(selectSelectedProject);
     const selectedTask = useSelector(selectSelectedTask);
     const selectedSubtask = useSelector(selectSelectedSubtask);
+    const creationStatus = useSelector((state) => state.log.creationStatus);
     
     const [inputValue, setInputValue] = useState('');
 
@@ -25,14 +26,12 @@ export const LogCreateForm = () => {
 
     const onSubmit = async (event) => {
         event.preventDefault();
-
         if(inputValue === "" || inputValue === undefined)
         {
             setShowError(true)
             setCreateLogErrorMessage("Insert a log")
             return;
         }
-
         const persist = {
             projectId: selectedProject,
             taskId: selectedTask,
@@ -40,12 +39,9 @@ export const LogCreateForm = () => {
             log: inputValue
         }
         
-        try {
-            await dispatch(createLog(persist));
+        await dispatch(createLog(persist));
+        if(creationStatus === "succeeded")
             setInputValue("")
-        } catch (err) {
-            setCreateLogErrorMessage("Error when saving the log")
-        }
     }
 
     return (
@@ -58,9 +54,15 @@ export const LogCreateForm = () => {
                 placeholder="Type your text here..."
             />
             <br></br>
-            {showError && <p>{createLogErrorMessage}</p>}
+            {(showError || creationStatus === "failed") && <p>{createLogErrorMessage}</p>}
             <br></br>
-            <input type="submit" value="Log" />
+            <input
+                type="submit"
+                value="Log"
+                disabled={
+                    selectedProject === "0" || 
+                    inputValue.length <= 2
+                    ? true : false}/>
         </Form>
     );
 }
