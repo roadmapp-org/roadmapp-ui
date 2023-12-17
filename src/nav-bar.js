@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 
-import {logout, selectCurrentUser } from './pages/login/login-slice'
+import { logout } from './pages/login/login-slice'
 
 export const NavBar = () => {
 
@@ -21,9 +21,8 @@ export const NavBar = () => {
         
             <nav>
                 <ul>
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/about">About</Link></li>
-                    <li><Link to="/articles">Articles</Link></li>
+                    <li><Link to="/home">Home</Link></li>
+                    <li><Link to="/config">Config</Link></li>
                 </ul>
                 <div className="nav-right">
                     <button onClick={onClickLogOut}>Log Out</button>

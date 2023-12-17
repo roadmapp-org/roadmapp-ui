@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { logSliceSelectors } from '../../pages/home/home-slice'
 
 export const getLogs = createAsyncThunk('logs/fetch', async() => {
         console.log("logs/fetch")
