@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { projectSelected, taskSelected, subtaskSelected } from '../../pages/home/home-slice'
+import { fetchFilteredLogs, getLogs } from './log-slice'
 
 export const LogFilterComponent = () => {
     const dispatch = useDispatch()
@@ -10,7 +11,7 @@ export const LogFilterComponent = () => {
     const subtasks = useSelector((state) => state.home.subtasks)
 
     const [filteredTask, setFilteredTasks] = useState(useSelector((state) => state.home.tasks));
-    const [filteredSubtask, setFilteredSubtasks] = useState(useSelector((state) => state.home.tasks));
+    const [filteredSubtask, setFilteredSubtasks] = useState(useSelector((state) => state.home.subtasks));
 
     
     const [ layout, setLayout ] = useState({
@@ -39,6 +40,16 @@ export const LogFilterComponent = () => {
         dispatch(projectSelected(e.target.value))
         const filtered = tasks.filter((item) => item.project_id.toString() === e.target.value);
         setFilteredTasks(filtered)
+        if(e.target.value === "0") {
+            dispatch(getLogs())
+        }
+        else {
+            dispatch(fetchFilteredLogs({
+                project: e.target.value,
+                task: "0",
+                subtask: "0"
+            }))
+        }
     }
 
     const onSelectTask = (e) => {
@@ -56,11 +67,21 @@ export const LogFilterComponent = () => {
         dispatch(taskSelected(e.target.value))
         const filtered = subtasks.filter((item) => item.task_id.toString() == e.target.value)
         setFilteredSubtasks(filtered);
+        dispatch(fetchFilteredLogs({
+            project: e.target.value != "0" ? "0" : filter.project,
+            task: e.target.value != "0" ? e.target.value : "0",
+            subtask: "0"
+        }))
     }
 
     const onSelectSubtask = (e) => {
         setFilter({...filter, subtask: e.target.value})
         dispatch(subtaskSelected(e.target.value))
+        dispatch(fetchFilteredLogs({
+            project: "0",
+            task: e.target.value != "0" ? "0" : filter.task,
+            subtask: e.target.value != "0" ? e.target.value : "0"
+        }))
     }
 
     return (
