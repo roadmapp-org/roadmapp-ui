@@ -96,6 +96,7 @@ export const LogFilterComponent = () => {
                     ))
                 }
             </select>
+            {filter.project}
             <p>Task:</p>
             <select id='taskFilter' disabled={layout.taskDisabled} onChange={onSelectTask}>
                 <option key={0} value={0}>{"All"}</option>
@@ -105,6 +106,7 @@ export const LogFilterComponent = () => {
                     ))
                 }
             </select>
+            {filter.task}
             <p>Subtask:</p>
             <select id='subtaskFilter' disabled={layout.subtaskDisabled} onChange={onSelectSubtask}>
                 <option key={0} value={0}>{"All"}</option>
@@ -114,6 +116,7 @@ export const LogFilterComponent = () => {
                     ))
                 }
             </select>
+            {filter.subtask}
         </div>
     )
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux'
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux'
-import { getHome } from "../../data/levels-slice";
+import { getLevels } from "../../data/levels-slice";
 
 
 export const Config = () => {
@@ -12,7 +12,7 @@ export const Config = () => {
 
     useEffect(() => {
         if (homeStatus === 'idle') {
-          dispatch(getHome())
+          dispatch(getLevels())
         }
       }, [])
 

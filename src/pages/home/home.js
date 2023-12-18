@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { LogListComponent } from '../../components/logs/log-list-component';
 import { useEffect } from 'react';
 import { LogFilterComponent } from '../../components/logs/log-filter-component';
-import { getHome } from "../../data/levels-slice";
+import { getLevels } from "../../data/levels-slice";
 import { getLogs } from "../../data/log-slice"
 import { LogCreateForm } from '../../components/logs/log-create-form';
 
@@ -14,7 +14,7 @@ export const Home = () => {
 
     useEffect(() => {
         if (homeStatus === 'idle') {
-          dispatch(getHome())
+          dispatch(getLevels())
         }
       }, [])
 

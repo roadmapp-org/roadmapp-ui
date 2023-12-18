@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-export const getHome = createAsyncThunk('home/fetch', async() => {
+export const getLevels = createAsyncThunk('home/fetch', async() => {
     const bearerToken = localStorage.getItem('token');
     const response = await fetch('http://localhost:8080/home', {
         headers: {
@@ -30,9 +30,12 @@ const homeSlice = createSlice({
     reducers: {
         projectSelected: (state, action) => {
             state.selectedProject = action.payload
+            state.selectedTask = "0"
+            state.selectedSubtask = "0"
         },
         taskSelected: (state, action) => {
             state.selectedTask = action.payload
+            state.selectedSubtask = "0"
         },
         subtaskSelected: (state, action) => {
             state.selectedSubtask = action.payload
@@ -40,16 +43,16 @@ const homeSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(getHome.pending, (state) => {
+            .addCase(getLevels.pending, (state) => {
                 state.status = 'loading'
             })
-            .addCase(getHome.fulfilled, (state, action) => {
+            .addCase(getLevels.fulfilled, (state, action) => {
                 state.projects = action.payload.list.projectList
                 state.tasks = action.payload.list.taskList
                 state.subtasks = action.payload.list.subtaskList
                 state.logs = action.payload.list.logList
             })
-            .addCase(getHome.rejected, (state,action) => {
+            .addCase(getLevels.rejected, (state,action) => {
                 state.status = 'rejected';
                 state.error = action.error.message;
             })
