@@ -25,7 +25,7 @@ public class LogRepositoryImpl implements ILogRepository {
     @Override
     public List<LogResponse> getLatestByOwner(String owner) {
         return getLogs(
-                "SELECT l.* FROM logs l, projects p WHERE l.project_id = ? AND l.project_id = p.id AND p.owner = ?",
+                "SELECT l.* FROM logs l, projects p WHERE l.project_id = p.id AND p.owner = ?",
                 new Object[]{owner});
     }
 
@@ -49,7 +49,7 @@ public class LogRepositoryImpl implements ILogRepository {
     public List<LogResponse> getLatestBySubTask(int subtaskId, String owner) {
         return getLogs(
                 "SELECT l.* FROM logs l, projects p WHERE l.subtask_id = ? AND p.id = l.project_id AND p.owner = ?",
-                new Object[]{subtaskId}
+                new Object[]{subtaskId, owner}
         );
     }
 

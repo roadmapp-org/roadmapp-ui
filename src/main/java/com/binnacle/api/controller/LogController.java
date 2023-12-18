@@ -50,12 +50,8 @@ public class LogController {
     }
 
     @GetMapping("/filtered")
-    public ResponseEntity<?> getFiltered(@RequestBody LogFilterRequest logFilterRequest) {
-        DataResponse dataResponse = logUseCases.getFiltered(
-                logFilterRequest.getProjectId(),
-                logFilterRequest.getTaskId(),
-                logFilterRequest.getSubtaskId()
-        );
+    public ResponseEntity<?> getFiltered(@RequestParam int project, @RequestParam int task, @RequestParam int subtask) {
+        DataResponse dataResponse = logUseCases.getFiltered(project, task, subtask);
         return ResponseEntity.status(dataResponse.getStatus()).body(dataResponse);
     }
 

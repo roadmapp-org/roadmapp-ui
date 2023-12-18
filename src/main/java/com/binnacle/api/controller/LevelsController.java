@@ -1,24 +1,23 @@
 package com.binnacle.api.controller;
 
 import com.binnacle.api.response.DataResponse;
-import com.binnacle.api.service.contract.IHomeUseCases;
+import com.binnacle.api.service.contract.ILevelUseCases;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/home")
+@RequestMapping("/levels")
 @RequiredArgsConstructor
-public class HomeController {
+public class LevelsController {
 
-    private final IHomeUseCases homeUseCases;
+    private final ILevelUseCases levelUseCases;
 
     @GetMapping
     public ResponseEntity<?> getHomeData() {
-        DataResponse dataResponse = homeUseCases.getHomeData();
+        DataResponse dataResponse = levelUseCases.getLevels();
         return ResponseEntity.status(dataResponse.getStatus()).body(dataResponse);
     }
 

@@ -169,7 +169,7 @@ public class LogService implements ILogUseCases {
         if(subtask == null) return true;
         for(SubtaskEntity subtaskLoop : task.getSubtaskList())
         {
-            if(subtaskLoop.getId() == task.getId())
+            if(subtaskLoop.getTask().getId() == task.getId())
                 return true;
         }
         return false;

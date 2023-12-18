@@ -5,7 +5,7 @@ INSERT INTO users VALUES
 INSERT INTO projects (active, name, owner) VALUES (1, 'WS Mercados', 'tobiolea');
 INSERT INTO projects (active, name, owner) VALUES (1, 'Amparos', 'smartineza');
 INSERT INTO projects (active, name, owner) VALUES (1, 'DemonioMQ', 'tobiolea');
-INSERT INTO projects (active, name, owner) VALUES (1, 'Sigma', 'tobiolea');
+INSERT INTO projects (active, name, owner) VALUES (0, 'Sigma', 'tobiolea');
 
 INSERT INTO tasks (active, name, project_id) VALUES (1, 'Nuevo endpoint', 1);
 INSERT INTO tasks (active, name, project_id) VALUES (1, 'Pruebas unitarias', 1);
