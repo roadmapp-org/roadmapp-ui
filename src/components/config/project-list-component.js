@@ -16,8 +16,8 @@ export const ProjectListComponent = () => {
                 </thead>
                 <tbody>
                     {
-                        projects.map((project) => (
-                            <ProjectListItemComponent project={project} />
+                        projects.map((project,index) => (
+                            <ProjectListItemComponent project={project} key={project.id}/>
                         ))
                     }
                 </tbody>

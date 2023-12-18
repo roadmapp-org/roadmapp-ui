@@ -1,9 +1,11 @@
 import { useState } from "react"
-import { Form } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { editProject } from "../../data/levels-slice"
 
 export const ProjectListItemComponent = ({project}) => {
-
+    const dispatch = useDispatch()
     const [editMode, setEditMode] = useState(false)
+    const [inputValue, setInputValue] = useState(project.name)
 
     const handleEdit = () => {
         setEditMode(true)
@@ -13,12 +15,28 @@ export const ProjectListItemComponent = ({project}) => {
         setEditMode(false)
     }
 
+    const handleConfirmEdit = () => {
+        const persist = {
+            id: project.id,
+            name: inputValue
+        }
+        console.log('edit')
+        console.log(persist)
+        dispatch(editProject(persist))
+        setEditMode(false)
+    }
+
+    const handleInputChange = (event) => {
+        setInputValue(event.target.value)
+    }
+
+
     return (
-        <tr key={project.id}>
+        <tr>
             <td>
-                <input type="text" value={project.name} readOnly={editMode} disabled={!editMode}></input>
+                <input type="text" value={inputValue} disabled={!editMode} onChange={handleInputChange}/>
                 <button hidden={editMode} onClick={handleEdit}>Edit</button>
-                <button hidden={!editMode}>OK</button>
+                <button hidden={!editMode} onClick={handleConfirmEdit}>OK</button>
                 <button hidden={!editMode} onClick={handleCancelEdit}>Cancel</button>
             </td>
             <td>
