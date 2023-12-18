@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from 'react-redux'
 import { Form, useNavigate } from "react-router-dom";
-import { login } from './login-slice';
+import { login } from '../../data/login-slice';
 
 export const Login = () => {
     const [showError, setShowError] = useState(false);

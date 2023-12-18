@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Form } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { createLog } from "./log-slice";
+import { createLog } from "../../data/log-slice"
 import {
     selectSelectedProject,
     selectSelectedTask,
-    selectSelectedSubtask } from "../../pages/home/home-slice";
+    selectSelectedSubtask } from "../../data/levels-slice";
 
 export const LogCreateForm = () => {
 

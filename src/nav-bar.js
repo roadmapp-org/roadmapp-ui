@@ -1,7 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
-
-import { logout } from './pages/login/login-slice'
+import { logout } from './data/login-slice'
 
 export const NavBar = () => {
 

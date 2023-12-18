@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { projectSelected, taskSelected, subtaskSelected } from '../../pages/home/home-slice'
-import { fetchFilteredLogs, getLogs } from './log-slice'
+import { projectSelected, taskSelected, subtaskSelected } from '../../data/levels-slice'
+import { fetchFilteredLogs, getLogs } from "../../data/log-slice"
 
 export const LogFilterComponent = () => {
     const dispatch = useDispatch()
