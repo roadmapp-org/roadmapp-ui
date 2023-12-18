@@ -4,12 +4,12 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux'
 import { getLevels } from "../../data/levels-slice";
 import { ProjectFormComponent } from '../../components/config/project-form-component';
+import { ProjectListComponent } from '../../components/config/project-list-component';
 
 
 export const Config = () => {
     const dispatch = useDispatch();
     const levelsStatus = useSelector(state => state.levels.status)
-    const projects = useSelector((state) => state.levels.projects)
 
     useEffect(() => {
         if (levelsStatus === 'idle') {
@@ -19,46 +19,10 @@ export const Config = () => {
 
     return (
         <>
-            <h1>Config</h1>
-            <h2>Projects</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>#</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        // filter enabled projects
-                        projects.filter(project => project.active === true).map((project) => (
-                            <tr>
-                                <td>{project.name}</td>
-                                <td>Edit | Disable</td>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </table>
+            <ProjectListComponent /> 
+            <br></br>
             <ProjectFormComponent />
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>#</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        projects.filter(project => project.active === false).map((project) => (
-                            <tr>
-                                <td>{project.name}</td>
-                                <td>Edit | Disable</td>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </table>
+            <br></br>            
         </>
     );
 }
