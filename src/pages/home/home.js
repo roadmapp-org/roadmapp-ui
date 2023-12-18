@@ -9,17 +9,17 @@ import { LogCreateForm } from '../../components/logs/log-create-form';
 
 export const Home = () => {
     
-    const homeStatus = useSelector(state => state.home.status)
+    const levelsStatus = useSelector(state => state.levels.status)
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (homeStatus === 'idle') {
+        if (levelsStatus === 'idle') {
           dispatch(getLevels())
         }
       }, [])
 
     useEffect(() => {
-      if (homeStatus === 'idle') {
+      if (levelsStatus === 'idle') {
         dispatch(getLogs())
       }
     }, [])

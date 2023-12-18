@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import loginReducer  from './login-slice'
 import logReducer from "./log-slice.js"
-import homeReducer from './levels-slice.js'
+import levelsReducer from "./levels-slice.js"
 
 export default configureStore({
   reducer: {
     user: loginReducer,
-    home: homeReducer,
+    levels: levelsReducer,
     log: logReducer
   }
 })

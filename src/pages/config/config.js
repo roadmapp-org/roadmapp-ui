@@ -7,8 +7,8 @@ import { getLevels } from "../../data/levels-slice";
 
 export const Config = () => {
     const dispatch = useDispatch();
-    const homeStatus = useSelector(state => state.home.status)
-    const projects = useSelector((state) => state.home.projects)
+    const homeStatus = useSelector(state => state.levels.status)
+    const projects = useSelector((state) => state.levels.projects)
 
     useEffect(() => {
         if (homeStatus === 'idle') {

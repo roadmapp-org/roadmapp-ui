@@ -24,8 +24,8 @@ const initialState = {
 }
 
 
-const homeSlice = createSlice({
-    name: 'home',
+const levelsSlice = createSlice({
+    name: 'levels',
     initialState,
     reducers: {
         projectSelected: (state, action) => {
@@ -59,18 +59,18 @@ const homeSlice = createSlice({
     }
 })
 
-export const selectSelectedProject = (state) => state.home.selectedProject;
-export const selectSelectedTask = (state) => state.home.selectedTask;
-export const selectSelectedSubtask = (state) => state.home.selectedSubtask;
-export const selectLogList = (state) => state.home.logs;
+export const selectSelectedProject = (state) => state.levels.selectedProject;
+export const selectSelectedTask = (state) => state.levels.selectedTask;
+export const selectSelectedSubtask = (state) => state.levels.selectedSubtask;
+export const selectLogList = (state) => state.levels.logs;
 
-export const logSliceSelectors = {
+export const levelsSliceSelectors = {
     selectSelectedProject,
     selectSelectedTask,
     selectSelectedSubtask,
     selectLogList
 }
 
-export const { projectSelected, taskSelected, subtaskSelected } = homeSlice.actions;
+export const { projectSelected, taskSelected, subtaskSelected } = levelsSlice.actions;
 
-export default homeSlice.reducer;
+export default levelsSlice.reducer;

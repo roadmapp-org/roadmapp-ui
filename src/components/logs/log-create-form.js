@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { createLog } from "../../data/log-slice"
@@ -38,9 +38,13 @@ export const LogCreateForm = () => {
             log: inputValue
         }
         await dispatch(createLog(persist));
+        
+    }
+
+    useEffect(() => {
         if(creationStatus === "succeeded")
             setInputValue("")
-    }
+    }, [creationStatus])
 
     return (
         <Form method="post" onSubmit={onSubmit} >
@@ -59,7 +63,7 @@ export const LogCreateForm = () => {
                 value="Log"
                 disabled={
                     selectedProject === "0" || 
-                    inputValue.length <= 2
+                    inputValue.length < 5
                     ? true : false}/>
         </Form>
     );

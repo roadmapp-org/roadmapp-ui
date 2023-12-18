@@ -6,12 +6,12 @@ import { fetchFilteredLogs, getLogs } from "../../data/log-slice"
 export const LogFilterComponent = () => {
     
     const dispatch = useDispatch()
-    const projects = useSelector((state) => state.home.projects)
-    const tasks = useSelector((state) => state.home.tasks)
-    const subtasks = useSelector((state) => state.home.subtasks)
+    const projects = useSelector((state) => state.levels.projects)
+    const tasks = useSelector((state) => state.levels.tasks)
+    const subtasks = useSelector((state) => state.levels.subtasks)
 
-    const [filteredTask, setFilteredTasks] = useState(useSelector((state) => state.home.tasks));
-    const [filteredSubtask, setFilteredSubtasks] = useState(useSelector((state) => state.home.subtasks));
+    const [filteredTask, setFilteredTasks] = useState(useSelector((state) => state.levels.tasks));
+    const [filteredSubtask, setFilteredSubtasks] = useState(useSelector((state) => state.levels.subtasks));
 
     const [ layout, setLayout ] = useState({
         projectDisabled: false,
@@ -86,7 +86,6 @@ export const LogFilterComponent = () => {
                     ))
                 }
             </select>
-            {projectSelected}
             <p>Task:</p>
             <select id='taskFilter' disabled={layout.taskDisabled} onChange={onSelectTask}>
                 <option key={0} value={0}>{"All"}</option>
@@ -96,7 +95,6 @@ export const LogFilterComponent = () => {
                     ))
                 }
             </select>
-            {taskSelected}
             <p>Subtask:</p>
             <select id='subtaskFilter' disabled={layout.subtaskDisabled} onChange={onSelectSubtask}>
                 <option key={0} value={0}>{"All"}</option>
@@ -106,7 +104,6 @@ export const LogFilterComponent = () => {
                     ))
                 }
             </select>
-            {subtaskSelected}
         </div>
     )
 
