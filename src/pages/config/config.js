@@ -3,15 +3,16 @@ import { useSelector } from 'react-redux'
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux'
 import { getLevels } from "../../data/levels-slice";
+import { ProjectFormComponent } from '../../components/config/project-form-component';
 
 
 export const Config = () => {
     const dispatch = useDispatch();
-    const homeStatus = useSelector(state => state.levels.status)
+    const levelsStatus = useSelector(state => state.levels.status)
     const projects = useSelector((state) => state.levels.projects)
 
     useEffect(() => {
-        if (homeStatus === 'idle') {
+        if (levelsStatus === 'idle') {
           dispatch(getLevels())
         }
       }, [])
@@ -39,9 +40,7 @@ export const Config = () => {
                     }
                 </tbody>
             </table>
-            <input type="text" placeholder="New Project Name" />
-            <button>Add Project</button>
-            <h2>Disabled projects</h2>
+            <ProjectFormComponent />
             <table>
                 <thead>
                     <tr>

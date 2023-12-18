@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-export const getLevels = createAsyncThunk('home/fetch', async() => {
+export const getLevels = createAsyncThunk('levels/fetch', async() => {
     const bearerToken = localStorage.getItem('token');
-    const response = await fetch('http://localhost:8080/home', {
+    const response = await fetch('http://localhost:8080/levels', {
         headers: {
             Authorization: `Bearer ${bearerToken}`
         }
@@ -10,6 +10,24 @@ export const getLevels = createAsyncThunk('home/fetch', async() => {
     return response.json();
 }
 )
+
+export const createProject = createAsyncThunk('levels/createProject', async(persist) => {
+    const bearerToken = localStorage.getItem('token');
+    const response = await fetch('http://localhost:8080/project', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${bearerToken}`
+        },
+        body: JSON.stringify(persist)
+    });
+
+    if(!response.ok)
+        throw new Error('Error when saving the log');
+
+    return response.json();
+})
+
 
 const initialState = {
     projects: [],
@@ -20,7 +38,8 @@ const initialState = {
     selectedTask: "0",
     selectedSubtask: "0",
     status: "idle",
-    error: ""
+    error: "",
+    creationStatus: "idle"
 }
 
 
@@ -54,6 +73,17 @@ const levelsSlice = createSlice({
             })
             .addCase(getLevels.rejected, (state,action) => {
                 state.status = 'rejected';
+                state.error = action.error.message;
+            })
+            .addCase(createProject.pending, (state) => {
+                state.creationStatus = 'loading'
+            })
+            .addCase(createProject.fulfilled, (state, action) => {
+                state.creationStatus = 'succeeded';
+                state.projects.push(action.payload.persistedObject)
+            })
+            .addCase(createProject.rejected, (state,action) => {
+                state.creationStatus = 'rejected';
                 state.error = action.error.message;
             })
     }
