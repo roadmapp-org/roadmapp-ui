@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux"
+import { ProjectListItemComponent } from "./project-list-item"
 
 export const ProjectListComponent = () => {
 
@@ -6,23 +7,17 @@ export const ProjectListComponent = () => {
 
     return (
         <>
-            <h1>Config</h1>
-            <h2>Projects</h2>
             <table>
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>#</th>
+                        <th colSpan={4}></th>
                     </tr>
                 </thead>
                 <tbody>
                     {
-                        // filter enabled projects
                         projects.map((project) => (
-                            <tr key={project.id}>
-                                <td>{project.name}</td>
-                                <td>Edit | {project.active ? 'Disable' : 'Enable'} | Edit</td>
-                            </tr>
+                            <ProjectListItemComponent project={project} />
                         ))
                     }
                 </tbody>

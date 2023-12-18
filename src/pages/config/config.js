@@ -19,10 +19,12 @@ export const Config = () => {
 
     return (
         <>
-            <ProjectListComponent /> 
-            <br></br>
-            <ProjectFormComponent />
-            <br></br>            
+          <h1>Config</h1>
+          <h2>Projects</h2>
+          <ProjectListComponent /> 
+          <br></br>
+          <ProjectFormComponent />
+          <br></br>            
         </>
     );
 }
