@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { editTask } from "../../data/levels-slice"
+import { editTask, deleteTask } from "../../data/levels-slice"
 
 export const TaskListItemComponent = ({task}) => {
     const [inputValue, setInputValue] = useState(task.name)
@@ -27,10 +27,36 @@ export const TaskListItemComponent = ({task}) => {
         const persist = {
             id: task.id,
             projectId: task.project_id,
-            name: inputValue
+            name: inputValue,
+            active: task.active
         }
         dispatch(editTask(persist))
         setEditMode(false)
+    }
+
+    const handleEnableDisable = () => {
+        const persist = {
+            id: task.id,
+            projectId: task.project_id,
+            name: task.name,
+            active: !task.active
+        }
+        dispatch(editTask(persist))
+    }
+
+    const handleDelete = () => {
+        setDeleteMode(true)
+    }
+
+    const handleCancelDelete = () => {
+        setDeleteMode(false)
+    }
+
+    const handleConfirmDelete = () => {
+        const persist = {
+            id: task.id
+        }
+        dispatch(deleteTask(persist))
     }
 
     return (
@@ -42,11 +68,11 @@ export const TaskListItemComponent = ({task}) => {
                 <button hidden={!editMode} onClick={handleConfirmEdit}>OK</button>
                 <button hidden={!editMode} onClick={handleCancelEdit}>Cancel</button>
             </td>
-            <td><button>{task.active ? "Disable" : "Enable"}</button></td>
+            <td><button onClick={handleEnableDisable}>{task.active ? "Disable" : "Enable"}</button></td>
             <td>
-                <button hidden={deleteMode}>Delete</button>
-                <button hidden={!deleteMode}>OK</button>
-                <button hidden={!deleteMode}>Cancel</button>
+                <button hidden={deleteMode} onClick={handleDelete}>Delete</button>
+                <button hidden={!deleteMode} onClick={handleConfirmDelete}>OK</button>
+                <button hidden={!deleteMode} onClick={handleCancelDelete}>Cancel</button>
             </td>
         </tr>
     )

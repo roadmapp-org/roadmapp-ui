@@ -78,6 +78,23 @@ export const editTask = createAsyncThunk('levels/editTask', async(persist) => {
     return response.json();
 })
 
+export const deleteTask = createAsyncThunk('levels/deleteTask', async (persist) => {
+    const bearerToken = localStorage.getItem('token');
+    const response = await fetch('http://localhost:8080/task', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${bearerToken}`
+        },
+        body: JSON.stringify(persist)
+    });
+
+    if(!response.ok)
+        throw new Error('Error when deleting the log');
+
+    return response.json();
+})
+
 const initialState = {
     projects: [],
     tasks: [],
@@ -169,6 +186,18 @@ const levelsSlice = createSlice({
                 state.tasks[index] = action.payload.persistedObject
             })
             .addCase(editTask.rejected, (state,action) => {
+                state.editStatus = 'rejected';
+                state.error = action.error.message;
+            })
+            .addCase(deleteTask.pending, (state) => {
+                state.editStatus = 'loading'
+            })
+            .addCase(deleteTask.fulfilled, (state, action) => {
+                state.editStatus = 'succeeded';
+                const index = state.tasks.findIndex((task) => task.id === action.payload.persistedObject.id)
+                state.tasks.splice(index, 1)
+            })
+            .addCase(deleteTask.rejected, (state,action) => {
                 state.editStatus = 'rejected';
                 state.error = action.error.message;
             })
