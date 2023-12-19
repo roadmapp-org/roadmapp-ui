@@ -76,6 +76,7 @@ public class ProjectService implements IProjectUseCases {
 
             //business logic
             project.setName(request.getName());
+            project.setActive(request.isActive());
             ProjectEntity savedProject = projectRepository.save(project);
 
             // return
