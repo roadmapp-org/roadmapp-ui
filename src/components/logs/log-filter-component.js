@@ -9,6 +9,9 @@ export const LogFilterComponent = () => {
     const projects = useSelector((state) => state.levels.projects)
     const tasks = useSelector((state) => state.levels.tasks)
     const subtasks = useSelector((state) => state.levels.subtasks)
+    const selectedProject = useSelector((state) => state.levels.selectedProject)
+    const selectedTask = useSelector((state) => state.levels.selectedTask)
+    const selectedSubtask = useSelector((state) => state.levels.selectedSubtask)
 
     const [filteredTask, setFilteredTasks] = useState(useSelector((state) => state.levels.tasks));
     const [filteredSubtask, setFilteredSubtasks] = useState(useSelector((state) => state.levels.subtasks));
@@ -60,7 +63,7 @@ export const LogFilterComponent = () => {
         const filtered = subtasks.filter((item) => item.task_id.toString() === e.target.value)
         setFilteredSubtasks(filtered);
         dispatch(fetchFilteredLogs({
-            project: e.target.value !== "0" ? "0" : projectSelected,
+            project: e.target.value !== "0" ? "0" : selectedProject,
             task: e.target.value !== "0" ? e.target.value : "0",
             subtask: "0"
         }))
@@ -70,7 +73,7 @@ export const LogFilterComponent = () => {
         dispatch(subtaskSelected(e.target.value))
         dispatch(fetchFilteredLogs({
             project: "0",
-            task: e.target.value !== "0" ? "0" : taskSelected,
+            task: e.target.value !== "0" ? "0" : selectedTask,
             subtask: e.target.value !== "0" ? e.target.value : "0"
         }))
     }

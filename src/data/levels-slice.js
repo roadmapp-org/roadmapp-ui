@@ -44,6 +44,24 @@ export const editProject = createAsyncThunk('levels/editProject', async(persist)
     return response.json();
 })
 
+export const deleteProject = createAsyncThunk('levels/deleteProject', async(persist) => {
+    const bearerToken = localStorage.getItem('token');
+    const response = await fetch('http://localhost:8080/project', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${bearerToken}`
+        },
+        body: JSON.stringify(persist)
+    });
+
+    if(!response.ok)
+        throw new Error('Error when deleting the log');
+
+    return response.json();
+})
+
+
 const initialState = {
     projects: [],
     tasks: [],
@@ -111,6 +129,18 @@ const levelsSlice = createSlice({
                 state.projects[index] = action.payload.persistedObject
             })
             .addCase(editProject.rejected, (state,action) => {
+                state.editStatus = 'rejected';
+                state.error = action.error.message;
+            })
+            .addCase(deleteProject.pending, (state) => {
+                state.editStatus = 'loading'
+            })
+            .addCase(deleteProject.fulfilled, (state, action) => {
+                state.editStatus = 'succeeded';
+                const index = state.projects.findIndex((project) => project.id === action.payload.persistedObject.id)
+                state.projects.splice(index, 1)
+            })
+            .addCase(deleteProject.rejected, (state,action) => {
                 state.editStatus = 'rejected';
                 state.error = action.error.message;
             })
