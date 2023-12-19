@@ -10,9 +10,9 @@ export const TaskListComponent = () => {
     return (
         <>
         <select>
-            <option value="0">Select a project</option>
+            <option value="0" key={0}>Select a project</option>
             {projects.map((project) => (
-                <option value={project.id}>{project.name}</option>
+                <option value={project.id} key={project.id}>{project.name}</option>
             ))}
         </select>
         <br></br>

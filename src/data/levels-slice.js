@@ -61,6 +61,22 @@ export const deleteProject = createAsyncThunk('levels/deleteProject', async(pers
     return response.json();
 })
 
+export const editTask = createAsyncThunk('levels/editTask', async(persist) => {
+    const bearerToken = localStorage.getItem('token');
+    const response = await fetch('http://localhost:8080/task', {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${bearerToken}`
+        },
+        body: JSON.stringify(persist)
+    });
+    
+    if(!response.ok)
+        throw new Error('Error when saving the log');
+
+    return response.json();
+})
 
 const initialState = {
     projects: [],
@@ -141,6 +157,18 @@ const levelsSlice = createSlice({
                 state.projects.splice(index, 1)
             })
             .addCase(deleteProject.rejected, (state,action) => {
+                state.editStatus = 'rejected';
+                state.error = action.error.message;
+            })
+            .addCase(editTask.pending, (state) => {
+                state.editStatus = 'loading'
+            })
+            .addCase(editTask.fulfilled, (state, action) => {
+                state.editStatus = 'succeeded';
+                const index = state.tasks.findIndex((task) => task.id === action.payload.persistedObject.id)
+                state.tasks[index] = action.payload.persistedObject
+            })
+            .addCase(editTask.rejected, (state,action) => {
                 state.editStatus = 'rejected';
                 state.error = action.error.message;
             })

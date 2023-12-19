@@ -18,6 +18,7 @@ export const ProjectListItemComponent = ({project}) => {
 
     const handleCancelEdit = () => {
         setEditMode(false)
+        setInputValue(project.name)
     }
 
     const handleCancelDelete = () => {

@@ -24,8 +24,6 @@ export const ProjectFormComponent = () => {
     }
 
     useEffect(() => {
-        console.log(useEffect)
-        console.log(creationStatus)
         if(creationStatus === "succeeded")
             setInputValue("")
         if(creationStatus === "rejected")
