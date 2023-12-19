@@ -47,7 +47,7 @@ export const ProjectListItemComponent = ({project}) => {
             name: project.name,
             active: !project.active
         }
-        dispatch(deleteProject(persist))
+        dispatch(editProject(persist))
         setDeleteMode(false)
     }
 
