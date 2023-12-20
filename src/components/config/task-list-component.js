@@ -7,9 +7,11 @@ export const TaskListComponent = () => {
     const projects = useSelector((state) => state.levels.projects)
     const tasks = useSelector((state) => state.levels.tasks)
     const [filteredTask, setFilteredTasks] = useState([]);
+    const [selectedProject, setSelectedProject] = useState("0");
 
     const onSelectProject = (e) => {
         if(e.target.value !== "0") {
+            setSelectedProject(e.target.value)
             setFilteredTasks(tasks.filter((item) => item.project_id.toString() === e.target.value))
         } else {
             setFilteredTasks(tasks)
@@ -17,7 +19,10 @@ export const TaskListComponent = () => {
     }
 
     useEffect(() => {
-        setFilteredTasks(tasks)
+        if(selectedProject === "0")
+            setFilteredTasks(tasks)
+        else
+            setFilteredTasks(tasks.filter((item) => item.project_id.toString() === selectedProject))
     }, [tasks])
 
     return (
