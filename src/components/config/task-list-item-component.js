@@ -61,7 +61,7 @@ export const TaskListItemComponent = ({task}) => {
 
     return (
         <tr>
-            <td>{project.name}</td>
+            <td>{project && project.name}</td>
             <td><input type="text" value={inputValue} disabled={!editMode} onChange={handleInputChange}/></td>
             <td>
                 <button hidden={editMode} onClick={handleEdit}>Edit</button>

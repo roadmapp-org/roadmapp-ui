@@ -1,12 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux'
 import { Form, useNavigate } from "react-router-dom";
 import { login } from '../../data/login-slice';
 
 export const Login = () => {
+
     const [showError, setShowError] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if(token != null) {
+            navigate(`/home`);
+        }
+    })
 
     const onSubmit = async (event) => {
         event.preventDefault();

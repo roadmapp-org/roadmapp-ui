@@ -95,6 +95,23 @@ export const deleteTask = createAsyncThunk('levels/deleteTask', async (persist) 
     return response.json();
 })
 
+export const createTask = createAsyncThunk('levels/createTask', async(persist) => {
+    const bearerToken = localStorage.getItem('token');
+    const response = await fetch('http://localhost:8080/task', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${bearerToken}`
+        },
+        body: JSON.stringify(persist)
+    });
+
+    if(!response.ok)
+        throw new Error('Error when saving the log');
+
+    return response.json();
+})
+
 const initialState = {
     projects: [],
     tasks: [],
@@ -115,6 +132,8 @@ const levelsSlice = createSlice({
     initialState,
     reducers: {
         projectSelected: (state, action) => {
+            console.log("project selected: ")
+            console.log(action.payload)
             state.selectedProject = action.payload
             state.selectedTask = "0"
             state.selectedSubtask = "0"
@@ -169,9 +188,12 @@ const levelsSlice = createSlice({
                 state.editStatus = 'loading'
             })
             .addCase(deleteProject.fulfilled, (state, action) => {
+                debugger
                 state.editStatus = 'succeeded';
+                state.tasks = state.tasks.filter((task) => task.project_id !== action.payload.persistedObject.id)
                 const index = state.projects.findIndex((project) => project.id === action.payload.persistedObject.id)
                 state.projects.splice(index, 1)
+                //delete all tasks and subtasks related to the project
             })
             .addCase(deleteProject.rejected, (state,action) => {
                 state.editStatus = 'rejected';
@@ -199,6 +221,17 @@ const levelsSlice = createSlice({
             })
             .addCase(deleteTask.rejected, (state,action) => {
                 state.editStatus = 'rejected';
+                state.error = action.error.message;
+            })
+            .addCase(createTask.pending, (state) => {
+                state.creationStatus = 'loading'
+            })
+            .addCase(createTask.fulfilled, (state, action) => {
+                state.creationStatus = 'succeeded';
+                state.tasks.push(action.payload.persistedObject)
+            })
+            .addCase(createTask.rejected, (state,action) => {
+                state.creationStatus = 'rejected';
                 state.error = action.error.message;
             })
     }
