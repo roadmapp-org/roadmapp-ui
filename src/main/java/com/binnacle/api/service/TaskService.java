@@ -8,6 +8,7 @@ import com.binnacle.api.request.CreateUpdateTaskRequest;
 import com.binnacle.api.request.DeleteGroupRequest;
 import com.binnacle.api.response.DataResponse;
 import com.binnacle.api.response.PersistResponse;
+import com.binnacle.api.response.task.TaskResponse;
 import com.binnacle.api.service.contract.ITaskUseCases;
 import com.binnacle.api.utils.Results;
 import com.binnacle.api.utils.Tools;
@@ -51,8 +52,15 @@ public class TaskService implements ITaskUseCases {
             task.setActive(true);
             TaskEntity savedTask = taskRepository.save(task);
 
+            TaskResponse response = new TaskResponse(
+                    savedTask.getId(),
+                    savedTask.getName(),
+                    savedTask.getProject().getId(),
+                    savedTask.isActive()
+            );
+
             // return
-            persistResponse = new PersistResponse(Results.OK,"",savedTask,HttpStatus.OK);
+            persistResponse = new PersistResponse(Results.OK,"",response,HttpStatus.OK);
 
         } catch(AppException e){
             persistResponse = Tools.getBadRequest(e, "");
@@ -84,10 +92,18 @@ public class TaskService implements ITaskUseCases {
 
             //business logic
             task.setName(request.getName());
+            task.setActive(request.isActive());
             TaskEntity savedTask = taskRepository.save(task);
 
+            TaskResponse response = new TaskResponse(
+                    savedTask.getId(),
+                    savedTask.getName(),
+                    savedTask.getProject().getId(),
+                    savedTask.isActive()
+            );
+
             // return
-            persistResponse = new PersistResponse(Results.OK,"",savedTask,HttpStatus.OK);
+            persistResponse = new PersistResponse(Results.OK,"",response,HttpStatus.OK);
 
         } catch(AppException e) {
             persistResponse = Tools.getBadRequest(e,"");

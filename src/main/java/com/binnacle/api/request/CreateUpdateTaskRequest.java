@@ -14,4 +14,5 @@ public class CreateUpdateTaskRequest {
     @NotBlank(message = ErrorDescriptions.NOT_BLANK)
     @Size(max = 50, message = ErrorDescriptions.UP_TO_50_CHARACTERS)
     private String name;
+    private boolean active;
 }
