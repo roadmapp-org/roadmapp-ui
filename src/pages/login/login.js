@@ -6,6 +6,7 @@ import { login } from '../../data/login-slice';
 export const Login = () => {
 
     const [showError, setShowError] = useState(false);
+    const [error, setError] = useState('');
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -18,17 +19,18 @@ export const Login = () => {
 
     const onSubmit = async (event) => {
         event.preventDefault();
-        try {
-            const result = await dispatch(login({
-                username: document.getElementById('username').value,
-                password: document.getElementById('password').value
-            }));
-            if(result.type === "auth/login/rejected") {
-                setShowError(true);
-            } else {
-                navigate(`/home`);
-            }
-        } catch (err) {
+        const loginData = {
+            username: document.getElementById('username').value,
+            password: document.getElementById('password').value
+        }
+
+        const result = await dispatch(login(loginData));
+
+        if(result.type === "auth/login/rejected") {
+            setError(result.error.message)
+            setShowError(true);
+        } else {
+            navigate(`/home`);
         }
     }
 
@@ -40,7 +42,7 @@ export const Login = () => {
                 <input type="password" name="password" id="password" placeholder="Password" />
                 <input type="submit" value="Login" />
                 <br></br>
-                {showError && <p>Invalid username or password</p>}
+                {showError && <p>{error}</p>}
             </Form>
         </>
     );

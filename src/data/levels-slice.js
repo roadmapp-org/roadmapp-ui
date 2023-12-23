@@ -132,8 +132,6 @@ const levelsSlice = createSlice({
     initialState,
     reducers: {
         projectSelected: (state, action) => {
-            console.log("project selected: ")
-            console.log(action.payload)
             state.selectedProject = action.payload
             state.selectedTask = "0"
             state.selectedSubtask = "0"

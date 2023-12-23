@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { ProjectListItemComponent } from './project-list-item'
 import { TaskListItemComponent } from './task-list-item-component'
 import { projectSelected } from '../../data/levels-slice'
 
@@ -14,7 +13,6 @@ export const TaskListComponent = () => {
     const onSelectProject = (e) => {
         if(e.target.value !== "0") {
             setFilteredTasks(tasks.filter((item) => item.project_id.toString() === e.target.value))
-            console.log("selected project: " + e.target.value)
             dispatch(projectSelected(e.target.value))
         } else {
             setFilteredTasks(tasks)
@@ -26,7 +24,7 @@ export const TaskListComponent = () => {
             setFilteredTasks(tasks)
         else
             setFilteredTasks(tasks.filter((item) => item.project_id.toString() === selectedProject))
-    }, [tasks])
+    }, [tasks, selectedProject])
 
     return (
         <>

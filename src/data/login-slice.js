@@ -2,19 +2,25 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 
 export const login = createAsyncThunk('auth/login', async (credentials) => {
-        
-        const response = await fetch('http://localhost:8080/auth/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(credentials)
-        });
-        
+        let response;
+        try {
+            
+            response = await fetch('http://localhost:8080/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(credentials)
+            });
+
+        } catch (error) {
+            throw new Error('Server error.');
+        }
+
         const token = response.headers.get('authorization');
 
-        if(token != null && token != undefined && token != '')
+        if(token !== null && token !== undefined && token !== '')
             return token;
-        else
-            throw new Error('Login failed');
+        
+        throw new Error('Wrong credentials.');
     }
 );
 
