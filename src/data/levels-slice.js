@@ -39,31 +39,42 @@ export const createProject = createAsyncThunk('levels/createProject', async(pers
 })
 
 export const editProject = createAsyncThunk('levels/editProject', async(persist) => {
+    let response;
     const bearerToken = localStorage.getItem('token');
-    const response = await fetch('http://localhost:8080/project', {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${bearerToken}`
-        },
-        body: JSON.stringify(persist)
-    });
+    try {
+        response = await fetch('http://localhost:8080/project', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${bearerToken}`
+            },
+            body: JSON.stringify(persist)
+        });
+    } catch (error) {
+        throw new Error('Server error. Try again later.');
+    }
+
     if(!response.ok)
-        throw new Error('Error when saving the log');
+        throw new Error('Error when editing the log');
 
     return response.json();
 })
 
 export const deleteProject = createAsyncThunk('levels/deleteProject', async(persist) => {
+    let response;
     const bearerToken = localStorage.getItem('token');
-    const response = await fetch('http://localhost:8080/project', {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${bearerToken}`
-        },
-        body: JSON.stringify(persist)
-    });
+    try {
+        response = await fetch('http://localhost:8080/project', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${bearerToken}`
+            },
+            body: JSON.stringify(persist)
+        });
+    } catch (error) {
+        throw new Error('Server error. Try again later.');
+    }
 
     if(!response.ok)
         throw new Error('Error when deleting the log');
@@ -72,15 +83,20 @@ export const deleteProject = createAsyncThunk('levels/deleteProject', async(pers
 })
 
 export const editTask = createAsyncThunk('levels/editTask', async(persist) => {
+    let response;
     const bearerToken = localStorage.getItem('token');
-    const response = await fetch('http://localhost:8080/task', {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${bearerToken}`
-        },
-        body: JSON.stringify(persist)
-    });
+    try {
+        response = await fetch('http://localhost:8080/task', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${bearerToken}`
+            },
+            body: JSON.stringify(persist)
+        });
+    } catch (error) {
+        throw new Error('Server error. Try again later.');
+    }
     
     if(!response.ok)
         throw new Error('Error when saving the log');
@@ -89,15 +105,20 @@ export const editTask = createAsyncThunk('levels/editTask', async(persist) => {
 })
 
 export const deleteTask = createAsyncThunk('levels/deleteTask', async (persist) => {
+    let response;
     const bearerToken = localStorage.getItem('token');
-    const response = await fetch('http://localhost:8080/task', {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${bearerToken}`
-        },
-        body: JSON.stringify(persist)
-    });
+    try {
+        response = await fetch('http://localhost:8080/task', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${bearerToken}`
+            },
+            body: JSON.stringify(persist)
+        });
+    } catch (error) {
+        
+    }
 
     if(!response.ok)
         throw new Error('Error when deleting the log');
@@ -106,15 +127,20 @@ export const deleteTask = createAsyncThunk('levels/deleteTask', async (persist) 
 })
 
 export const createTask = createAsyncThunk('levels/createTask', async(persist) => {
+    let response;
     const bearerToken = localStorage.getItem('token');
-    const response = await fetch('http://localhost:8080/task', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${bearerToken}`
-        },
-        body: JSON.stringify(persist)
-    });
+    try {
+        response = await fetch('http://localhost:8080/task', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${bearerToken}`
+            },
+            body: JSON.stringify(persist)
+        });
+    } catch (error) {
+        throw new Error('Server error. Try again later.');
+    }
 
     if(!response.ok)
         throw new Error('Error when saving the log');
@@ -196,12 +222,10 @@ const levelsSlice = createSlice({
                 state.editStatus = 'loading'
             })
             .addCase(deleteProject.fulfilled, (state, action) => {
-                debugger
                 state.editStatus = 'succeeded';
                 state.tasks = state.tasks.filter((task) => task.project_id !== action.payload.persistedObject.id)
                 const index = state.projects.findIndex((project) => project.id === action.payload.persistedObject.id)
                 state.projects.splice(index, 1)
-                //delete all tasks and subtasks related to the project
             })
             .addCase(deleteProject.rejected, (state,action) => {
                 state.editStatus = 'rejected';
