@@ -11,7 +11,7 @@ export const LogFilterComponent = () => {
     const subtasks = useSelector((state) => state.levels.subtasks)
     const selectedProject = useSelector((state) => state.levels.selectedProject)
     const selectedTask = useSelector((state) => state.levels.selectedTask)
-    const selectedSubtask = useSelector((state) => state.levels.selectedSubtask)
+    const error = useSelector((state) => state.levels.error)
 
     const [filteredTask, setFilteredTasks] = useState(useSelector((state) => state.levels.tasks));
     const [filteredSubtask, setFilteredSubtasks] = useState(useSelector((state) => state.levels.subtasks));
@@ -107,6 +107,7 @@ export const LogFilterComponent = () => {
                     ))
                 }
             </select>
+            {error && <p>{error}</p>}
         </div>
     )
 

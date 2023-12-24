@@ -12,14 +12,17 @@ export const login = createAsyncThunk('auth/login', async (credentials) => {
         } catch (error) {
             throw new Error('Server error. Try again later.');
         }
-
-        if(response.status === 401) throw new Error('Invalid user or password.');
-
         const token = response.headers.get('authorization');
 
-        if(token !== null && token !== undefined && token !== '') return token;
+        if(response.status === 401) {
+            throw new Error('Invalid user or password.');
+        }
+        if(token === null || token === undefined || token === '') {
+            throw new Error('Unexpected error. Try again later.');
+        }
 
-        throw new Error('Unexpected error. Try again later.');
+        return token;
+
     }
 );
 

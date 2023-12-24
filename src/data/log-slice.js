@@ -12,15 +12,16 @@ export const getLogs = createAsyncThunk('logs/fetch', async() => {
 )
 
 export const createLog = createAsyncThunk('logs/create', async(log, {rejectWithValue}) => {
+    let response;
+    const bearerToken = localStorage.getItem('token');
+    const persist = {
+        projectId: log.projectId,
+        taskId: log.taskId,
+        subtaskId: log.subtaskId,
+        log: log.log
+    };
     try {
-        const persist = {
-            projectId: log.projectId,
-            taskId: log.taskId,
-            subtaskId: log.subtaskId,
-            log: log.log
-        };
-        const bearerToken = localStorage.getItem('token');
-        const response = await fetch('http://localhost:8080/logs', {
+        response = await fetch('http://localhost:8080/logs', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -28,15 +29,15 @@ export const createLog = createAsyncThunk('logs/create', async(log, {rejectWithV
             },
             body: JSON.stringify(persist)
         });
-
-        if(!response.ok)
-            throw new Error('Error when saving the log');
-
-        return response.json();
-
+        
     } catch (error) {
-        return rejectWithValue(error.message);
+        throw new Error('Server error. Please try again later.');
     }
+    
+    if(!response.ok)
+        throw new Error('Error when saving the log');
+
+    return response.json();
 })     
 
 export const fetchFilteredLogs = createAsyncThunk('logs/filter', async(filters) => {
@@ -60,14 +61,17 @@ const initialState = {
     list: [],
     status: "idle",
     creationStatus: "idle",
-    error: ""
+    error: "",
+    creationError: ""
 }
 
 const logSlice = createSlice({
     name: 'log',
     initialState,
-    reducer: {
-
+    reducers: {
+        setCreationError: (state, action) => {
+            state.creationError = action.payload;
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -80,7 +84,7 @@ const logSlice = createSlice({
             })
             .addCase(createLog.rejected, (state, action) => {
                 state.creationStatus = 'failed';
-                state.error = action.error.message;
+                state.creationError = action.error.message;
             })
             .addCase(getLogs.pending, (state) => {
                 state.status = 'loading';
@@ -108,5 +112,6 @@ const logSlice = createSlice({
 });
 
 //export const selectLogList = (state) => state.token;
+export const { setCreationError } = logSlice.actions;
 
 export default logSlice.reducer;

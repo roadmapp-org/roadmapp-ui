@@ -6,17 +6,17 @@ import {
     selectSelectedProject,
     selectSelectedTask,
     selectSelectedSubtask } from "../../data/levels-slice";
+import { setCreationError } from "../../data/log-slice";
 
 export const LogCreateForm = () => {
 
     const dispatch = useDispatch();
-    const [showError, setShowError] = useState(false);
-    const [createLogErrorMessage, setCreateLogErrorMessage] = useState("Error when saving the log");
 
     const selectedProject = useSelector(selectSelectedProject);
     const selectedTask = useSelector(selectSelectedTask);
     const selectedSubtask = useSelector(selectSelectedSubtask);
     const creationStatus = useSelector((state) => state.log.creationStatus);
+    const creationError = useSelector((state) => state.log.creationError);
     
     const [inputValue, setInputValue] = useState('');
 
@@ -28,7 +28,7 @@ export const LogCreateForm = () => {
         event.preventDefault();
         if(inputValue === "" || inputValue === undefined)
         {
-            setShowError(true)
+            dispatch(setCreationError("Log cannot be empty"))
             return;
         }
         const persist = {
@@ -56,7 +56,7 @@ export const LogCreateForm = () => {
                 placeholder="Type your text here..."
             />
             <br></br>
-            {(showError || creationStatus === "failed") && <p>{createLogErrorMessage}</p>}
+            {creationError && <p>{creationError}</p>}
             <br></br>
             <input
                 type="submit"

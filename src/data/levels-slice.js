@@ -1,29 +1,39 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const getLevels = createAsyncThunk('levels/fetch', async() => {
+    let response;
     const bearerToken = localStorage.getItem('token');
-    const response = await fetch('http://localhost:8080/levels', {
-        headers: {
-            Authorization: `Bearer ${bearerToken}`
-        }
-    });
+    try {
+         response = await fetch('http://localhost:8080/levels', {
+            headers: {
+                Authorization: `Bearer ${bearerToken}`
+            }
+        });
+    } catch (error) {
+        throw new Error('Server error. Try again later.');
+    }
+    
     return response.json();
-}
-)
+})
 
 export const createProject = createAsyncThunk('levels/createProject', async(persist) => {
+    let response;
     const bearerToken = localStorage.getItem('token');
-    const response = await fetch('http://localhost:8080/project', {
+    try{
+        response = await fetch('http://localhost:8080/project', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${bearerToken}`
         },
         body: JSON.stringify(persist)
-    });
+        });
+    } catch (error) {
+        throw new Error('Server error. Try again later.');
+    }
 
     if(!response.ok)
-        throw new Error('Error when saving the log');
+        throw new Error('Error when saving the project');
 
     return response.json();
 })
