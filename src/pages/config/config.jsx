@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux'
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux'
 import { getLevels } from "../../data/levels-slice";
-import { ProjectComponent } from '../../components/config/project-component';
-import { TaskComponent } from '../../components/config/task-component';
+import { ProjectComponent } from '../../components/config/project-component.jsx';
+import { TaskComponent } from '../../components/config/task-component.jsx';
 
 
 export const Config = () => {

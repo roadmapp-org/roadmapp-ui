@@ -1,10 +1,10 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import Root from "./root";
-import { PrivateRoute } from "./private-route";
-import { Home } from "../pages/home/home";
-import { Login } from "../pages/login/login";
-import { NotFound } from "../pages/not-found";
-import { Config } from "../pages/config/config";
+import { PrivateRoute } from "./private-route.jsx";
+import { Home } from "../pages/home/home.jsx";
+import { Login } from "../pages/login/login.jsx";
+import { NotFound } from "../pages/not-found.jsx";
+import { Config } from "../pages/config/config.jsx";
 
 const router = createBrowserRouter([
     {
