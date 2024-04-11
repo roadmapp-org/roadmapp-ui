@@ -5,7 +5,7 @@ import { ProjectFormComponent } from './project-form-component';
 export const ProjectComponent = () => {
     return (
         <>
-        <h2>Projects</h2>
+        <h2 className='text-2xl mb-5'>Projects</h2>
           <ProjectListComponent />
           <br></br>
           <ProjectFormComponent />

@@ -8,12 +8,6 @@ export const ProjectListComponent = () => {
     return (
         <>
             <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th colSpan={4}></th>
-                    </tr>
-                </thead>
                 <tbody>
                     {
                         projects.map((project,index) => (

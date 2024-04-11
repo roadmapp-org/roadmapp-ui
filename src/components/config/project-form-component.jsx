@@ -35,14 +35,22 @@ export const ProjectFormComponent = () => {
     };
 
     return (
-        <Form method="post" onSubmit={onSubmit}>
-            <input  value={inputValue}
-                    onChange={handleChange}
-                    type="text"
-                    placeholder="New Project Name" />
-            <input type="submit" value="Add" disabled={inputValue.length < 5} />
+        <Form method="post" onSubmit={onSubmit} className="flex flex-col md:flex-row justify-evenly items-center">
+            <input  
+                value={inputValue}
+                onChange={handleChange}
+                type="text"
+                placeholder="New Project Name"
+                className="w-full px-3 py-2 placeholder-gray-500 border rounded-md focus:outline-none md:w-[70%]"
+            />
+            <input
+                type="submit"
+                value="Add"
+                disabled={inputValue.length < 5}
+                className="w-full mt-3 py-2 px-4 rounded-md shadow-sm font-medium text-white bg-cyan-700 md:w-[15%] md:mt-0 "
+            />
             <br></br>
-            {showError && <p>Error when saving the project</p>}
+            {showError && <p className="text-red-500">Error when saving the project</p>}
         </Form>
     )
 }
