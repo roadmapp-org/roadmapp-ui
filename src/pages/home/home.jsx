@@ -25,12 +25,19 @@ export const Home = () => {
     }, [])
 
     return (
-        <>
-            <LogFilterComponent/>
-            <br></br>
-            <LogCreateForm/>
-            <br></br>
-            <LogListComponent/>
-        </>
+        <div className="bg-gray-200 py-5 h-auto flex justify-center">
+          <div className='flex flex-col w-5/6 sm:w-3/4 md:w-1/2'>
+            <div className='container mx-auto grid grid-rows-6 grid-cols-1 sm:grid-cols-3 sm:grid-rows-2 justify-items-center gap-2 pb-10 border-b-2 border-zinc-300'>
+              <LogFilterComponent/>
+            </div>
+            <div className='container mx-auto mt-5 border-b-2 pb-10'>
+              <LogCreateForm/>
+            </div>
+            <div className='container mx-auto mt-5 border-b-2 pb-10 flex flex-col items-center'>
+              <h1 className='text-3xl pb-5'>Logs</h1>
+              <LogListComponent/>
+            </div>
+          </div>
+        </div>
     );
 }
