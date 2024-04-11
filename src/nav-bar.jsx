@@ -21,6 +21,7 @@ export const NavBar = () => {
                 <nav className="container mx-auto px-6 py-3">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-6">
+                            <a href='/home'><img src="roadmap.png" className="w-10 h-10 rounded" /></a>
                             <Link className="text-white hover:text-blue-300" to="/home">Home</Link>
                             <Link className="text-white hover:text-blue-300" to="/config">Config</Link>
                         </div>
