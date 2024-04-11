@@ -37,7 +37,7 @@ export const Login = () => {
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-cyan-900 p-5">
             <div className="p-6 space-y-8 bg-gray-200 rounded shadow-md w-full max-w-md">
-                <h1 className="text-2xl font-bold text-center">Login</h1>
+                <img src="roadmap.png" className="w-44 h-44 self-center justify-self-center mx-auto" />
                 <Form className="space-y-6" method="post" onSubmit={onSubmit}>
                     <div>
                         <input 
