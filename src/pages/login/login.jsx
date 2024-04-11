@@ -35,15 +35,38 @@ export const Login = () => {
     }
 
     return (
-        <>
-            <h1>Login</h1>
-            <Form method="post" onSubmit={onSubmit} >
-                <input type="text" name="username" id="username" placeholder="Username" />
-                <input type="password" name="password" id="password" placeholder="Password" />
-                <input type="submit" value="Login" />
-                <br></br>
-                {showError && <p>{error}</p>}
-            </Form>
-        </>
+        <div className="flex flex-col items-center justify-center min-h-screen bg-cyan-900 p-5">
+            <div className="p-6 space-y-8 bg-gray-200 rounded shadow-md w-full max-w-md">
+                <h1 className="text-2xl font-bold text-center">Login</h1>
+                <Form className="space-y-6" method="post" onSubmit={onSubmit}>
+                    <div>
+                        <input 
+                            className="w-full px-3 py-2 placeholder-gray-500 border rounded-md focus:outline-none border-cyan-500 focus:ring-cyan-900 focus:border-cyan-900 sm:text-sm" 
+                            type="text" 
+                            name="username" 
+                            id="username" 
+                            placeholder="Username" 
+                        />
+                    </div>
+                    <div>
+                        <input 
+                            className="w-full px-3 py-2 placeholder-gray-500 border rounded-md focus:outline-none border-cyan-500 focus:ring-cyan-900 focus:border-cyan-900 sm:text-sm" 
+                            type="password" 
+                            name="password" 
+                            id="password" 
+                            placeholder="Password" 
+                        />
+                    </div>
+                    <div>
+                        <input 
+                            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-cyan-900 hover:bg-cyan-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" 
+                            type="submit" 
+                            value="Login" 
+                        />
+                    </div>
+                </Form>
+                {showError && <p className="text-red-600 text-center font-medium">{error}</p>}
+            </div>
+        </div>
     );
 }
