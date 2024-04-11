@@ -17,16 +17,24 @@ export const NavBar = () => {
     return (
         <>
         {auth.token && (
-        
-            <nav>
-                <ul>
-                    <li><Link to="/home">Home</Link></li>
-                    <li><Link to="/config">Config</Link></li>
-                </ul>
-                <div className="nav-right">
-                    <button onClick={onClickLogOut}>Log Out</button>
-                </div>
-            </nav>
+            <header className="bg-cyan-900 text-white shadow w-full">
+                <nav className="container mx-auto px-6 py-3">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-6">
+                            <Link className="text-white hover:text-blue-300" to="/home">Home</Link>
+                            <Link className="text-white hover:text-blue-300" to="/config">Config</Link>
+                        </div>
+                        <div>
+                            <button 
+                                className="bg-gray-800 text-white font-bold py-2 px-4 rounded" 
+                                onClick={onClickLogOut}
+                            >
+                                Log Out
+                            </button>
+                        </div>
+                    </div>
+                </nav>
+            </header>
         )}
         </>
     );
