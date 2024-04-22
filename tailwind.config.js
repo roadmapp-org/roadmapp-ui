@@ -15,6 +15,7 @@ export default {
       current: 'currentColor',
       'custom-black': '#333',
       'custom-grey': '#bbb',
+      'custom-grey-2': '#585858',
       'custom-white': '#eee',
       'custom-blue': '#a5d0e8',
       'purple': '#3f3cbb',

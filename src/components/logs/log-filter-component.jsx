@@ -100,8 +100,8 @@ export const LogFilterComponent = () => {
                     ))
                 }z
             </select>
-            <h1 className='sm:order-3 text-xl leading-2 font-medium text-gray-700  hidden sm:block'>Subtask</h1>
-            <select id='subtaskFilter' className='w-full rounded-md sm:order-6 py-2 px-3 border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm' disabled={layout.subtaskDisabled} onChange={onSelectSubtask}>
+            <h1 className='sm:order-3 text-xl leading-2 font-medium text-gray-700  hidden'>Subtask</h1>
+            <select id='subtaskFilter' className='w-full rounded-md sm:order-6 py-2 px-3 border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm hidden' disabled={layout.subtaskDisabled} onChange={onSelectSubtask}>
                 <option key={0} value={0}>{"All subtasks"}</option>
                 {
                     filteredSubtask.map((item, index) => (
