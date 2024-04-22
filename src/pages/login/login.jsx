@@ -35,9 +35,9 @@ export const Login = () => {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-cyan-900 p-5">
-            <div className="p-6 space-y-8 bg-gray-200 rounded shadow-md w-full max-w-md">
-                <img src="roadmap.png" className="w-40 h-40 mx-auto" />
+        <div className="flex items-center justify-center min-h-screen bg-custom-grey p-6">
+            <div className="flex-col p-6 space-y-8 bg-custom-white rounded-lg shadow-lg w-full max-w-md">
+                <img src="roadmap.png" className="w-24 h-24 mx-auto" />
                 <div className="flex justify-center text-3xl">
                     <h1>RoadmApp</h1>
                 </div>
@@ -62,7 +62,7 @@ export const Login = () => {
                     </div>
                     <div>
                         <input 
-                            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-cyan-900 hover:bg-cyan-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" 
+                            className="w-full py-2 px-4 mb-8 border border-transparent rounded-md shadow-lg text-sm font-medium bg-custom-blue" 
                             type="submit" 
                             value="Login" 
                         />
