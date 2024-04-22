@@ -35,8 +35,8 @@ export const Login = () => {
     }
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-custom-grey p-6">
-            <div className="flex-col p-6 space-y-8 bg-custom-white rounded-lg shadow-lg w-full max-w-md">
+        <div className="flex items-center justify-center min-h-screen bg-custom-black p-6">
+            <div className="flex-col p-6 space-y-8 bg-custom-white rounded-2xl shadow-lg w-full max-w-md">
                 <img src="roadmap.png" className="w-24 h-24 mx-auto" />
                 <div className="flex justify-center text-3xl">
                     <h1>RoadmApp</h1>
