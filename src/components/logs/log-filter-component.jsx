@@ -22,26 +22,31 @@ export const LogFilterComponent = () => {
         subtaskDisabled: true
     });
 
+    const [currentProject, setCurrentProject] = useState(null);
+    const onClickProject = (id) => {
+        setCurrentProject(id);
+    } 
+
     const onSelectProject = (e) => {
 
-        if(e.target.value !== "0") {
+        if(e !== "0") {
             setLayout({...setLayout, taskDisabled: false, subtaskDisabled: true})
         } else {
             setLayout({...layout, taskDisabled: true, subtaskDisabled: true})
-            dispatch(taskSelected(e.target.value))
-            dispatch(subtaskSelected(e.target.value))
+            dispatch(taskSelected(e))
+            dispatch(subtaskSelected(e))
         }
         document.getElementById('taskFilter').selectedIndex = 0
         document.getElementById('subtaskFilter').selectedIndex = 0
-        dispatch(projectSelected(e.target.value))
-        const filtered = tasks.filter((item) => item.project_id.toString() === e.target.value);
+        dispatch(projectSelected(e))
+        const filtered = tasks.filter((item) => item.project_id.toString() === e);
         setFilteredTasks(filtered)
-        if(e.target.value === "0") {
+        if(e === "0") {
             dispatch(getLogs())
         }
         else {
             dispatch(fetchFilteredLogs({
-                project: e.target.value,
+                project: e,
                 task: "0",
                 subtask: "0"
             }))
@@ -84,17 +89,17 @@ export const LogFilterComponent = () => {
                 <h1 className='text-2xl mb-4'>Select a project</h1>
                 <div className="flex items-start">
                     <div className="flex flex-wrap justify-evenly" id="projectsList">
-                    {
-                        projects.map((item, index) => (
-                            <>
-                                <div className='align-content-center flex-grow text-center bg-color-3 text-custom-black  p-2 m-1 rounded-md font-medium text-black'>
-                                    {item.name}
+                        {
+                            projects.map((item, index) => (
+                                <div className={`relative align-content-center flex-grow text-center text-custom-black p-2 m-1 rounded-md font-medium text-black hover:cursor-pointer ${item.id === currentProject ? 'bg-color-4' : 'bg-color-3'}`} onClick={() => onClickProject(item.id)}>
+                                    <p>{item.name}</p>
                                 </div>
-                            </>
-                        ))
-                    }  
-                    <div className='flex-grow text-center bg-custom-black text-custom-white p-2 m-1 rounded-md font-medium text-black'>Create new</div>
+                            ))
+                        }  
                     </div>
+                <div className='flex-grow text-center bg-custom-black text-custom-white p-2 m-1 rounded-md font-medium text-black'>
+                    +
+                </div>
                 </div>
             </div>
             
