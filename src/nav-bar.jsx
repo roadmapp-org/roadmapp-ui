@@ -20,12 +20,18 @@ export const NavBar = () => {
             <header className="bg-custom-black text-white shadow-lg w-full text-custom-white">
                 <nav className="container mx-auto px-6 py-3">
                     <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-6">
-                            <a href='/home'><img src="roadmap.png" className="w-10 h-10 rounded" /></a>
+                        <a href='/home' className='flex items-center'>
+                            <img src="roadmap.png" className="w-10 h-10 rounded" />
+                            <span className='text-2xl ml-3'>RoadmApp</span>
+                        </a>
+                        <div className="flex items-center space-x-6  ">
                             <Link className="hidden xs:block text-white hover:text-blue-300" to="/home">Home</Link>
                             <Link className="hidden xs:block text-white hover:text-blue-300" to="/config">Config</Link>
                         </div>
                         <div>
+                            <a href='/home' className="xs:hidden">
+                                <img src="white-menu.png" className="w-6 h-6 rounded" />
+                            </a>
                             <button className="hidden xs:block bg-gray-800 text-white font-bold py-2 px-4 rounded" onClick={onClickLogOut}>
                                 Log Out
                             </button>
