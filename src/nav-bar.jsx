@@ -17,19 +17,16 @@ export const NavBar = () => {
     return (
         <>
         {auth.token && (
-            <header className="bg-cyan-900 text-white shadow w-full">
+            <header className="bg-custom-black text-white shadow-lg w-full text-custom-white">
                 <nav className="container mx-auto px-6 py-3">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-6">
                             <a href='/home'><img src="roadmap.png" className="w-10 h-10 rounded" /></a>
-                            <Link className="text-white hover:text-blue-300" to="/home">Home</Link>
-                            <Link className="text-white hover:text-blue-300" to="/config">Config</Link>
+                            <Link className="hidden xs:block text-white hover:text-blue-300" to="/home">Home</Link>
+                            <Link className="hidden xs:block text-white hover:text-blue-300" to="/config">Config</Link>
                         </div>
                         <div>
-                            <button 
-                                className="bg-gray-800 text-white font-bold py-2 px-4 rounded" 
-                                onClick={onClickLogOut}
-                            >
+                            <button className="hidden xs:block bg-gray-800 text-white font-bold py-2 px-4 rounded" onClick={onClickLogOut}>
                                 Log Out
                             </button>
                         </div>

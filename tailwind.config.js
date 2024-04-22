@@ -5,10 +5,15 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      screens: {
+        'xs': '350px',
+      },
+    },
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
+      'custom-black': '#333',
       'custom-grey': '#bbb',
       'custom-white': '#eee',
       'custom-blue': '#a5d0e8',
