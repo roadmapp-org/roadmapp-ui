@@ -102,6 +102,23 @@ export const LogFilterComponent = () => {
                 </div>
                 </div>
             </div>
+            <div className="flex flex-col items-center justify-center mt-5">
+                <h1 className='text-2xl mb-4'>Select a Task</h1>
+                <div className="flex items-start">
+                    <div className="flex flex-wrap justify-evenly" id="projectsList">
+                        {
+                            projects.map((item, index) => (
+                                <div className={`relative align-content-center flex-grow text-center text-custom-black p-2 m-1 rounded-md font-medium text-black hover:cursor-pointer ${item.id === currentProject ? 'bg-color-4' : 'bg-color-4'}`} onClick={() => onClickProject(item.id)}>
+                                    <p>{item.name}</p>
+                                </div>
+                            ))
+                        }  
+                    </div>
+                <div className='flex-grow text-center bg-custom-black text-custom-white p-2 m-1 rounded-md font-medium text-black'>
+                    +
+                </div>
+                </div>
+            </div>
             
             {
             /*
