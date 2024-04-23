@@ -4,7 +4,6 @@ import { projectSelected, taskSelected, subtaskSelected } from '../../data/level
 import { fetchFilteredLogs, getLogs } from "../../data/log-slice"
 
 export const LogFilterComponent = () => {
-    
     const dispatch = useDispatch()
     const projects = useSelector((state) => state.levels.projects)
     const tasks = useSelector((state) => state.levels.tasks)
@@ -14,13 +13,6 @@ export const LogFilterComponent = () => {
     const error = useSelector((state) => state.levels.error)
 
     const [filteredTask, setFilteredTasks] = useState(useSelector((state) => state.levels.tasks));
-    const [filteredSubtask, setFilteredSubtasks] = useState(useSelector((state) => state.levels.subtasks));
-
-    const [ layout, setLayout ] = useState({
-        projectDisabled: false,
-        taskDisabled: true,
-        subtaskDisabled: true
-    });
 
     const [currentProject, setCurrentProject] = useState(null);
     const [currentProjectName, setCurrentProjectName] = useState(null);
@@ -30,12 +22,17 @@ export const LogFilterComponent = () => {
     const onClickProject = (item) => {
         setCurrentProject(item.id);
         setCurrentProjectName(item.name);
+        let filtered = tasks.filter((task) => task.project_id === item.id);
+        setFilteredTasks(filtered);
+        dispatch(projectSelected(item.id));
     }
 
     const cleanCurrentProject = () => {
         cleanCurrentTask();
         setCurrentProject(null);
         setCurrentProjectName(null);
+        dispatch(projectSelected(0));
+        dispatch(taskSelected(0));
     }
 
     const onClickTask = (item) => {
@@ -48,61 +45,41 @@ export const LogFilterComponent = () => {
         setCurrentTaskName(null);
     }
 
-    const onSelectProject = (e) => {
-
-        if(e !== "0") {
-            setLayout({...setLayout, taskDisabled: false, subtaskDisabled: true})
-        } else {
-            setLayout({...layout, taskDisabled: true, subtaskDisabled: true})
-            dispatch(taskSelected(e))
-            dispatch(subtaskSelected(e))
-        }
-        document.getElementById('taskFilter').selectedIndex = 0
-        document.getElementById('subtaskFilter').selectedIndex = 0
-        dispatch(projectSelected(e))
-        const filtered = tasks.filter((item) => item.project_id.toString() === e);
-        setFilteredTasks(filtered)
-        if(e === "0") {
-            dispatch(getLogs())
-        }
-        else {
-            dispatch(fetchFilteredLogs({
-                project: e,
-                task: "0",
-                subtask: "0"
-            }))
-        }
+    const onSelectProject = (id) => {
+        const filtered = tasks.filter((item) => item.project_id.toString() === id);
+        setFilteredTasks(filtered);
+        
     }
 
-    const onSelectTask = (e) => {
-        if(e.target.value !== "0") {
-            setLayout({...layout, subtaskDisabled: false})
-        } else {
-            setLayout({
-                ...layout,
-                subtaskDisabled: true
-            })
-            dispatch(subtaskSelected(e.target.value))
-        }
-        document.getElementById('subtaskFilter').selectedIndex = 0
-        dispatch(taskSelected(e.target.value))
-        const filtered = subtasks.filter((item) => item.task_id.toString() === e.target.value)
-        setFilteredSubtasks(filtered);
-        dispatch(fetchFilteredLogs({
-            project: e.target.value !== "0" ? "0" : selectedProject,
-            task: e.target.value !== "0" ? e.target.value : "0",
-            subtask: "0"
-        }))
-    }
+    // const onSelectTask = (e) => {
+    //     if(e.target.value !== "0") {
+    //         setLayout({...layout, subtaskDisabled: false})
+    //     } else {
+    //         setLayout({
+    //             ...layout,
+    //             subtaskDisabled: true
+    //         })
+    //         dispatch(subtaskSelected(e.target.value))
+    //     }
+    //     document.getElementById('subtaskFilter').selectedIndex = 0
+    //     dispatch(taskSelected(e.target.value))
+    //     const filtered = subtasks.filter((item) => item.task_id.toString() === e.target.value)
+    //     setFilteredSubtasks(filtered);
+    //     dispatch(fetchFilteredLogs({
+    //         project: e.target.value !== "0" ? "0" : selectedProject,
+    //         task: e.target.value !== "0" ? e.target.value : "0",
+    //         subtask: "0"
+    //     }))
+    // }
 
-    const onSelectSubtask = (e) => {
-        dispatch(subtaskSelected(e.target.value))
-        dispatch(fetchFilteredLogs({
-            project: "0",
-            task: e.target.value !== "0" ? "0" : selectedTask,
-            subtask: e.target.value !== "0" ? e.target.value : "0"
-        }))
-    }
+    // const onSelectSubtask = (e) => {
+    //     dispatch(subtaskSelected(e.target.value))
+    //     dispatch(fetchFilteredLogs({
+    //         project: "0",
+    //         task: e.target.value !== "0" ? "0" : selectedTask,
+    //         subtask: e.target.value !== "0" ? e.target.value : "0"
+    //     }))
+    // }
 
     return (
         <>
@@ -129,7 +106,7 @@ export const LogFilterComponent = () => {
                     <div className="flex flex-wrap justify-evenly" id="projectsList">
                         {
                             projects.map((item, index) => (
-                                <div className={`relative align-content-center flex-grow text-center text-custom-black p-2 m-1 rounded-md font-medium text-black hover:cursor-pointer ${item.id === currentProject ? 'bg-color-4' : 'bg-color-3'}`} onClick={() => onClickProject(item)}>
+                                <div key={index} className={`relative align-content-center flex-grow text-center text-custom-black p-2 m-1 rounded-md font-medium text-black hover:cursor-pointer ${item.id === currentProject ? 'bg-color-4' : 'bg-color-3'}`} onClick={() => onClickProject(item)}>
                                     <p>{item.name}</p>
                                 </div>
                             ))
@@ -140,7 +117,6 @@ export const LogFilterComponent = () => {
                 </div>
                 </div>
             </div>
-            
             <div className={`flex flex-col items-center justify-center ${currentProject != null && currentTask == null ? "block" : "hidden"}`}>
                 <div className='text-2xl flex mb-5'>
                     <span className='self-center'>Tasks of&nbsp;{currentProjectName}</span>
@@ -148,8 +124,8 @@ export const LogFilterComponent = () => {
                 <div className="flex items-start">
                     <div className="flex flex-wrap justify-evenly" id="projectsList">
                         {
-                            projects.map((item, index) => (
-                                <div className={`relative align-content-center flex-grow text-center text-custom-black p-2 m-1 rounded-md font-medium text-black hover:cursor-pointer ${item.id === currentProject ? 'bg-color-4' : 'bg-color-4'}`} onClick={() => onClickTask(item)}>
+                            filteredTask.map((item, index) => (
+                                <div key={index} className={`relative align-content-center flex-grow text-center text-custom-black p-2 m-1 rounded-md font-medium text-black hover:cursor-pointer ${item.id === currentProject ? 'bg-color-4' : 'bg-color-4'}`} onClick={() => onClickTask(item)}>
                                     <p>{item.name}</p>
                                 </div>
                             ))
@@ -160,9 +136,6 @@ export const LogFilterComponent = () => {
                 </div>
                 </div>
             </div>
-            
-            
-            
             {
             /*
             <h1 className='sm:order-1 text-xl leading-2 font-medium text-gray-700 hidden sm:block'>

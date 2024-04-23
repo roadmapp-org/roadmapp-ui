@@ -42,16 +42,16 @@ export const NavBar = () => {
                 </header>
                 <div className={`w-100 h-100 bg-custom-black text-custom-white ${isOpen ? 'block' : 'hidden'}`} id="menu">
                     <Link to="/home" onClick={() => setIsOpen(!isOpen)}>
-                        <a className="text-xl flex justify-end p-4 pr-10 border-t border-gray-300">
+                        <div className="text-xl flex justify-end p-4 pr-10 border-t border-gray-300">
                             <span>Home</span>
                             <img src="home.png" className="w-6 h-6 rounded self-center ml-4" />
-                        </a>
+                        </div>
                     </Link>
                     <Link to="/config" onClick={() => setIsOpen(!isOpen)}>
-                        <a className="text-xl flex justify-end p-4 pr-10 border-t border-gray-300">
+                        <div className="text-xl flex justify-end p-4 pr-10 border-t border-gray-300">
                             <span>Config</span>
                             <img src="config.png" className="w-6 h-6 rounded self-center ml-4" />
-                        </a>
+                        </div>
                     </Link>
                     <a className="text-xl flex justify-end p-4 pr-10 border-t border-gray-300" onClick={onClickLogOut}>
                         <span>Logout</span>
