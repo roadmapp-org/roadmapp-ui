@@ -32,8 +32,8 @@ export const Home = () => {
             </div>
             {/* <div className='container mx-auto mt-5 border-b-2 pb-10'>
               <LogCreateForm/>
-            </div>
-            <div className='container mx-auto mt-5 border-b-2 pb-10 flex flex-col items-center'>
+            </div> */}
+            {/* <div className='container mx-auto mt-5 border-b-2 pb-10 flex flex-col items-center'>
               <LogListComponent/>
             </div> */}
           </div>
