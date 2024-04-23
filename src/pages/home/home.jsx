@@ -6,6 +6,7 @@ import { LogFilterComponent } from '../../components/logs/log-filter-component.j
 import { getLevels } from "../../data/levels-slice";
 import { getLogs } from "../../data/log-slice"
 import { LogCreateForm } from '../../components/logs/log-create-form.jsx';
+import { LogCurrentFilterComponent } from '../../components/logs/log-current-filter-component.jsx';
 
 export const Home = () => {
     
@@ -25,6 +26,7 @@ export const Home = () => {
     }, [])
 
     return (
+      <>
         <div className="bg-gray-200 py-5 h-auto flex justify-center min-h-screen">
           <div className='flex flex-col w-5/6 sm:w-3/4 md:w-1/2'>
             <div className='container mx-auto'>
@@ -38,5 +40,9 @@ export const Home = () => {
             </div> */}
           </div>
         </div>
+        <div className="w-full h-24 bg-custom-black fixed bottom-0">
+            <LogCurrentFilterComponent />
+        </div>
+      </>
     );
 }
