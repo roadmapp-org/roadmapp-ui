@@ -40,7 +40,7 @@ export const Home = () => {
             </div> */}
           </div>
         </div>
-        <div className="w-full h-24 bg-custom-black fixed bottom-0">
+        <div className="flex flex-wrap items-center justify-center px-5 w-full h-24 bg-custom-black fixed bottom-0">
             <LogCurrentFilterComponent />
         </div>
       </>
