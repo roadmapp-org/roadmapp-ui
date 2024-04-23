@@ -24,13 +24,28 @@ export const LogFilterComponent = () => {
 
     const [currentProject, setCurrentProject] = useState(null);
     const [currentProjectName, setCurrentProjectName] = useState(null);
+    const [currentTask, setCurrentTask] = useState(null);
+    const [currentTaskName, setCurrentTaskName] = useState(null);
+    
     const onClickProject = (item) => {
         setCurrentProject(item.id);
         setCurrentProjectName(item.name);
     }
+
     const cleanCurrentProject = () => {
+        cleanCurrentTask();
         setCurrentProject(null);
         setCurrentProjectName(null);
+    }
+
+    const onClickTask = (item) => {
+        setCurrentTask(item.id);
+        setCurrentTaskName(item.name);
+    }  
+    
+    const cleanCurrentTask = () => {
+        setCurrentTask(null);
+        setCurrentTaskName(null);
     }
 
     const onSelectProject = (e) => {
@@ -91,8 +106,25 @@ export const LogFilterComponent = () => {
 
     return (
         <>
+            <div className={`flex flex-col ${currentProject != null ? "block" : "hidden"} items-center mb-8`}>
+                <h1 className='text-2xl mb-4'>Your current roadmap</h1>
+                <div className="flex justify-center">
+                    <div className='bg-color-3 rounded-md py-1 px-2 relative grow-0'>
+                        <p className="font-medium">{currentProjectName}</p>
+                        <button className='absolute -top-2 -right-3 rounded-[50%] bg-color-2' onClick={() => cleanCurrentProject()}>
+                            <img src="white-cancel.png" className="w-5 h-5 p-1" />
+                        </button>
+                    </div>
+                    <div className={`bg-color-4 rounded-md py-1 px-2 relative grow-0 ml-4 ${currentTask != null ? "block" : "hidden"}`}>
+                        <p className="font-medium">{currentTaskName}</p>
+                        <button className='absolute -top-2 -right-3 rounded-[50%] bg-color-2' onClick={() => cleanCurrentTask()}>
+                            <img src="white-cancel.png" className="w-5 h-5 p-1" />
+                        </button>
+                    </div>
+                </div>
+            </div>
             <div className={`flex flex-col items-center justify-center ${currentProject != null ? "hidden" : "block"}`}>
-                <h1 className='text-2xl mb-4'>Choose a project</h1>
+                <h1 className='text-2xl mb-4'>Projects</h1>
                 <div className="flex items-start">
                     <div className="flex flex-wrap justify-evenly" id="projectsList">
                         {
@@ -108,22 +140,16 @@ export const LogFilterComponent = () => {
                 </div>
                 </div>
             </div>
-            <div className={`flex flex-col items-center justify-center ${currentProject != null ? "block" : "hidden"}`}>
-
+            
+            <div className={`flex flex-col items-center justify-center ${currentProject != null && currentTask == null ? "block" : "hidden"}`}>
                 <div className='text-2xl flex mb-5'>
-                    <span className='self-center'>Choose a task of&nbsp;</span>
-                    <div className='bg-color-3 rounded-md py-1 px-2 relative'>
-                        <em className="font-medium">{currentProjectName}</em>
-                        <button className='absolute -top-2 -right-3 rounded-[50%] bg-color-2' onClick={() => cleanCurrentProject()}>
-                            <img src="white-cancel.png" className="w-5 h-5 p-1" />
-                        </button>
-                    </div>
+                    <span className='self-center'>Tasks of&nbsp;{currentProjectName}</span>
                 </div>
                 <div className="flex items-start">
                     <div className="flex flex-wrap justify-evenly" id="projectsList">
                         {
                             projects.map((item, index) => (
-                                <div className={`relative align-content-center flex-grow text-center text-custom-black p-2 m-1 rounded-md font-medium text-black hover:cursor-pointer ${item.id === currentProject ? 'bg-color-4' : 'bg-color-4'}`}>
+                                <div className={`relative align-content-center flex-grow text-center text-custom-black p-2 m-1 rounded-md font-medium text-black hover:cursor-pointer ${item.id === currentProject ? 'bg-color-4' : 'bg-color-4'}`} onClick={() => onClickTask(item)}>
                                     <p>{item.name}</p>
                                 </div>
                             ))
@@ -134,6 +160,8 @@ export const LogFilterComponent = () => {
                 </div>
                 </div>
             </div>
+            
+            
             
             {
             /*
