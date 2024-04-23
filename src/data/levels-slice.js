@@ -153,8 +153,10 @@ const initialState = {
     tasks: [],
     subtasks: [],
     logs: [],
-    selectedProject: "0",
-    selectedTask: "0",
+    selectedProject: 0,
+    selectedProjectName: "",
+    selectedTask: 0,
+    selectedTaskName: "",
     selectedSubtask: "0",
     status: "idle",
     error: "",
@@ -169,12 +171,18 @@ const levelsSlice = createSlice({
     reducers: {
         projectSelected: (state, action) => {
             state.selectedProject = action.payload
-            state.selectedTask = "0"
-            state.selectedSubtask = "0"
+            state.selectedTask = 0
+            state.selectedSubtask = 0
+        },
+        projectNameSelected: (state, action) => {
+            state.selectedProjectName = action.payload
         },
         taskSelected: (state, action) => {
             state.selectedTask = action.payload
-            state.selectedSubtask = "0"
+            state.selectedSubtask = 0
+        },
+        taskNameSelected: (state, action) => {
+            state.selectedTaskName = action.payload
         },
         subtaskSelected: (state, action) => {
             state.selectedSubtask = action.payload
@@ -281,6 +289,6 @@ export const levelsSliceSelectors = {
     selectLogList
 }
 
-export const { projectSelected, taskSelected, subtaskSelected } = levelsSlice.actions;
+export const { projectSelected, projectNameSelected, taskSelected, taskNameSelected, subtaskSelected } = levelsSlice.actions;
 
 export default levelsSlice.reducer;
