@@ -9,6 +9,9 @@ export default {
       screens: {
         'xs': '500px',
       },
+      gridTemplateColumns: {
+        '1-9': '1fr 9fr',
+      },
     },
     colors: {
       transparent: 'transparent',
