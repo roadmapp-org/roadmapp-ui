@@ -1,11 +1,8 @@
-import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import { LogListComponent } from '../../components/logs/log-list-component.jsx';
 import { useEffect } from 'react';
 import { LogFilterComponent } from '../../components/logs/log-filter-component.jsx';
 import { getLevels } from "../../data/levels-slice";
-import { getLogs } from "../../data/log-slice"
-import { LogCreateForm } from '../../components/logs/log-create-form.jsx';
 import { LogCurrentFilterComponent } from '../../components/logs/log-current-filter-component.jsx';
 
 export const Home = () => {
@@ -19,12 +16,6 @@ export const Home = () => {
         }
       }, [])
 
-    useEffect(() => {
-      if (levelsStatus === 'idle') {
-        dispatch(getLogs())
-      }
-    }, [])
-
     return (
       <>
         <div className="bg-gray-200 py-5 h-auto flex justify-center min-h-screen">
@@ -35,7 +26,7 @@ export const Home = () => {
             {/* <div className='container mx-auto mt-5 border-b-2 pb-10'>
               <LogCreateForm/>
             </div> */}
-            <div className='container mx-auto border-b-2 pb-10 flex flex-col items-center mb-5'>
+            <div className='container mx-auto pb-10 flex flex-col items-center mb-5'>
               <LogListComponent/>
             </div>
           </div>

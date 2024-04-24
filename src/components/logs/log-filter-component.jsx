@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { projectSelected, projectNameSelected, taskSelected, taskNameSelected, subtaskSelected } from '../../data/levels-slice'
+import { projectSelected, projectNameSelected, taskSelected, taskNameSelected } from '../../data/levels-slice'
+import { getLogs } from "../../data/log-slice"
 
 export const LogFilterComponent = () => {
     const dispatch = useDispatch()
+    const levelsStatus = useSelector(state => state.levels.status)
     const projects = useSelector((state) => state.levels.projects)
     const tasks = useSelector((state) => state.levels.tasks)    
     const currentProject = useSelector((state) => state.levels.selectedProject);
@@ -24,15 +26,21 @@ export const LogFilterComponent = () => {
         dispatch(taskNameSelected(item.name));
     }
 
+    useEffect(() => {
+      if (levelsStatus === 'idle') {
+        dispatch(getLogs())
+      }
+    }, [])
+
     return (
         <>
             <div className={`mb-5 flex flex-col items-center justify-center ${currentProject == 0 ? "block" : "hidden"}`}>
-                <h1 className='text-2xl mb-4'>Your projects</h1>
+                <h1 className='text-2xl mb-4'>Projects</h1>
                 <div className="flex items-start">
                     <div className="flex flex-wrap justify-evenly" id="projectsList">
                         {
                             projects.map((item, index) => (
-                                <div key={index} className={`relative align-content-center flex-grow text-center text-custom-black p-2 m-1 rounded-md font-medium text-black hover:cursor-pointer bg-color-2`} onClick={() => onClickProject(item)}>
+                                <div key={index} className={`relative align-content-center flex-grow text-center text-custom-black p-2 m-1 rounded-md font-medium  hover:cursor-pointer bg-custom-blue `} onClick={() => onClickProject(item)}>
                                     <p>{item.name}</p>
                                 </div>
                             ))
@@ -45,13 +53,13 @@ export const LogFilterComponent = () => {
             </div>
             <div className={`mb-5 flex flex-col items-center justify-center ${currentProject != 0 && currentTask == 0 ? "block" : "hidden"}`}>
                 <div className='text-2xl flex mb-5'>
-                    <span className='self-center'>Tasks of&nbsp;{currentProjectName}</span>
+                    <span className='self-center text-center'>Tasks of&nbsp;{currentProjectName}</span>
                 </div>
                 <div className="flex items-start">
                     <div className="flex flex-wrap justify-evenly" id="projectsList">
                         {
                             filteredTask.map((item, index) => (
-                                <div key={index} className={`relative align-content-center flex-grow text-center text-custom-black p-2 m-1 rounded-md font-medium text-black hover:cursor-pointer ${item.id === currentProject ? 'bg-color-4' : 'bg-color-4'}`} onClick={() => onClickTask(item)}>
+                                <div key={index} className={`relative align-content-center flex-grow text-center text-custom-black p-2 m-1 rounded-md font-medium text-black hover:cursor-pointer bg-custom-blue`} onClick={() => onClickTask(item)}>
                                     <p>{item.name}</p>
                                 </div>
                             ))
