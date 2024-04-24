@@ -24,7 +24,7 @@ export const LogCurrentFilterComponent = () => {
     return (
         <div className={`flex flex-col items-center mb-8 pt-5`}>
             <div className="flex justify-center text-center content-center">
-                <div className={`bg-color-3 rounded-md py-1 px-2 relative grow-0 ${currentProject != 0 ? "block" : "hidden"} text-center content-center`}>
+                <div className={`bg-color-2 rounded-md py-1 px-2 relative grow-0 ${currentProject != 0 ? "block" : "hidden"} text-center content-center`}>
                     <p className="font-medium">{currentProjectName}</p>
                     <button className='absolute -top-2 -right-3 rounded-[50%] bg-color-2' onClick={() => cleanCurrentProject()}>
                         <img src="white-cancel.png" className="w-5 h-5 p-1" />

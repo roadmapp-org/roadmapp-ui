@@ -35,12 +35,12 @@ export const Home = () => {
             {/* <div className='container mx-auto mt-5 border-b-2 pb-10'>
               <LogCreateForm/>
             </div> */}
-            {/* <div className='container mx-auto mt-5 border-b-2 pb-10 flex flex-col items-center'>
+            <div className='container mx-auto border-b-2 pb-10 flex flex-col items-center mb-5'>
               <LogListComponent/>
-            </div> */}
+            </div>
           </div>
         </div>
-        <div className="flex flex-wrap items-center justify-center px-5 w-full h-24 bg-custom-black fixed bottom-0">
+        <div className="flex flex-wrap items-center justify-center px-5 w-full h-15 bg-custom-black fixed bottom-0">
             <LogCurrentFilterComponent />
         </div>
       </>
