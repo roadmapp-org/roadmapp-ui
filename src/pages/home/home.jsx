@@ -18,7 +18,7 @@ export const Home = () => {
 
     return (
       <>
-        <div className="bg-gray-200 py-5 h-auto flex justify-center min-h-screen">
+        <div className="bg-custom-grey py-5 h-auto flex justify-center min-h-screen">
           <div className='flex flex-col w-5/6 sm:w-3/4 md:w-1/2'>
             <div className='container mx-auto'>
               <LogFilterComponent/>

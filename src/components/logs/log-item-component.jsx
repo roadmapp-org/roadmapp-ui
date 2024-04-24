@@ -14,12 +14,20 @@ export const LogItemComponent = ({log, index}) => {
     }
 
     return (
-        <div className="bg-amber-200 shadow overflow-hidden sm:rounded-lg p-6 mb-4 w-full bg-color-3 rounded-lg">
+        <div className="overflow-hidden sm:rounded-lg px-6 pt-6 pb-3 mb-4 w-full rounded-lg shadow-custom-black bg-custom-white">
             <div className="flex w-full justify-between">
                 <i className="text-custom-grey-2">{formatDate(log.date)}</i>
                 <i className="text-custom-grey-2">{log.date.split(" ")[1]}</i>
             </div>
             {breakLines(log.log)}
+            <div className={`flex flex-col w-full mt-4 justify-evenly`}>
+                <div className="bg-custom-grey rounded-lg text-xs px-3 mb-1 max-w-max">
+                    #Cumpleaños de Leo Messi
+                </div>
+                <div className="bg-custom-grey rounded-lg text-xs px-3 mb-1 grow-0 max-w-max">
+                    #Audio
+                </div>
+            </div>
         </div>
     );
 }
