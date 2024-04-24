@@ -7,6 +7,6 @@ import com.binnacle.api.response.PersistResponse;
 public interface ILogUseCases {
     PersistResponse create(CreateUpdateLogRequest request);
     DataResponse getLatestByOwner();
-    DataResponse getFiltered(int projectId, int taskId, int subtaskId);
+    DataResponse getFiltered(int projectId, int taskId, int subtaskId, int alreadySent);
 
 }
