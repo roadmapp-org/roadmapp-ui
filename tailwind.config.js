@@ -17,7 +17,7 @@ export default {
       transparent: 'transparent',
       current: 'currentColor',
       'custom-black': '#333',
-      'custom-grey': '#bbb',
+      'custom-grey': '#ddd',
       'custom-grey-2': '#585858',
       'custom-white': '#eee',
       'white': '#fff',

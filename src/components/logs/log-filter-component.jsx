@@ -14,14 +14,18 @@ export const LogFilterComponent = () => {
     
     const [filteredTask, setFilteredTasks] = useState(useSelector((state) => state.levels.tasks));
     
-    const onClickProject = (item) => {
+    const onClickProject = (e) => {
+        if(e.target.value == 0) return;
+        let item = projects.find((item) => item.id === parseInt(e.target.value, 10));
         let filtered = tasks.filter((task) => task.project_id === item.id);
         setFilteredTasks(filtered);
         dispatch(projectSelected(item.id));
         dispatch(projectNameSelected(item.name));
     }
 
-    const onClickTask = (item) => {
+    const onClickTask = (e) => {
+        if(e.target.value == 0) return;
+        let item = tasks.find((item) => item.id === parseInt(e.target.value, 10));
         dispatch(taskSelected(item.id));
         dispatch(taskNameSelected(item.name));
     }
@@ -37,15 +41,16 @@ export const LogFilterComponent = () => {
             <div className={`mb-5 flex flex-col items-center justify-center ${currentProject == 0 ? "block" : "hidden"}`}>
                 <h1 className='text-2xl mb-4'>Projects</h1>
                 <div className="flex items-start">
-                    <div className="flex flex-wrap justify-evenly" id="projectsList">
+                    <select className="w-full flex flex-wrap justify-evenly rounded-md py-2 bg-custom-white shadow" id="projectsList" onChange={onClickProject}>
+                        <option key={0} value={0} className={`relative align-content-center flex-grow text-center text-custom-black p-2 m-1 rounded-md font-medium text-black hover:cursor-pointer`}>{"All projects"}</option>
                         {
                             projects.map((item, index) => (
-                                <div key={index} className={`relative align-content-center flex-grow text-center text-custom-black p-2 m-1 rounded-md font-medium  hover:cursor-pointer bg-custom-blue `} onClick={() => onClickProject(item)}>
-                                    <p>{item.name}</p>
-                                </div>
+                                <option key={index} value={item.id} className={`relative align-content-center flex-grow text-center text-custom-black p-2 mx-1  font-medium  hover:cursor-pointer`}>
+                                    {item.name}
+                                </option>
                             ))
                         }  
-                    </div>
+                    </select>
                     {/* <div className='flex-grow text-center bg-custom-black text-custom-white p-2 m-1 rounded-md font-medium text-black'>
                         +
                     </div> */}
@@ -53,22 +58,21 @@ export const LogFilterComponent = () => {
             </div>
             <div className={`mb-5 flex flex-col items-center justify-center ${currentProject != 0 && currentTask == 0 ? "block" : "hidden"}`}>
                 <div className='text-2xl flex mb-5'>
-                    <span className='self-center text-center'>Tasks of&nbsp;{currentProjectName}</span>
+                    <span className='self-center text-center'>Tasks</span>
                 </div>
-                <div className="flex items-start">
-                    <div className="flex flex-wrap justify-evenly" id="projectsList">
-                        {
-                            filteredTask.map((item, index) => (
-                                <div key={index} className={`relative align-content-center flex-grow text-center text-custom-black p-2 m-1 rounded-md font-medium text-black hover:cursor-pointer bg-custom-blue`} onClick={() => onClickTask(item)}>
-                                    <p>{item.name}</p>
-                                </div>
-                            ))
-                        }  
-                    </div>
-                    {/* <div className='flex-grow text-center bg-custom-black text-custom-white p-2 m-1 rounded-md font-medium text-black'>
-                        +
-                    </div> */}
-                </div>
+                <select className="w-full rounded-md py-2 bg-custom-white shadow" id="projectsList" onChange={onClickTask}>
+                    <option key={0} value={0} className={`relative align-content-center flex-grow text-center text-custom-black p-2 m-1 rounded-md font-medium text-black hover:cursor-pointer`}>{"All tasks"}</option>
+                    {
+                        filteredTask.map((item, index) => (
+                            <option key={index} value={item.id} className={`relative align-content-center flex-grow text-center text-custom-black p-2 m-1 rounded-md font-medium text-black hover:cursor-pointer`}>
+                                {item.name}
+                            </option>
+                        ))
+                    }  
+                </select>
+                {/* <div className='flex-grow text-center bg-custom-black text-custom-white p-2 m-1 rounded-md font-medium text-black'>
+                    +
+                </div> */}
             </div>
         </>
     )
