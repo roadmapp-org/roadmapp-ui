@@ -32,15 +32,15 @@ export const LogFilterComponent = () => {
                     <div className="flex flex-wrap justify-evenly" id="projectsList">
                         {
                             projects.map((item, index) => (
-                                <div key={index} className={`relative align-content-center flex-grow text-center text-custom-black p-2 m-1 rounded-md font-medium text-black hover:cursor-pointer ${item.id === currentProject ? 'bg-color-4' : 'bg-color-3'}`} onClick={() => onClickProject(item)}>
+                                <div key={index} className={`relative align-content-center flex-grow text-center text-custom-black p-2 m-1 rounded-md font-medium text-black hover:cursor-pointer bg-color-2`} onClick={() => onClickProject(item)}>
                                     <p>{item.name}</p>
                                 </div>
                             ))
                         }  
                     </div>
-                    <div className='flex-grow text-center bg-custom-black text-custom-white p-2 m-1 rounded-md font-medium text-black'>
+                    {/* <div className='flex-grow text-center bg-custom-black text-custom-white p-2 m-1 rounded-md font-medium text-black'>
                         +
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <div className={`mb-5 flex flex-col items-center justify-center ${currentProject != 0 && currentTask == 0 ? "block" : "hidden"}`}>
@@ -57,9 +57,9 @@ export const LogFilterComponent = () => {
                             ))
                         }  
                     </div>
-                    <div className='flex-grow text-center bg-custom-black text-custom-white p-2 m-1 rounded-md font-medium text-black'>
+                    {/* <div className='flex-grow text-center bg-custom-black text-custom-white p-2 m-1 rounded-md font-medium text-black'>
                         +
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </>
