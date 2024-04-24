@@ -39,6 +39,7 @@ public class LogService implements ILogUseCases {
     private final IProjectRepository projectRepository;
     private final ITaskRepository taskRepository;
     private final ISubTaskRepository subTaskRepository;
+    private final int FILTERED_QUERY_LIMIT = 5;
 
 
     @Override
@@ -114,7 +115,7 @@ public class LogService implements ILogUseCases {
         String owner = SecurityContextHolder.getContext().getAuthentication().getName();
         try {
 
-            logList = logRepository.getLatestByOwner(owner);
+            logList = logRepository.findTop10ByOwnerOrderByDateDesc(owner);
             if(logList == null)
                 throw new ErrorWhenRetreivingDataException(ErrorCodes.ERROR_WHEN_RETREIVING_DATA, ErrorDescriptions.ERROR_WHEN_RETREIVING_DATA);
 
@@ -128,32 +129,31 @@ public class LogService implements ILogUseCases {
     }
 
     @Override
-    public DataResponse getFiltered(int projectId, int taskId, int subtaskId) {
+    public DataResponse getFiltered(int projectId, int taskId, int subtaskId, int alreadySent) {
         DataResponse dataResponse = new DataResponse();
         List<LogResponse> logList = new ArrayList<>();
         String owner = SecurityContextHolder.getContext().getAuthentication().getName();
         try {
-            if(subtaskId != 0){
-                logList = logRepository.getLatestBySubTask(subtaskId, owner);
-                if(logList == null)
-                    throw new ErrorWhenRetreivingDataException(ErrorCodes.ERROR_WHEN_RETREIVING_DATA, ErrorDescriptions.ERROR_WHEN_RETREIVING_DATA);
-            } else if(taskId != 0){
-                logList = logRepository.getLatestByTask(taskId, owner);
-                if(logList == null)
-                    throw new ErrorWhenRetreivingDataException(ErrorCodes.ERROR_WHEN_RETREIVING_DATA, ErrorDescriptions.ERROR_WHEN_RETREIVING_DATA);
-            } else if(projectId != 0) {
-                logList = logRepository.getLatestByProject(projectId, owner);
-                if(logList == null)
-                    throw new ErrorWhenRetreivingDataException(ErrorCodes.ERROR_WHEN_RETREIVING_DATA, ErrorDescriptions.ERROR_WHEN_RETREIVING_DATA);
+            int limit = FILTERED_QUERY_LIMIT, offset = 0;
+            int pages = alreadySent / FILTERED_QUERY_LIMIT;
+            int restToCompletePage = FILTERED_QUERY_LIMIT - (alreadySent % FILTERED_QUERY_LIMIT);
+            if(restToCompletePage == FILTERED_QUERY_LIMIT) {
+                offset = pages * FILTERED_QUERY_LIMIT;
+            } else {
+                offset = pages * FILTERED_QUERY_LIMIT + alreadySent % FILTERED_QUERY_LIMIT;
             }
+
+            logList = logRepository.findFilteredAndPaged(owner, projectId, taskId, subtaskId, limit, offset);
+            if(logList == null)
+                throw new ErrorWhenRetreivingDataException(ErrorCodes.ERROR_WHEN_RETREIVING_DATA, ErrorDescriptions.ERROR_WHEN_RETREIVING_DATA);
 
             dataResponse = new DataResponse(Results.OK,"",logList, HttpStatus.OK);
 
         } catch (Exception e) {
             dataResponse = Tools.getDataResponseError(e, "");
-        } finally {
-            return dataResponse;
         }
+
+        return dataResponse;
     }
 
     private boolean isTaskInProject(TaskEntity task, ProjectEntity project) {

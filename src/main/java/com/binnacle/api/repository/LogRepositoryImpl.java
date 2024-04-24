@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -50,6 +51,43 @@ public class LogRepositoryImpl implements ILogRepository {
         return getLogs(
                 "SELECT l.* FROM logs l, projects p WHERE l.subtask_id = ? AND p.id = l.project_id AND p.owner = ?",
                 new Object[]{subtaskId, owner}
+        );
+    }
+
+    @Override
+    public List<LogResponse> findTop10ByOwnerOrderByDateDesc(String owner) {
+        return getLogs(
+                "SELECT l.* FROM logs l, projects p WHERE l.project_id = p.id AND p.owner = ? ORDER BY l.date DESC LIMIT 5 OFFSET 0",
+                new Object[]{owner}
+        );
+    }
+
+    @Override
+    public List<LogResponse> findFilteredAndPaged(String owner, int projectId, int taskId, int subtaskId, int limit, int offset) {
+        String query = "";
+        List<Object> params = new ArrayList<>();
+        query = "SELECT l.* FROM logs l, projects p";
+        query += " WHERE p.owner = ?";
+        query += "   AND p.id = l.project_id";
+        params.add(owner);
+        if (projectId != 0) {
+            query += " AND l.project_id = ?";
+            params.add(projectId);
+        }
+        if (taskId != 0) {
+            query += " AND l.task_id = ?";
+            params.add(taskId);
+        }
+        if (subtaskId != 0) {
+            query += " AND l.subtask_id = ?";
+            params.add(subtaskId);
+        }
+        query += " ORDER BY l.date DESC LIMIT ? OFFSET ?";
+        params.add(limit);
+        params.add(offset);
+        return getLogs(
+                query,
+                params.toArray()
         );
     }
 
