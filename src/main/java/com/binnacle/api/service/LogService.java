@@ -14,6 +14,7 @@ import com.binnacle.api.response.PersistResponse;
 import com.binnacle.api.response.log.LogResponse;
 import com.binnacle.api.response.project.ProjectResponse;
 import com.binnacle.api.service.contract.ILogUseCases;
+import com.binnacle.api.utils.Constants;
 import com.binnacle.api.utils.Results;
 import com.binnacle.api.utils.Tools;
 import com.binnacle.api.utils.errors.ErrorCodes;
@@ -39,7 +40,6 @@ public class LogService implements ILogUseCases {
     private final IProjectRepository projectRepository;
     private final ITaskRepository taskRepository;
     private final ISubTaskRepository subTaskRepository;
-    private final int FILTERED_QUERY_LIMIT = 5;
 
 
     @Override
@@ -92,9 +92,18 @@ public class LogService implements ILogUseCases {
             log.setActive(true);
 
             LogEntity savedLog = logRepository.save(log);
+            LogResponse response = LogResponse.builder()
+                    .id(savedLog.getId())
+                    .active(log.isActive())
+                    .project_id(log.getProject().getId())
+                    .task_id(log.getTask() != null ? log.getTask().getId() : 0)
+                    .subtask_id(log.getSubtask() != null ? log.getSubtask().getId() : 0)
+                    .log(log.getLog())
+                    .date(log.getDate())
+                    .build();
 
             // response
-            persistResponse = new PersistResponse(Results.OK,"",savedLog, HttpStatus.OK);
+            persistResponse = new PersistResponse(Results.OK,"",response, HttpStatus.OK);
 
         } catch(AppException e){
             persistResponse = Tools.getBadRequest(e, ErrorDescriptions.COULD_NOT_SAVE_PROJECT);
@@ -134,13 +143,13 @@ public class LogService implements ILogUseCases {
         List<LogResponse> logList = new ArrayList<>();
         String owner = SecurityContextHolder.getContext().getAuthentication().getName();
         try {
-            int limit = FILTERED_QUERY_LIMIT, offset = 0;
-            int pages = alreadySent / FILTERED_QUERY_LIMIT;
-            int restToCompletePage = FILTERED_QUERY_LIMIT - (alreadySent % FILTERED_QUERY_LIMIT);
-            if(restToCompletePage == FILTERED_QUERY_LIMIT) {
-                offset = pages * FILTERED_QUERY_LIMIT;
+            int limit = Constants.FILTERED_QUERY_LIMIT, offset = 0;
+            int pages = alreadySent / Constants.FILTERED_QUERY_LIMIT;
+            int restToCompletePage = Constants.FILTERED_QUERY_LIMIT - (alreadySent % Constants.FILTERED_QUERY_LIMIT);
+            if(restToCompletePage == Constants.FILTERED_QUERY_LIMIT) {
+                offset = pages * Constants.FILTERED_QUERY_LIMIT;
             } else {
-                offset = pages * FILTERED_QUERY_LIMIT + alreadySent % FILTERED_QUERY_LIMIT;
+                offset = pages * Constants.FILTERED_QUERY_LIMIT + alreadySent % Constants.FILTERED_QUERY_LIMIT;
             }
 
             logList = logRepository.findFilteredAndPaged(owner, projectId, taskId, subtaskId, limit, offset);

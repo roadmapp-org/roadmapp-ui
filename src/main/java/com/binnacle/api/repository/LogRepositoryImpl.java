@@ -5,6 +5,7 @@ import com.binnacle.api.repository.contract.ILogRepository;
 import com.binnacle.api.repository.contract.spring.ILogSpringRepository;
 import com.binnacle.api.response.log.LogResponse;
 import com.binnacle.api.response.task.TaskResponse;
+import com.binnacle.api.utils.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -57,8 +58,8 @@ public class LogRepositoryImpl implements ILogRepository {
     @Override
     public List<LogResponse> findTop10ByOwnerOrderByDateDesc(String owner) {
         return getLogs(
-                "SELECT l.* FROM logs l, projects p WHERE l.project_id = p.id AND p.owner = ? ORDER BY l.date DESC LIMIT 5 OFFSET 0",
-                new Object[]{owner}
+                "SELECT l.* FROM logs l, projects p WHERE l.project_id = p.id AND p.owner = ? ORDER BY l.date DESC LIMIT ? OFFSET 0",
+                new Object[]{owner, Constants.FILTERED_QUERY_LIMIT}
         );
     }
 
