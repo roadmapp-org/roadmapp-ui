@@ -25,6 +25,7 @@ export const LogCreateForm = () => {
     };
 
     const onSubmit = async (event) => {
+        debugger;
         event.preventDefault();
         if(inputValue === "" || inputValue === undefined)
         {

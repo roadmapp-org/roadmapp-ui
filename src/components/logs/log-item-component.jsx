@@ -35,13 +35,16 @@ export const LogItemComponent = ({log, index}) => {
                         projects.filter(project => project.id === log.project_id)[0].name
                     }
                 </div>
-                <div className={`bg-custom-blue rounded-lg text-xs px-3 mb-1 grow-0 max-w-max ${currentTask === 0 ? "block" : "hidden"}`}>
-                    {   
-                        log.task_id != 0 &&
-                        tasks.filter(task => task.id === log.task_id)[0] && 
-                        tasks.filter(task => task.id === log.task_id)[0].name
-                    }
-                </div>
+                {
+                    log.task_id != 0 &&
+                    <div className={`bg-custom-blue rounded-lg text-xs px-3 mb-1 grow-0 max-w-max ${currentTask === 0 ? "block" : "hidden"}`}>
+                        {   
+                            
+                            tasks.filter(task => task.id === log.task_id)[0] && 
+                            tasks.filter(task => task.id === log.task_id)[0].name
+                        }
+                    </div>
+                }
             </div>
         </div>
     );
