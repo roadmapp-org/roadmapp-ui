@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createLog } from './log-slice'
 
 const initialState = {
     showCurrentFilterLogError: false,
@@ -17,7 +18,11 @@ const layoutSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        
+        builder
+        .addCase(createLog.fulfilled, (state, action) => {
+            debugger;
+            state.showCreateLogModal = false;
+        })
     }
 });
 
