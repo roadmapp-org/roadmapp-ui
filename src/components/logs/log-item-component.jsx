@@ -28,8 +28,8 @@ export const LogItemComponent = ({log, index}) => {
                 <i className="text-custom-grey-2">{log.date.split(" ")[1]}</i>
             </div>
             {breakLines(log.log)}
-            <div className={`flex flex-col w-full mt-4 justify-evenly`}>
-                <div className={`bg-color-3 rounded-lg text-xs px-3 mb-1 max-w-max ${currentProject === 0 ? "block" : "hidden"}`}>
+            <div className={`flex w-full mt-4 justify-start`}>
+                <div className={`bg-color-3 rounded-lg text-xs px-3 mb-1 mr-3 max-w-max ${currentProject === 0 ? "block" : "hidden"}`}>
                     {   
                         projects.filter(project => project.id === log.project_id)[0] && 
                         projects.filter(project => project.id === log.project_id)[0].name
