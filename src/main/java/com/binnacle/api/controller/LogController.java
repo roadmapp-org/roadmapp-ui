@@ -36,7 +36,6 @@ public class LogController {
 
         persistResponse = logUseCases.create(request);
 
-        //return ResponseEntity.status(HttpStatus.CREATED).body(request);
         return ResponseEntity.status(persistResponse.getStatus()).body(persistResponse);
 
     }
