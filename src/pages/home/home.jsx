@@ -5,6 +5,7 @@ import { LogFilterComponent } from '../../components/logs/log-filter-component.j
 import { getLevels } from "../../data/levels-slice";
 import { LogCurrentFilterComponent } from '../../components/logs/log-current-filter-component.jsx';
 import { fetchFilteredLogs } from "../../data/log-slice"
+import { toogleCurrentFilterLogError } from "../../data/layout-slice"
 
 export const Home = () => {
     const levelsStatus = useSelector(state => state.levels.status)
@@ -51,9 +52,16 @@ export const Home = () => {
       };
     }, [logs]);
 
+    const openWriteLog = () => {
+      if(currentProject == 0)
+        dispatch(toogleCurrentFilterLogError(true))
+      else
+        alert('Write log')
+    }
+
     return (
       <>
-        <div className="bg-custom-grey py-5 h-auto flex justify-center min-h-screen">
+        <div className="bg-custom-grey py-5 h-auto flex justify-center min-h-screen relative">
           <div className='flex flex-col w-5/6 sm:w-3/4 md:w-1/2'>
             <div className='container mx-auto'>
               <LogFilterComponent/>
@@ -66,8 +74,15 @@ export const Home = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-wrap items-center justify-center px-5 w-full h-15 bg-custom-black fixed bottom-0">
+        <div className="flex flex-col items-center justify-center w-full fixed bottom-0">
+          <div className="bg-transparent place-self-end">
+            <button className="w-16 h-16 rounded-full bg-custom-black flex items-center justify-center mb-3 mr-3" onClick={openWriteLog}>
+              <img src='write-white.png' className="w-8 h-8" />
+            </button>
+          </div>
+          <div className="bg-custom-black w-full">
             <LogCurrentFilterComponent />
+          </div>
         </div>
       </>
     );

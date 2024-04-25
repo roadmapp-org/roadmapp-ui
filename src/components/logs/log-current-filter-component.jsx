@@ -8,7 +8,8 @@ export const LogCurrentFilterComponent = () => {
     const currentTask = useSelector((state) => state.levels.selectedTask);
     const currentProjectName = useSelector((state) => state.levels.selectedProjectName);
     const currentTaskName = useSelector((state) => state.levels.selectedTaskName);
-
+    const showCurrentFilterLogError = useSelector((state) => state.layout.showCurrentFilterLogError);
+    
     const cleanCurrentProject = () => {
         dispatch(projectSelected(0));
         dispatch(projectNameSelected(""));
@@ -36,6 +37,11 @@ export const LogCurrentFilterComponent = () => {
                         <img src="white-cancel.png" className="w-5 h-5 p-1" />
                     </button>
                 </div>
+                { showCurrentFilterLogError &&
+                    <div className="bg-color-2 rounded-md px-8 font-medium text-custom-black">
+                        You need to choose a project
+                    </div>
+                }
             </div>
         </div>
     )

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { projectSelected, projectNameSelected, taskSelected, taskNameSelected } from '../../data/levels-slice'
 import { getLogs } from "../../data/log-slice"
+import { toogleCurrentFilterLogError } from "../../data/layout-slice"
 
 export const LogFilterComponent = () => {
     const dispatch = useDispatch()
@@ -15,6 +16,7 @@ export const LogFilterComponent = () => {
     const [filteredTask, setFilteredTasks] = useState(useSelector((state) => state.levels.tasks));
     
     const onClickProject = (e) => {
+        dispatch(toogleCurrentFilterLogError(false));
         if(e.target.value == 0) return;
         let item = projects.find((item) => item.id === parseInt(e.target.value, 10));
         let filtered = tasks.filter((task) => task.project_id === item.id);
