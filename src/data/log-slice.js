@@ -44,7 +44,6 @@ export const fetchFilteredLogs = createAsyncThunk('logs/filter', async(filters) 
     const baseUrl = 'http://localhost:8080/logs/filtered';
     const url = new URL(baseUrl);
     Object.keys(filters).forEach(key => url.searchParams.append(key, filters[key]));
-
     const bearerToken = localStorage.getItem('token');
 
     const response = await fetch(url, {
@@ -102,7 +101,7 @@ const logSlice = createSlice({
             })
             .addCase(fetchFilteredLogs.fulfilled, (state,action) => {
                 state.status = 'succeeded';
-                state.list = action.payload.list;
+                state.list = state.list.concat(action.payload.list);
             })
             .addCase(fetchFilteredLogs.rejected, (state, action) => {
                 state.status = 'failed';

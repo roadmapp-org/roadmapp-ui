@@ -4,10 +4,13 @@ import { useEffect } from 'react';
 import { LogFilterComponent } from '../../components/logs/log-filter-component.jsx';
 import { getLevels } from "../../data/levels-slice";
 import { LogCurrentFilterComponent } from '../../components/logs/log-current-filter-component.jsx';
+import { fetchFilteredLogs } from "../../data/log-slice"
 
 export const Home = () => {
-    
     const levelsStatus = useSelector(state => state.levels.status)
+    const logs = useSelector((state) => state.log.list)
+    const currentProject = useSelector((state) => state.levels.selectedProject);
+    const currentTask = useSelector((state) => state.levels.selectedTask);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -15,6 +18,34 @@ export const Home = () => {
           dispatch(getLevels())
         }
       }, [])
+
+    useEffect(() => {
+      const handleScroll = () => {
+          if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+            let params = [];
+            let count = 0;
+            if(currentProject === 0 || currentTask === 0)
+              count = logs.length;
+            else
+              count = logs.filter(log => log.projectId === currentProject && log.taskId === currentTask).length;
+
+            params["project"] = currentProject;
+            params["task"] = currentTask;
+            params["subtask"] = 0;
+            params["alreadySent"] = count;  
+
+            dispatch(fetchFilteredLogs(params))
+          }
+      };
+  
+      // Attach the event listener
+      window.addEventListener('scroll', handleScroll);
+  
+      // Clean up the event listener on component unmount
+      return () => {
+          window.removeEventListener('scroll', handleScroll);
+      };
+    }, [logs]);
 
     return (
       <>

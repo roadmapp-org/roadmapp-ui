@@ -1,4 +1,12 @@
+import React from 'react';
+import { useSelector } from 'react-redux';
+
 export const LogItemComponent = ({log, index}) => {
+
+    const projects = useSelector((state) => state.levels.projects);
+    const tasks = useSelector((state) => state.levels.tasks);
+    const currentProject = useSelector((state) => state.levels.selectedProject);
+    const currentTask = useSelector((state) => state.levels.selectedTask);
     
     const formatDate = (date) => {
         const d = new Date(date);
@@ -21,11 +29,18 @@ export const LogItemComponent = ({log, index}) => {
             </div>
             {breakLines(log.log)}
             <div className={`flex flex-col w-full mt-4 justify-evenly`}>
-                <div className="bg-custom-grey rounded-lg text-xs px-3 mb-1 max-w-max">
-                    #Cumpleaños de Leo Messi
+                <div className={`bg-color-3 rounded-lg text-xs px-3 mb-1 max-w-max ${currentProject === 0 ? "block" : "hidden"}`}>
+                    {   
+                        projects.filter(project => project.id === log.project_id)[0] && 
+                        projects.filter(project => project.id === log.project_id)[0].name
+                    }
                 </div>
-                <div className="bg-custom-grey rounded-lg text-xs px-3 mb-1 grow-0 max-w-max">
-                    #Audio
+                <div className={`bg-custom-blue rounded-lg text-xs px-3 mb-1 grow-0 max-w-max ${currentTask === 0 ? "block" : "hidden"}`}>
+                    {   
+                        log.task_id != 0 &&
+                        tasks.filter(task => task.id === log.task_id)[0] && 
+                        tasks.filter(task => task.id === log.task_id)[0].name
+                    }
                 </div>
             </div>
         </div>
