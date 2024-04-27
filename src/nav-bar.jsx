@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
-import { logout } from './data/login-slice'
+import { logout } from './data/login-slice';
+import { toogleShowBurgerMenu } from './data/layout-slice';
 
 export const NavBar = () => {
 
@@ -11,7 +12,10 @@ export const NavBar = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    const showBurgerMenu = useSelector((state) => state.layout.showBurgerMenu);
+
     const onClickLogOut = () => {
+        dispatch(toogleShowBurgerMenu(false));
         dispatch(logout());
         navigate(`/login`);
     }
@@ -30,7 +34,7 @@ export const NavBar = () => {
                             <div className="flex items-center space-x-6  ">
                                 <Link className="hidden xs:block text-white hover:text-blue-300" to="/home">Home</Link>
                                 <Link className="hidden xs:block text-white hover:text-blue-300" to="/config">Config</Link>
-                                <button onClick={() => setIsOpen(!isOpen)} className="xs:hidden" id="menuBtn">
+                                <button onClick={() => dispatch(toogleShowBurgerMenu())} className="xs:hidden" id="menuBtn">
                                     <img src="white-menu.png" className="w-6 h-6 rounded" />
                                 </button>
                                 <button className="hidden xs:block bg-gray-800 text-white font-bold py-2 px-4 rounded" onClick={onClickLogOut}>
@@ -40,7 +44,7 @@ export const NavBar = () => {
                         </div>
                     </nav>
                 </header>
-                <div className={`w-100 h-100 bg-custom-black text-custom-white ${isOpen ? 'block' : 'hidden'}`} id="menu">
+                <div className={`w-100 h-100 bg-custom-black text-custom-white ${showBurgerMenu ? 'block' : 'hidden'}`} id="menu">
                     <Link to="/home" onClick={() => setIsOpen(!isOpen)}>
                         <div className="text-xl flex justify-end p-4 pr-10 border-t border-gray-300">
                             <span>Home</span>

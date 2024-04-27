@@ -3,7 +3,8 @@ import { createLog } from './log-slice'
 
 const initialState = {
     showCurrentFilterLogError: false,
-    showCreateLogModal: false
+    showCreateLogModal: false,
+    showBurgerMenu: false
 };
 
 const layoutSlice = createSlice({
@@ -15,17 +16,19 @@ const layoutSlice = createSlice({
         },
         toogleShowCreateLogModal: (state, action) => {
             state.showCreateLogModal = (action.payload === undefined) ? !state.showCreateLogModal : action.payload;
+        },
+        toogleShowBurgerMenu: (state, action) => {
+            state.showBurgerMenu = (action.payload === undefined) ? !state.showBurgerMenu : action.payload;
         }
     },
     extraReducers: (builder) => {
         builder
         .addCase(createLog.fulfilled, (state, action) => {
-            debugger;
             state.showCreateLogModal = false;
         })
     }
 });
 
-export const { toogleCurrentFilterLogError, toogleShowCreateLogModal } = layoutSlice.actions
+export const { toogleCurrentFilterLogError, toogleShowCreateLogModal, toogleShowBurgerMenu } = layoutSlice.actions
 
 export default layoutSlice.reducer;
