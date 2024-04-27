@@ -45,13 +45,13 @@ export const NavBar = () => {
                     </nav>
                 </header>
                 <div className={`w-100 h-100 bg-custom-black text-custom-white ${showBurgerMenu ? 'block' : 'hidden'}`} id="menu">
-                    <Link to="/home" onClick={() => setIsOpen(!isOpen)}>
+                    <Link to="/home" onClick={() => dispatch(toogleShowBurgerMenu(false))}>
                         <div className="text-xl flex justify-end p-4 pr-10 border-t border-gray-300">
                             <span>Home</span>
                             <img src="home.png" className="w-6 h-6 rounded self-center ml-4" />
                         </div>
                     </Link>
-                    <Link to="/config" onClick={() => setIsOpen(!isOpen)}>
+                    <Link to="/config" onClick={() => dispatch(toogleShowBurgerMenu(false))}>
                         <div className="text-xl flex justify-end p-4 pr-10 border-t border-gray-300">
                             <span>Config</span>
                             <img src="config.png" className="w-6 h-6 rounded self-center ml-4" />
