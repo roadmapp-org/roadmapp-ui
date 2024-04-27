@@ -35,8 +35,8 @@ export const Login = () => {
     }
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-custom-black p-6">
-            <div className="flex-col p-6 space-y-8 bg-custom-white rounded-2xl shadow-lg w-full max-w-md">
+        <div className="flex items-center justify-center min-h-screen bg-custom-grey p-6">
+            <div className="flex-col p-6 space-y-8 bg-custom-white rounded-2xl shadow-xl border-1 w-full max-w-md">
                 <img src="roadmap.png" className="w-24 h-24 mx-auto" />
                 <div className="flex justify-center text-3xl">
                     <h1>RoadmApp</h1>
@@ -62,7 +62,7 @@ export const Login = () => {
                     </div>
                     <div>
                         <input 
-                            className="w-full py-2 px-4 mb-8 border border-transparent rounded-md shadow-lg text-sm font-medium bg-custom-blue" 
+                            className="w-full py-2 px-4 mb-8 border border-transparent rounded-md shadow-lg text-lg font-bold bg-custom-black text-custom-white" 
                             type="submit" 
                             value="Login" 
                         />
