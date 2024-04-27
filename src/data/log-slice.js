@@ -78,7 +78,6 @@ const logSlice = createSlice({
                 state.creationStatus = 'loading';
             })
             .addCase(createLog.fulfilled, (state, action) => {
-                debugger;
                 state.creationStatus = 'succeeded';
                 state.list.unshift(action.payload.persistedObject);
             })

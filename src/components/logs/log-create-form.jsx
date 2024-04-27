@@ -43,7 +43,6 @@ export const LogCreateForm = () => {
     }
 
     const onCloseModal = () => {
-        debugger
         dispatch(setCreationError(null));
         dispatch(toogleShowCreateLogModal(false))
     }
