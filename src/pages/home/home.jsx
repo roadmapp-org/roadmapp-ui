@@ -64,10 +64,7 @@ export const Home = () => {
     return (
       <>
         <div className={`fixed inset-0 bg-custom-black bg-opacity-90 justify-center items-center px-10 ${showCreateLogForm ? "flex flex-col" : "hidden"}`}>
-          <button className="w-4 h-4 self-end mr-2" onClick={() => dispatch(toogleShowCreateLogModal(false))}>
-            <img src="white-cancel.png" />
-          </button>
-          <div className='container mx-auto mt-2'>
+          <div className='w-full flex flex-col'>
             <LogCreateForm />
           </div>
         </div>
