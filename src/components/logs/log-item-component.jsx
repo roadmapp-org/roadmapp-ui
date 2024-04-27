@@ -25,7 +25,7 @@ export const LogItemComponent = ({log, index}) => {
         <div className="overflow-hidden sm:rounded-lg px-6 pt-6 pb-3 mb-4 w-full rounded-lg shadow-custom-black bg-custom-white">
             <div className="flex w-full justify-between">
                 <i className="text-custom-grey-2">{formatDate(log.date)}</i>
-                <i className="text-custom-grey-2">{log.date.split(" ")[1]}</i>
+                <i className="text-custom-grey-2">{log.date.split(" ")[1].split(":")[0] + ":" + log.date.split(" ")[1].split(":")[1]}</i>
             </div>
             {breakLines(log.log)}
             <div className={`flex w-full mt-4 justify-start`}>
