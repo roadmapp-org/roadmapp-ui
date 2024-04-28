@@ -7,11 +7,13 @@ import { getLevels } from "../../data/levels-slice";
 import { LogCurrentFilterComponent } from '../../components/logs/log-current-filter-component.jsx';
 import { fetchFilteredLogs } from "../../data/log-slice"
 import { toogleCurrentFilterLogError, toogleShowCreateLogModal } from "../../data/layout-slice"
+import { ProjectFormComponent } from '../../components/config/project-form-component.jsx';
 
 export const Home = () => {
     const levelsStatus = useSelector(state => state.levels.status)
     const showCreateLogForm = useSelector(state => state.layout.showCreateLogModal);
     const logs = useSelector((state) => state.log.list);
+    const projects = useSelector((state) => state.levels.projects);
     const currentProject = useSelector((state) => state.levels.selectedProject);
     const currentProjectRef = useRef();
     currentProjectRef.current = currentProject;
@@ -71,23 +73,32 @@ export const Home = () => {
         <div>
           <div className="bg-custom-grey py-5 h-auto flex justify-center min-h-screen">
             <div className='flex flex-col w-5/6 sm:w-3/4 md:w-1/2'>
-              <div className='container mx-auto'>
-                <LogFilterComponent/>
-              </div>
-              <div className='container mx-auto pb-10 flex flex-col items-center mb-5'>
-                <LogListComponent/>
-              </div>
+              {
+                projects.length !== 0 &&
+                <>
+                <div className='container mx-auto'>
+                  <LogFilterComponent/>
+                </div>
+                <div className='container mx-auto pb-10 flex flex-col items-center mb-5'>
+                  <LogListComponent/>
+                </div>
+                </>
+              }
             </div>
           </div>
           <div className="flex flex-col items-center justify-center w-full fixed bottom-0">
-            <div className="bg-transparent place-self-end">
-              <button className={`w-16 h-16 rounded-full bg-custom-black items-center justify-center mb-3 mr-3 " ${showCreateLogForm ? "hidden" : "flex"}`} onClick={openWriteLog}>
-                <img src='write-white.png' className="w-8 h-8" />
-              </button>
-            </div>
-            <div className="bg-custom-black w-full">
-              <LogCurrentFilterComponent />
-            </div>
+            { projects.length !== 0 &&
+              <>
+                <div className="bg-transparent place-self-end">
+                  <button className={`w-16 h-16 rounded-full bg-custom-black items-center justify-center mb-3 mr-3 " ${showCreateLogForm ? "hidden" : "flex"}`} onClick={openWriteLog}>
+                    <img src='write-white.png' className="w-8 h-8" />
+                  </button>
+                </div>
+                <div className="bg-custom-black w-full">
+                  <LogCurrentFilterComponent />
+                </div>
+              </>
+            }
           </div>
         </div>
       </>

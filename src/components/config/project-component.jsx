@@ -4,12 +4,10 @@ import { ProjectFormComponent } from './project-form-component';
 
 export const ProjectComponent = () => {
     return (
-        <>
-        <h2 className='text-2xl mb-5'>Projects</h2>
+        <div className="bg-custom-white p-4 rounded-md">
+          <h2 className='text-2xl mb-3'>Projects</h2>
           <ProjectListComponent />
-          <br></br>
           <ProjectFormComponent />
-          <br></br>
-        </>
+        </div>
     )
 }

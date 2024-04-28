@@ -57,20 +57,20 @@ export const ProjectListItemComponent = ({project}) => {
     }
 
     return (
-        <tr className="border-t border-gray-400 table-fixed">
+        <tr className="table-fixed">
             <td className="py-3 w-[70%]">
-                <input type="text" value={inputValue} disabled={!editMode} onChange={handleInputChange} className="w-full px-3 py-2 placeholder-gray-500 border rounded-md bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+                <input type="text" value={inputValue} disabled={!editMode} onChange={handleInputChange} className="w-full bg-white"/>
                 <p hidden={!deleteMode} className="text-red-500">This action will delete the project, its tasks and subtasks and all the related logs. Are you sure?</p>
             </td>
             <td className="py-3 w-[15%]">
-                <button hidden={editMode} onClick={handleEdit} className="hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-auto">
-                    <img src="edit.png" alt="Edit" style={{ width: '20px', height: '20px' }} />
+                <button hidden={editMode} onClick={handleEdit} className="hover:bg-blue-700 text-white font-bold">
+                    <img src="edit.png" alt="Edit" className="w-5 h-5" />
                 </button>
-                <button hidden={!editMode} onClick={handleConfirmEdit} className="text-white font-bold py-2 px-4 rounded">
-                    <img src="ok.png" alt="Confirm" style={{ width: '20px', height: '20px' }} />
+                <button hidden={!editMode} onClick={handleConfirmEdit} className="text-white font-bold">
+                    <img src="ok.png" alt="Confirm" className="w-5 h-5" />
                 </button>
-                <button hidden={!editMode} onClick={handleCancelEdit} className="text-white font-bold py-2 px-4 rounded">
-                    <img src="cancel.png" alt="Cancel" style={{ width: '20px', height: '20px' }} />
+                <button hidden={!editMode} onClick={handleCancelEdit} className="text-white font-bold">
+                    <img src="cancel.png" alt="Cancel" className="w-5 h-5" />
                 </button>
             </td>
             {/* <td className="px-4 py-3">
@@ -79,14 +79,14 @@ export const ProjectListItemComponent = ({project}) => {
                 </button>
             </td> */}
             <td className="py-3 w-[15%]">
-                <button hidden={deleteMode} onClick={handleDelete} className="text-white font-bold py-2 px-4 rounded">
-                    <img src="remove.png" alt="Cancel" style={{ width: '20px', height: '20px' }} />
+                <button hidden={deleteMode} onClick={handleDelete} className="text-white font-bold">
+                    <img src="remove.png" alt="Cancel" className="w-5 h-5" />
                 </button>
-                <button hidden={!deleteMode} onClick={handleConfirmDelete} className=" text-white font-bold py-2 px-4 rounded">
-                <img src="ok.png" alt="Confirm" style={{ width: '20px', height: '20px' }} />
+                <button hidden={!deleteMode} onClick={handleConfirmDelete} className=" text-white font-bold">
+                <img src="ok.png" alt="Confirm" className="w-5 h-5" />
                 </button>
-                <button hidden={!deleteMode} onClick={handleCancelDelete} className=" text-white font-bold py-2 px-4 rounded">
-                    <img src="cancel.png" alt="Cancel" style={{ width: '20px', height: '20px' }} />
+                <button hidden={!deleteMode} onClick={handleCancelDelete} className=" text-white font-bold">
+                    <img src="cancel.png" alt="Cancel" className="w-5 h-5" />
                 </button>
             </td>
             <td className="px-4 py-3">
