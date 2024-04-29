@@ -6,6 +6,7 @@ import { createProject } from "../../data/levels-slice";
 export const ProjectFormComponent = () => {
     const dispatch = useDispatch()
     const [showError, setShowError] = useState("");
+    const [error, setError] = useState("");
     const [inputValue, setInputValue] = useState('');
 
     const creationStatus = useSelector((state) => state.levels.creationStatus);
@@ -14,6 +15,13 @@ export const ProjectFormComponent = () => {
         event.preventDefault();
         if(inputValue === "" || inputValue === undefined)
         {
+            setError("Project name is required")
+            setShowError(true)
+            return;
+        }
+        if(inputValue.length < 5)
+        {
+            setError("Project name must be at least 5 characters long")
             setShowError(true)
             return;
         }
@@ -26,8 +34,10 @@ export const ProjectFormComponent = () => {
     useEffect(() => {
         if(creationStatus === "succeeded")
             setInputValue("")
-        if(creationStatus === "rejected")
+        if(creationStatus === "rejected"){
+            setError("An error occurred while creating the project")
             setShowError(true)
+        }
     }, [creationStatus])
 
     const handleChange = (event) => {
@@ -43,13 +53,16 @@ export const ProjectFormComponent = () => {
                 placeholder="New Project Name"
                 className="w-full px-3 py-2 placeholder-gray-500 rounded-sm focus:outline-none"
             />
-            <input
-                type="submit"
-                value="Add"
-                disabled={inputValue.length < 5}
-                className="w-full mt-3 py-2 px-4 rounded-md shadow-sm font-medium text-white bg-custom-black w-[30%] self-end"
-            />
-            {showError && <p className="text-red-500">Error when saving the project</p>}
+            <div className="flex flex-nowrap mt-3">
+                <p className={`text-color-1 ml-2 py-2 w-full`}>
+                    {showError && error}
+                </p>
+                <input
+                    type="submit"
+                    value="Add"
+                    className="py-2 px-4 rounded-md shadow-sm font-medium text-white bg-custom-black"
+                />
+            </div>
         </Form>
     )
 }
