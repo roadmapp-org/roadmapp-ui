@@ -57,42 +57,39 @@ export const ProjectListItemComponent = ({project}) => {
     }
 
     return (
-        <tr className="table-fixed">
-            <td className="py-3 w-[70%]">
-                <input type="text" value={inputValue} disabled={!editMode} onChange={handleInputChange} className="w-full bg-white"/>
-                <p hidden={!deleteMode} className="text-red-500">This action will delete the project, its tasks and subtasks and all the related logs. Are you sure?</p>
-            </td>
-            <td className="py-3 w-[15%]">
-                <button hidden={editMode} onClick={handleEdit} className="hover:bg-blue-700 text-white font-bold">
-                    <img src="edit.png" alt="Edit" className="w-5 h-5" />
-                </button>
-                <button hidden={!editMode} onClick={handleConfirmEdit} className="text-white font-bold">
-                    <img src="ok.png" alt="Confirm" className="w-5 h-5" />
-                </button>
-                <button hidden={!editMode} onClick={handleCancelEdit} className="text-white font-bold">
-                    <img src="cancel.png" alt="Cancel" className="w-5 h-5" />
-                </button>
-            </td>
-            {/* <td className="px-4 py-3">
-                <button onClick={handleEnableDisable} className="text-white font-bold py-2 px-4 rounded">
-                    {project.active ? 'Disable' : 'Enable'}
-                </button>
-            </td> */}
-            <td className="py-3 w-[15%]">
-                <button hidden={deleteMode} onClick={handleDelete} className="text-white font-bold">
-                    <img src="remove.png" alt="Cancel" className="w-5 h-5" />
-                </button>
-                <button hidden={!deleteMode} onClick={handleConfirmDelete} className=" text-white font-bold">
-                <img src="ok.png" alt="Confirm" className="w-5 h-5" />
-                </button>
-                <button hidden={!deleteMode} onClick={handleCancelDelete} className=" text-white font-bold">
-                    <img src="cancel.png" alt="Cancel" className="w-5 h-5" />
-                </button>
-            </td>
-            <td className="px-4 py-3">
-                
-            </td>
-        </tr>
+        <div className="mb-3">
+            <div className="flex flex-nowrap">
+                <input type="text" value={inputValue} disabled={!editMode} onChange={handleInputChange} className={`w-full py-2 px-3 mr-2 rounded-md ${editMode ? "bg-white" : "bg-custom-white"}`}/>
+                <div className={`flex py-3 mr-2 ${deleteMode ? "hidden" : "block"}`}>
+                    <button hidden={editMode} onClick={handleEdit} className="text-white font-bold w-5 h-5">
+                        <img src="edit.png" alt="Edit"/>
+                    </button>
+                    <button hidden={!editMode} onClick={handleConfirmEdit} className="text-white font-bold mr-3 w-5 h-5">
+                        <img src="ok.png" alt="Confirm" />
+                    </button>
+                    <button hidden={!editMode} onClick={handleCancelEdit} className="text-white font-bold mr-3 w-5 h-5">
+                        <img src="cancel.png" alt="Cancel" />
+                    </button>
+                </div>
+                {/* <td className="px-4 py-3">
+                    <button onClick={handleEnableDisable} className="text-white font-bold py-2 px-4 rounded">
+                        {project.active ? 'Disable' : 'Enable'}
+                    </button>
+                </td> */}
+                <div className={`flex py-3 mr-2 ${editMode ? "hidden" : "block"}`}>
+                    <button hidden={deleteMode} onClick={handleDelete} className="text-white font-bold w-5 h-5">
+                        <img src="remove.png" alt="Cancel" />
+                    </button>
+                    <button hidden={!deleteMode} onClick={handleConfirmDelete} className=" text-white font-bold mr-3 w-5 h-5">
+                        <img src="ok.png" alt="Confirm"/>
+                    </button>
+                    <button hidden={!deleteMode} onClick={handleCancelDelete} className=" text-white font-bold mr-4 w-5 h-5">
+                        <img src="cancel.png" alt="Cancel" />
+                    </button>
+                </div>
+            </div>
+            <p hidden={!deleteMode} className="text-color-1">This action will delete the project, its tasks and all the related logs. Are you sure?</p>
+        </div>
     )
 
 }
