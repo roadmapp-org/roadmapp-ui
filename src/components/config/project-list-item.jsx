@@ -57,9 +57,10 @@ export const ProjectListItemComponent = ({project}) => {
     }
 
     return (
-        <div className="mb-3">
-            <div className="flex flex-nowrap">
-                <input type="text" value={inputValue} disabled={!editMode} onChange={handleInputChange} className={`w-full py-2 px-3 mr-2 rounded-md ${editMode ? "bg-white" : "bg-custom-white"}`}/>
+        <div className="mb-3 ">
+            <div className="flex flex-nowrap items-center">
+                <input type="text" value={inputValue} disabled={!editMode} onChange={handleInputChange}
+                    className={`w-full px-3 mr-2 rounded-md ${editMode ? "bg-white" : "bg-custom-white"}`}/>
                 <div className={`flex py-3 mr-2 ${deleteMode ? "hidden" : "block"}`}>
                     <button hidden={editMode} onClick={handleEdit} className="text-white font-bold w-5 h-5">
                         <img src="edit.png" alt="Edit"/>

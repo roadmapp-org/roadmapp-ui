@@ -22,7 +22,7 @@ export const Config = () => {
           <div className='flex flex-col w-5/6 sm:w-3/4 md:w-1/2'>
             <h1 className='text-3xl mb-5'>Configuration</h1>
             <ProjectComponent />
-            {/*<TaskComponent />*/}
+            <TaskComponent />
           </div>
         </div>
     );
