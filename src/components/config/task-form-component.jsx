@@ -9,6 +9,8 @@ export const TaskFormComponent = () => {
     
     const dispatch = useDispatch();
     const [inputValue, setInputValue] = useState('');
+    const [showError, setShowError] = useState("");
+    const [error, setError] = useState("");
     const selectedProject = useSelector((state) => state.levels.selectedProject)
 
     const handleChange = (event) => {
@@ -27,13 +29,23 @@ export const TaskFormComponent = () => {
     }
 
     return (
-        <Form method="post" onSubmit={onSubmit}>
+        <Form method="post" onSubmit={onSubmit} className="w-full flex flex-col">
             <input  value={inputValue}
                     onChange={handleChange}
                     type="text"
-                    placeholder="New task name" />
-            <input type="submit" value="Add" disabled={selectedProject === '0'}/>
-            <br></br>
+                    placeholder="New task name"
+                    className="w-full px-3 py-2 placeholder-gray-500 rounded-sm focus:outline-none"
+            />
+            <div className="flex flex-nowrap mt-3">
+                <p className={`text-color-1 ml-2 py-2 w-full`}>
+                    {showError && error}
+                </p>
+                <input
+                    type="submit"
+                    value="Add"
+                    disabled={selectedProject === '0'}
+                    className="py-2 px-4 rounded-md shadow-sm font-medium text-white bg-custom-black"/>
+            </div>
         </Form>
     )
 }

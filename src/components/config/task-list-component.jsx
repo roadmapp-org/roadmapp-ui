@@ -28,29 +28,23 @@ export const TaskListComponent = () => {
 
     return (
         <>
-        <select onChange={onSelectProject}>
-            <option value="0" key={0}>All</option>
-            {projects.map((project) => (
-                <option value={project.id} key={project.id}>{project.name}</option>
-            ))}
+        <select className="w-full flex flex-wrap justify-evenly rounded-md py-2 bg-white mb-3" id="projectsList" onChange={onSelectProject}>
+            <option key={0} value={0} className={`relative align-content-center flex-grow text-center text-custom-black p-2 m-1 rounded-md font-medium text-black hover:cursor-pointer`}>{"All projects"}</option>
+            {
+                projects.map((item, index) => (
+                    <option key={index} value={item.id} className={`relative align-content-center flex-grow text-center text-custom-black p-2 mx-1  font-medium  hover:cursor-pointer`}>
+                        {item.name}
+                    </option>
+                ))
+            }  
         </select>
-        <br></br>
-        <table>
-                <thead>
-                    <tr>
-                        <th>Project</th>
-                        <th>Task</th>
-                        <th colSpan={4}></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        filteredTask.map((task,index) => (
-                            <TaskListItemComponent task={task} key={task.id}/>
-                        ))
-                    }
-                </tbody>
-            </table>
+        <div className="flex flex-col">
+            {
+                filteredTask.map((task,index) => (
+                    <TaskListItemComponent task={task} key={task.id}/>
+                ))
+            }
+        </div>
         </>
     )
 }

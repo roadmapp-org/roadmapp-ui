@@ -10,17 +10,25 @@ export const TaskListItemComponent = ({task}) => {
     const project = projects.find(p => p.id === task.project_id)
     const dispatch = useDispatch();
 
-    const handleInputChange = (event) => {
-        setInputValue(event.target.value)
-    }
-
     const handleEdit = () => {
         setEditMode(true)
     }
 
+    const handleDelete = () => {
+        setDeleteMode(true)
+    }
+
     const handleCancelEdit = () => {
         setEditMode(false)
-        setInputValue(task.name)
+        setInputValue(project.name)
+    }
+
+    const handleCancelDelete = () => {
+        setDeleteMode(false)
+    }
+
+    const handleInputChange = (event) => {
+        setInputValue(event.target.value)
     }
 
     const handleConfirmEdit = () => {
@@ -44,14 +52,6 @@ export const TaskListItemComponent = ({task}) => {
         dispatch(editTask(persist))
     }
 
-    const handleDelete = () => {
-        setDeleteMode(true)
-    }
-
-    const handleCancelDelete = () => {
-        setDeleteMode(false)
-    }
-
     const handleConfirmDelete = () => {
         const persist = {
             id: task.id
@@ -60,8 +60,37 @@ export const TaskListItemComponent = ({task}) => {
     }
 
     return (
-        <tr>
-            <td>{project && project.name}</td>
+        <div className="mb-3">
+            <div className="flex flex-nowrap items-center">
+                <input  type="text"
+                        value={inputValue}
+                        disabled={!editMode}
+                        onChange={handleInputChange}
+                        className={`w-full px-3 py-2 mr-2 rounded-md ${editMode ? "bg-white" : "bg-custom-white"}`}/>
+                <div className={`flex py-3 mr-2 ${deleteMode ? "hidden" : "block"}`}>
+                    <button hidden={editMode} onClick={handleEdit} className="text-white font-bold w-5 h-5">
+                        <img src="edit.png" alt="Edit"/>
+                    </button>
+                    <button hidden={!editMode} onClick={handleConfirmEdit} className="text-white font-bold mr-3 w-5 h-5">
+                        <img src="ok.png" alt="Confirm" />
+                    </button>
+                    <button hidden={!editMode} onClick={handleCancelEdit} className="text-white font-bold mr-3 w-5 h-5">
+                        <img src="cancel.png" alt="Cancel" />
+                    </button>
+                </div>
+                <div className={`flex py-3 mr-2 ${editMode ? "hidden" : "block"}`}>
+                    <button hidden={deleteMode} onClick={handleDelete} className="text-white font-bold w-5 h-5">
+                        <img src="remove.png" alt="Cancel" />
+                    </button>
+                    <button hidden={!deleteMode} onClick={handleConfirmDelete} className=" text-white font-bold mr-3 w-5 h-5">
+                        <img src="ok.png" alt="Confirm"/>
+                    </button>
+                    <button hidden={!deleteMode} onClick={handleCancelDelete} className=" text-white font-bold mr-4 w-5 h-5">
+                        <img src="cancel.png" alt="Cancel" />
+                    </button>
+                </div>
+            </div>
+            {/* <td>{project && project.name}</td>
             <td><input type="text" value={inputValue} disabled={!editMode} onChange={handleInputChange}/></td>
             <td>
                 <button hidden={editMode} onClick={handleEdit}>Edit</button>
@@ -73,7 +102,7 @@ export const TaskListItemComponent = ({task}) => {
                 <button hidden={deleteMode} onClick={handleDelete}>Delete</button>
                 <button hidden={!deleteMode} onClick={handleConfirmDelete}>OK</button>
                 <button hidden={!deleteMode} onClick={handleCancelDelete}>Cancel</button>
-            </td>
-        </tr>
+            </td> */}
+        </div>
     )
 }
