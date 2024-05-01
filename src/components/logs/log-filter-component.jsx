@@ -33,9 +33,12 @@ export const LogFilterComponent = () => {
     }
 
     useEffect(() => {
-      if (levelsStatus === 'idle') {
+        // if (levelsStatus === 'idle') {
+        //     dispatch(getLogs())
+        // }
         dispatch(getLogs())
-      }
+        let filtered = tasks.filter((task) => task.project_id === currentProject);
+        setFilteredTasks(filtered);
     }, [])
 
     useEffect(() => {
