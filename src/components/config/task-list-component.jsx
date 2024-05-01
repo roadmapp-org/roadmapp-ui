@@ -11,24 +11,16 @@ export const TaskListComponent = () => {
     const selectedProjectOnConfigPage = useSelector((state) => state.levels.selectedProjectOnConfigPage)
 
     const onSelectProject = (e) => {
-        // if(e.target.value !== "0") {
-        //     setFilteredTasks(tasks.filter((item) => item.project_id.toString() === e.target.value))
-        // } else {
-        //     setFilteredTasks(tasks)
-        // }
         setFilteredTasks(tasks.filter((item) => item.project_id.toString() === e.target.value))
         dispatch(projectSelectedOnConfigPage(parseInt(e.target.value)))
     }
 
     useEffect(() => {
         setFilteredTasks(tasks.filter((item) => item.project_id === selectedProjectOnConfigPage))
-        // if(selectedProjectOnConfigPage === 0)
-        //     setFilteredTasks(tasks)
-        // else
-        //     setFilteredTasks(tasks.filter((item) => item.project_id === selectedProjectOnConfigPage))
     }, [tasks, selectedProjectOnConfigPage])
 
     useEffect(() => {
+        dispatch(projectSelectedOnConfigPage(0))
         setFilteredTasks(tasks.filter((item) => item.project_id === 0))
     }, [])
 
