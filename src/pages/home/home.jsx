@@ -72,7 +72,7 @@ export const Home = () => {
         </div>
         <div>
           <div className="bg-custom-grey py-5 h-auto flex justify-center min-h-screen">
-            <div className='flex flex-col w-5/6 sm:w-3/4'>
+            <div className='flex flex-col w-5/6 md:w-[80%] lg:w-[50%] xl:w-[40%]'>
               {
                 projects.length !== 0 &&
                 <>

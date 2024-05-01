@@ -9,6 +9,7 @@ export const LogCurrentFilterComponent = () => {
     const currentProjectName = useSelector((state) => state.levels.selectedProjectName);
     const currentTaskName = useSelector((state) => state.levels.selectedTaskName);
     const showCurrentFilterLogError = useSelector((state) => state.layout.showCurrentFilterLogError);
+    const showCreateLogForm = useSelector(state => state.layout.showCreateLogModal);
     
     const cleanCurrentProject = () => {
         dispatch(projectSelected(0));
@@ -27,13 +28,13 @@ export const LogCurrentFilterComponent = () => {
             <div className="flex flex-nowrap justify-center text-center content-center">
                 <div className={`bg-color-3 rounded-md py-1 px-2 relative ${currentProject != 0 ? "block" : "hidden"} text-center content-center`}>
                     <p className="font-medium">{currentProjectName}</p>
-                    <button className='absolute -top-2 -right-3 rounded-[50%] bg-color-2' onClick={() => cleanCurrentProject()}>
+                    <button className={`absolute -top-2 -right-3 rounded-[50%] bg-color-2 ${showCreateLogForm ? "hidden" : "block"}`} onClick={() => cleanCurrentProject()}>
                         <img src="white-cancel.png" className="w-5 h-5 p-1" />
                     </button>
                 </div>
                 <div className={`bg-custom-blue rounded-md py-1 px-2 relative ml-4 ${currentTask != 0 ? "block" : "hidden"} text-center content-center`}>
                     <p className="font-medium">{currentTaskName}</p>
-                    <button className='absolute -top-2 -right-3 rounded-[50%] bg-color-2' onClick={() => cleanCurrentTask()}>
+                    <button className={`absolute -top-2 -right-3 rounded-[50%] bg-color-2 ${showCreateLogForm ? "hidden" : "block"}`} onClick={() => cleanCurrentTask()}>
                         <img src="white-cancel.png" className="w-5 h-5 p-1" />
                     </button>
                 </div>
