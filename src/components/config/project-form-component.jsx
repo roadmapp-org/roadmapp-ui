@@ -35,7 +35,7 @@ export const ProjectFormComponent = () => {
         if(creationStatus === "succeeded")
             setInputValue("")
         if(creationStatus === "rejected"){
-            setError("An error occurred while creating the project")
+            setError("An error occurred while creating the project. Try again later.")
             setShowError(true)
         }
     }, [creationStatus])

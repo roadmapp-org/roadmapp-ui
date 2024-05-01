@@ -157,10 +157,12 @@ const initialState = {
     selectedProjectName: "",
     selectedTask: 0,
     selectedTaskName: "",
+    selectedProjectOnConfigPage: 0,
     selectedSubtask: "0",
     status: "idle",
     error: "",
     creationStatus: "idle",
+    taskCreationStatus: "idle",
     editStatus: "idle"
 }
 
@@ -186,6 +188,9 @@ const levelsSlice = createSlice({
         },
         subtaskSelected: (state, action) => {
             state.selectedSubtask = action.payload
+        },
+        projectSelectedOnConfigPage: (state, action) => {
+            state.selectedProjectOnConfigPage = action.payload
         }
     },
     extraReducers: (builder) => {
@@ -264,14 +269,14 @@ const levelsSlice = createSlice({
                 state.error = action.error.message;
             })
             .addCase(createTask.pending, (state) => {
-                state.creationStatus = 'loading'
+                state.taskCreationStatus = 'loading'
             })
             .addCase(createTask.fulfilled, (state, action) => {
-                state.creationStatus = 'succeeded';
+                state.taskCreationStatus = 'succeeded';
                 state.tasks.push(action.payload.persistedObject)
             })
             .addCase(createTask.rejected, (state,action) => {
-                state.creationStatus = 'rejected';
+                state.taskCreationStatus = 'rejected';
                 state.error = action.error.message;
             })
     }
@@ -289,6 +294,6 @@ export const levelsSliceSelectors = {
     selectLogList
 }
 
-export const { projectSelected, projectNameSelected, taskSelected, taskNameSelected, subtaskSelected } = levelsSlice.actions;
+export const { projectSelected, projectNameSelected, taskSelected, taskNameSelected, subtaskSelected, projectSelectedOnConfigPage } = levelsSlice.actions;
 
 export default levelsSlice.reducer;

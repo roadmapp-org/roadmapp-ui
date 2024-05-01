@@ -9,9 +9,9 @@ export const TaskFormComponent = () => {
     
     const dispatch = useDispatch();
     const [inputValue, setInputValue] = useState('');
-    const [showError, setShowError] = useState("");
+    const [showError, setShowError] = useState(false);
     const [error, setError] = useState("");
-    const selectedProject = useSelector((state) => state.levels.selectedProject)
+    const selectedProjectOnConfigPage = useSelector((state) => state.levels.selectedProjectOnConfigPage)
 
     const handleChange = (event) => {
         setInputValue(event.target.value);
@@ -19,8 +19,22 @@ export const TaskFormComponent = () => {
 
     const onSubmit = (event) => {
         event.preventDefault();
+        if(selectedProjectOnConfigPage === 0)
+        {
+            setError("Select a project")
+            setShowError(true)
+            return;
+        }
+        if(inputValue === "" || inputValue === undefined)
+        {
+            setError("Task name is required")
+            setShowError(true)
+            return;
+        }
+        setError("")
+        setShowError(false)
         const persist = {
-            projectId: selectedProject,
+            projectId: selectedProjectOnConfigPage,
             name: inputValue,
             active: true
         }
@@ -43,7 +57,7 @@ export const TaskFormComponent = () => {
                 <input
                     type="submit"
                     value="Add"
-                    disabled={selectedProject === '0'}
+                    disabled={selectedProjectOnConfigPage === '0'}
                     className="py-2 px-4 rounded-md shadow-sm font-medium text-white bg-custom-black"/>
             </div>
         </Form>

@@ -3,9 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from './data/login-slice';
 import { toogleShowBurgerMenu } from './data/layout-slice';
+import { projectSelected } from './data/levels-slice'
 
 export const NavBar = () => {
-
+    
     const auth = useSelector((state) => state.user)
     const [isOpen, setIsOpen] = useState(false);
 
@@ -20,11 +21,17 @@ export const NavBar = () => {
         navigate(`/login`);
     }
 
+    const onClickHome = () => {
+        dispatch(toogleShowBurgerMenu(false));
+        dispatch(projectSelected(0));
+        navigate(`/home`);
+    }
+
     return (
         <>
         {auth.token && (
             <>
-                <header className="bg-custom-black text-white shadow-lg w-full text-custom-white">
+                <header className="bg-custom-black shadow-lg w-full text-custom-white">
                     <nav className="container mx-auto px-6 py-3">
                         <div className="flex items-center justify-between">
                             <a href='/home' className='flex items-center'>
