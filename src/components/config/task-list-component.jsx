@@ -28,6 +28,10 @@ export const TaskListComponent = () => {
         //     setFilteredTasks(tasks.filter((item) => item.project_id === selectedProjectOnConfigPage))
     }, [tasks, selectedProjectOnConfigPage])
 
+    useEffect(() => {
+        setFilteredTasks(tasks.filter((item) => item.project_id === 0))
+    }, [])
+
     return (
         <>
         <select className="w-full flex flex-wrap justify-evenly rounded-md py-2 bg-white mb-3" id="projectsList" onChange={onSelectProject}>
