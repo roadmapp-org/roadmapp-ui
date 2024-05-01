@@ -66,13 +66,13 @@ export const Home = () => {
     return (
       <>
         <div className={`fixed inset-0 bg-custom-black bg-opacity-90 justify-center items-center px-10 ${showCreateLogForm ? "flex flex-col" : "hidden"}`}>
-          <div className='w-full flex flex-col'>
+          <div className='w-full flex flex-col md:w-[80%] lg:w-[50%] xl:w-[40%]'>
             <LogCreateForm />
           </div>
         </div>
         <div>
           <div className="bg-custom-grey py-5 h-auto flex justify-center min-h-screen">
-            <div className='flex flex-col w-5/6 sm:w-3/4 md:w-1/2'>
+            <div className='flex flex-col w-5/6 sm:w-3/4'>
               {
                 projects.length !== 0 &&
                 <>
