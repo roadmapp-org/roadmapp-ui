@@ -19,7 +19,7 @@ export const Config = () => {
 
     return (
         <div className="bg-custom-grey py-5 h-auto flex justify-center min-h-screen">
-          <div className='flex flex-col w-5/6 sm:w-3/4 md:w-1/2'>
+          <div className='flex flex-col w-5/6 sm:w-3/4'>
             <h1 className='text-3xl mb-5'>Configuration</h1>
             <ProjectComponent />
             <TaskComponent />
