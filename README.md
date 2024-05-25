@@ -1,7 +1,7 @@
 # Roadmapp
 Roadmapp is a webapp that allows you to record and query in a simple way the latest updates of your tasks and projects. It is thought for all those who work on more than a project at the same time and prefer to centralize the progress record
 
-## Architecture/Arquitectura
+## Arquitectura
 The app is formed by a React front end, a Springboot backend and an SQLite databse
 
 The **front end** incorporates
