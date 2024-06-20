@@ -15,7 +15,8 @@ pipeline {
             }
             steps {
                 sh 'echo Performing npm install'
-                sh 'npm install'
+                sh 'sudo chown -R 129:138 "/.npm"'
+                sh 'sudo npm install'
             }
         }
     }
