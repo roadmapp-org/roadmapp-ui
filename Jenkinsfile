@@ -19,6 +19,7 @@ pipeline {
             steps {
                 sh 'echo Performing npm install'
                 sh 'mkdir -p ${NPM_CONFIG_CACHE} && chown -R $(id -u):$(id -g) ${NPM_CONFIG_CACHE}'
+                sh 'rm -rf node_modules'
                 sh 'npm install'
             }
         }
