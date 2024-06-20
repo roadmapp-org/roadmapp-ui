@@ -21,7 +21,9 @@ pipeline {
                 sh 'mkdir -p ${NPM_CONFIG_CACHE} && chown -R $(id -u):$(id -g) ${NPM_CONFIG_CACHE}'
                 sh 'rm -rf node_modules'
                 sh 'npm install'
+                sh 'npm run build'
             }
         }
     }
+
 }
