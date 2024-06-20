@@ -8,11 +8,11 @@ RUN npm run build
 
 # Debugging step: List contents of /app directory to verify the build
 RUN ls -al /app
-RUN ls -al /app/build
+RUN ls -al /app/dist
 
 # Stage 2: Serve the app with Nginx
 FROM nginx:alpine
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
