@@ -3,27 +3,31 @@ pipeline {
     environment {
         GITHUB_ORG = 'roadmapp-org'
         CONTAINER_REGISTRY = "ghcr.io/${GITHUB_ORG}/"
+        APP_NAME = 'react-app'
+        VERSION = 'latest'  // You can set this dynamically or use a specific version
     }
 
     stages {
-        stage('Build Application') {
-            agent {
-                docker {
-                    image 'node:16-alpine'
-                    reuseNode true
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    // Build the Docker image using the multi-stage Dockerfile
+                    def image = docker.build("${CONTAINER_REGISTRY}${APP_NAME}:${VERSION}")
+                    
+                    // Push the Docker image to the registry
+                    docker.withRegistry('https://ghcr.io', 'github-pat') {
+                        image.push()
+                    }
                 }
             }
-            environment {
-                NPM_CONFIG_CACHE = "${env.WORKSPACE}/.npm"
-            }
+        }
+
+        stage('Clean Up') {
             steps {
-                sh 'echo Performing npm install'
-                sh 'mkdir -p ${NPM_CONFIG_CACHE} && chown -R $(id -u):$(id -g) ${NPM_CONFIG_CACHE}'
+                // Clean up any temporary files if necessary
                 sh 'rm -rf node_modules'
-                sh 'npm install'
-                sh 'npm run build'
+                sh 'rm -rf build'
             }
         }
     }
-
 }
