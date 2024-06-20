@@ -6,6 +6,10 @@ RUN npm install
 COPY . .
 RUN npm run build
 
+# Debugging step: List contents of /app directory to verify the build
+RUN ls -al /app
+RUN ls -al /app/build
+
 # Stage 2: Serve the app with Nginx
 FROM nginx:alpine
 COPY --from=build /app/build /usr/share/nginx/html
