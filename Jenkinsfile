@@ -7,7 +7,7 @@ pipeline {
 
     stages {
         stage('Build Application') {
-            agent{
+            agent {
                 docker {
                     image 'node:16-alpine'
                     reuseNode true
@@ -15,9 +15,12 @@ pipeline {
             }
             steps {
                 sh 'echo Performing npm install'
-                sh 'sudo chown -R 129:138 "/.npm"'
-                sh 'sudo npm install'
+                // Change ownership of the .npm directory before npm install
+                sh 'chown -R $(id -u):$(id -g) /root/.npm || true'
+                // Install npm packages
+                sh 'npm install'
             }
         }
     }
+
 }
