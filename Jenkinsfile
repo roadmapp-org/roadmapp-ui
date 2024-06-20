@@ -13,14 +13,14 @@ pipeline {
                     reuseNode true
                 }
             }
+            environment {
+                NPM_CONFIG_CACHE = "${env.WORKSPACE}/.npm"
+            }
             steps {
                 sh 'echo Performing npm install'
-                // Change ownership of the .npm directory before npm install
-                sh 'chown -R $(id -u):$(id -g) /root/.npm || true'
-                // Install npm packages
+                sh 'mkdir -p ${NPM_CONFIG_CACHE} && chown -R $(id -u):$(id -g) ${NPM_CONFIG_CACHE}'
                 sh 'npm install'
             }
         }
     }
-
 }
